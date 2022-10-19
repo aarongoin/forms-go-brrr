@@ -1,0 +1,30 @@
+{
+  "name": "react-deformed",
+  "version": "0.1.0",
+  "description": "Embrace uncontrolled forms and inputs in React. They're lighting fast, and incredibly robust. `npm install react-deformed`",
+  "main": "build/index.bundle.js",
+  "module": "build/index.js",
+  "scripts": {
+    "test": "npx jest",
+    "build:gzip": "gzip -k -9 ./build/index.bundle.min.js && wc -c ./build/index.bundle.min.js",
+    "build:types": "npx tsc --project ./tsconfig.json --emitDeclarationOnly",
+    "build:full": "npx esbuild ./src/* ./src/core/* ./src/components/* --target=chrome58,firefox57,safari11,edge18 --outdir=build --format=esm",
+    "build:bundle": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/index.bundle.js --format=esm --external:react",
+    "build:minified": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/index.bundle.min.js --format=esm --external:react --minify",
+    "build": "rm -rf ./build && npm run build:minified && npm run build:bundle && npm run build:full && npm run build:gzip && npm run build:types"
+  },
+  "keywords": [
+    "React.js",
+    "Forms"
+  ],
+  "author": "Aaron Goin",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.21",
+    "esbuild": "^0.15.11",
+    "typescript": "^4.8.4"
+  },
+  "peerDependencies": {
+    "react": "^15.6.2"
+  }
+}
