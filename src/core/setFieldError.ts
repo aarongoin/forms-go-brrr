@@ -21,7 +21,7 @@ export function setFieldError(
 
   el.setCustomValidity(error);
   const hint = el
-    .closest(".df-Label, .df-Fieldset")
+    .closest(".brrr-Label, .brrr-Fieldset")
     ?.querySelector(`#${el.name}-hint`);
   if (hint) hint.textContent = error;
 }

@@ -11,15 +11,15 @@ function Label({
   const hintId = `${name}-hint`;
   return /* @__PURE__ */ React.createElement("label", {
     htmlFor: name,
-    className: "df-Label".concat(className ? " " : "", className || "")
+    className: "brrr-Label".concat(className ? " " : "", className || "")
   }, typeof label === "string" ? /* @__PURE__ */ React.createElement("span", {
-    className: "df-Label-text".concat(
+    className: "brrr-Label-text".concat(
       textClassName ? " " : "",
       textClassName || ""
     )
   }, label) : label, children, /* @__PURE__ */ React.createElement("span", {
     id: hintId,
-    className: "df-Label-hint".concat(
+    className: "brrr-Label-hint".concat(
       hintClassName ? " " : "",
       hintClassName || ""
     ),
@@ -32,7 +32,7 @@ function InlineLabel({
   className
 }) {
   return /* @__PURE__ */ React.createElement("label", {
-    className: "df-Label".concat(className ? " " : "", className || "")
+    className: "brrr-Label".concat(className ? " " : "", className || "")
   }, children, label);
 }
 export {

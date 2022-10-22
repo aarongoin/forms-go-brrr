@@ -26,7 +26,7 @@ export function Select({
   optionClassName,
   ...props
 }: SelectProps): React.ReactElement {
-  const finalOptionClassName = "df-Select-option".concat(
+  const finalOptionClassName = "brrr-Field-option".concat(
     optionClassName ? " " : "",
     optionClassName || ""
   );
@@ -36,7 +36,7 @@ export function Select({
       tabIndex={0}
       aria-describedby={`${name}-hint`}
       {...props}
-      className={"df-Select".concat(className ? " " : "", className || "")}
+      className={"brrr-Select".concat(className ? " " : "", className || "")}
     >
       {options.map((opt) => (
         <option

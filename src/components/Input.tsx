@@ -157,7 +157,7 @@ export function Input(props: InputProps): React.ReactElement {
       tabIndex={0}
       {...props}
       aria-describedby={`${props.name}-hint`}
-      className={"df-Input".concat(
+      className={"brrr-Input".concat(
         props.className ? " " : "",
         props.className || ""
       )}

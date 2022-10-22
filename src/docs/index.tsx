@@ -10,7 +10,9 @@ function ExampleApp() {
       validator={(getValue, setValue) => {
         const a = getValue("text_field");
         const b = getValue("text_area");
-        if (a.length > b.length) return { text_area: "Too short!" };
+        return {
+          text_area: a.length > b.length ? "Too short!" : "",
+        };
       }}
     >
       <div

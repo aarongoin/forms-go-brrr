@@ -6,22 +6,20 @@
 
 ![Use the DOM. Forms go brrr.](./docs/forms-go-brrr.png)
 
-#
 
 Work in progress lib for managing form state in the DOM. Use at your own risk.
 
-Embrace uncontrolled forms and inputs in React. They're lighting fast, and incredibly robust.
-
-`npm install forms-go-brrr`
+Embrace uncontrolled forms and inputs in React. It really doesn't get any faster than this.
 
 ---
 
 ## Table of Contents
 
 1. [Getting Started](#Getting-Started)
-2. [Documentation](#Documentation)
-3. [Contributing](#Contributing)
-4. [License](#License)
+2. [Basic Use](#Basic-Use)
+3. [Documentation](#Documentation)
+4. [Contributing](#Contributing)
+5. [License](#License)
 
 ---
 
@@ -29,30 +27,56 @@ Embrace uncontrolled forms and inputs in React. They're lighting fast, and incre
 
 Follow these instructions to get forms-go-brrr setup in your project.
 
-#
-
-### Installing
-
-First you'll need to install forms-go-brrr with npm:
+### 1. Install the library
 
 ```
-npm install forms-go-brrr
+npm install --save forms-go-brrr
 ```
 
-Or if you prefer yarn:
+### 2. Style your form fields
+
+We impose no styling of our own, so all form and field components in the library use the default browser styling which very likely does not match your brand or taste. 
+
+You can style the form and field components using:
+
+#### A. Native CSS targeting `.brrr-*` class names on all elements
+```css
+
+.brrr-Label-text, .brrr-Label-hint {
+  display: block;
+}
+
+.brrr-Input:invalid ~ .brrr-Label-hint {
+  color: red;
+}
 
 ```
-yarn install forms-go-brrr
+
+#### B. CSS classes via `className` prop
+```javascript
+<Field
+  ...
+  className="my-label-style"
+  inputClassName="my-label-style"
+/>
 ```
 
-That's it. Nice work! ✋You've successfully installed forms-go-brrr.
+#### C. Inline styles via `style` prop
+```javascript
+<Field
+  ...
+  style={{ color: "#ff0033" }}
+  inputStyle={{ color: "black", padding: "2rem" }}
+/>
+```
 
-#
 
-### Basic Use
+### 3. Build your forms
+
+#### Basic Use
 
 ```javascript
-import { Form, Field } from "forms-go-brr";
+import { Form, Field } from "forms-go-brrr";
 
 export function MyForm() {
   return (
@@ -84,7 +108,7 @@ export function MyForm() {
         validate="onBlur"
         validator={value => {
           if (value.includes("123")) return "This is a terrible password. Pick a better one.";
-          if (!value.includes("secret")) return "This is probably not as secret as you think...";
+          if (value.includes("secret")) return "This is probably not as secret as you think...";
         }}
       />
       <button type="submit">Login</button>
@@ -93,6 +117,8 @@ export function MyForm() {
 }
 
 ```
+
+---
 
 ## Documentation
 

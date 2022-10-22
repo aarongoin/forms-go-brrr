@@ -111,7 +111,7 @@ function Form(_a) {
           (0, import_setFieldError.setFieldError)(form, name, formErrors[name]);
     };
   return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues(__spreadProps(__spreadValues({}, props), {
-    className: "df-Form".concat(className ? " " : "", className || ""),
+    className: "brrr-Form".concat(className ? " " : "", className || ""),
     noValidate: typeof window !== void 0,
     method: dialog ? "dialog" : method,
     action

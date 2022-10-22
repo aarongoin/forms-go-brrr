@@ -34,7 +34,7 @@ export function Textarea({
             }
           : undefined
       }
-      className={"df-Textarea".concat(className ? " " : "", className || "")}
+      className={"brrr-Textarea".concat(className ? " " : "", className || "")}
       rows={minRows}
     ></textarea>
   );

@@ -77,7 +77,7 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "df-Textarea".concat(className ? " " : "", className || ""),
+    className: "brrr-Textarea".concat(className ? " " : "", className || ""),
     rows: minRows
   }));
 }

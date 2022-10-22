@@ -11,10 +11,10 @@ function Fieldset({
   const hintId = `${name}-hint`;
   return /* @__PURE__ */ React.createElement("fieldset", {
     disabled,
-    className: "df-Fieldset".concat(className ? " " : "", className || "")
+    className: "brrr-Fieldset".concat(className ? " " : "", className || "")
   }, /* @__PURE__ */ React.createElement("legend", null, label), children, /* @__PURE__ */ React.createElement("span", {
     id: hintId,
-    className: "df-Fieldset-hint".concat(
+    className: "brrr-Fieldset-hint".concat(
       hintClassName ? " " : "",
       hintClassName || ""
     ),

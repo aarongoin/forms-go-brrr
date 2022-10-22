@@ -47,10 +47,10 @@ function Fieldset({
   const hintId = `${name}-hint`;
   return /* @__PURE__ */ React.createElement("fieldset", {
     disabled,
-    className: "df-Fieldset".concat(className ? " " : "", className || "")
+    className: "brrr-Fieldset".concat(className ? " " : "", className || "")
   }, /* @__PURE__ */ React.createElement("legend", null, label), children, /* @__PURE__ */ React.createElement("span", {
     id: hintId,
-    className: "df-Fieldset-hint".concat(
+    className: "brrr-Fieldset-hint".concat(
       hintClassName ? " " : "",
       hintClassName || ""
     ),
@@ -65,7 +65,7 @@ function Input(props) {
     tabIndex: 0,
     "aria-describedby": `${props.name}-hint`
   }, props), {
-    className: "df-Input".concat(
+    className: "brrr-Input".concat(
       props.className ? " " : "",
       props.className || ""
     )
@@ -86,15 +86,15 @@ function Label({
   const hintId = `${name}-hint`;
   return /* @__PURE__ */ React3.createElement("label", {
     htmlFor: name,
-    className: "df-Label".concat(className ? " " : "", className || "")
+    className: "brrr-Label".concat(className ? " " : "", className || "")
   }, typeof label === "string" ? /* @__PURE__ */ React3.createElement("span", {
-    className: "df-Label-text".concat(
+    className: "brrr-Label-text".concat(
       textClassName ? " " : "",
       textClassName || ""
     )
   }, label) : label, children, /* @__PURE__ */ React3.createElement("span", {
     id: hintId,
-    className: "df-Label-hint".concat(
+    className: "brrr-Label-hint".concat(
       hintClassName ? " " : "",
       hintClassName || ""
     ),
@@ -107,7 +107,7 @@ function InlineLabel({
   className
 }) {
   return /* @__PURE__ */ React3.createElement("label", {
-    className: "df-Label".concat(className ? " " : "", className || "")
+    className: "brrr-Label".concat(className ? " " : "", className || "")
   }, children, label);
 }
 
@@ -197,7 +197,7 @@ function Select(_a) {
     "className",
     "optionClassName"
   ]);
-  const finalOptionClassName = "df-Select-option".concat(
+  const finalOptionClassName = "brrr-Select-option".concat(
     optionClassName ? " " : "",
     optionClassName || ""
   );
@@ -206,7 +206,7 @@ function Select(_a) {
     tabIndex: 0,
     "aria-describedby": `${name}-hint`
   }, props), {
-    className: "df-Select".concat(className ? " " : "", className || "")
+    className: "brrr-Select".concat(className ? " " : "", className || "")
   }), options.map((opt) => /* @__PURE__ */ React6.createElement("option", {
     key: typeof opt === "string" ? opt : opt.id,
     value: typeof opt === "string" ? opt : opt.id,
@@ -239,7 +239,7 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "df-Textarea".concat(className ? " " : "", className || ""),
+    className: "brrr-Textarea".concat(className ? " " : "", className || ""),
     rows: minRows
   }));
 }
@@ -504,7 +504,7 @@ function wrapWithValiation(onEvent, validators, outerHandler) {
       }
     }
     input.setCustomValidity(error);
-    const hint = (_a = input.closest(".df-Label, .df-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
+    const hint = (_a = input.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
     if (hint)
       hint.textContent = error;
     return !!error;
@@ -560,7 +560,7 @@ function setFieldError(form, name, error) {
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = (_a = el.closest(".df-Label, .df-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
   if (hint)
     hint.textContent = error;
 }
@@ -635,7 +635,7 @@ function Form(_a) {
           setFieldError(form, name, formErrors[name]);
     };
   return /* @__PURE__ */ React10.createElement("form", __spreadProps(__spreadValues(__spreadProps(__spreadValues({}, props), {
-    className: "df-Form".concat(className ? " " : "", className || ""),
+    className: "brrr-Form".concat(className ? " " : "", className || ""),
     noValidate: typeof window !== void 0,
     method: dialog ? "dialog" : method,
     action

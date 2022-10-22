@@ -50,7 +50,7 @@ function Input(props) {
     tabIndex: 0,
     "aria-describedby": `${props.name}-hint`
   }, props), {
-    className: "df-Input".concat(
+    className: "brrr-Input".concat(
       props.className ? " " : "",
       props.className || ""
     )

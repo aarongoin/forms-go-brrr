@@ -74,7 +74,7 @@ export function Form({
   return (
     <form
       {...props}
-      className={"df-Form".concat(className ? " " : "", className || "")}
+      className={"brrr-Form".concat(className ? " " : "", className || "")}
       // skip built-in form validation if we're running JS in the client environment
       // otherwise if prerendering on the server, we fallback to built-in form validation so things work okay in js-less env
       noValidate={typeof window !== undefined}

@@ -59,7 +59,7 @@ function wrapWithValiation(onEvent, validators, outerHandler) {
       }
     }
     input.setCustomValidity(error);
-    const hint = (_a = input.closest(".df-Label, .df-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
+    const hint = (_a = input.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
     if (hint)
       hint.textContent = error;
     return !!error;

@@ -28,7 +28,7 @@ export function wrapWithFieldValidation<
 
     input.setCustomValidity(error);
     const hint = input
-      .closest(".df-Label, .df-Fieldset")
+      .closest(".brrr-Label, .brrr-Fieldset")
       ?.querySelector(`#${input.name}-hint`);
     if (hint) hint.textContent = error;
     return !!error;

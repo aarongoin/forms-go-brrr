@@ -26,11 +26,11 @@ export function Label({
     <label
       htmlFor={name}
       {...props}
-      className={"df-Label".concat(className ? " " : "", className || "")}
+      className={"brrr-Label".concat(className ? " " : "", className || "")}
     >
       {typeof label === "string" ? (
         <span
-          className={"df-Label-text".concat(
+          className={"brrr-Label-text".concat(
             textClassName ? " " : "",
             textClassName || ""
           )}
@@ -43,7 +43,7 @@ export function Label({
       {children}
       <span
         id={hintId}
-        className={"df-Label-hint".concat(
+        className={"brrr-Label-hint".concat(
           hintClassName ? " " : "",
           hintClassName || ""
         )}
@@ -61,7 +61,7 @@ export function InlineLabel({
   className,
 }: Omit<LabelProps, "name" | "hint">): React.ReactElement {
   return (
-    <label className={"df-Label".concat(className ? " " : "", className || "")}>
+    <label className={"brrr-InlineLabel".concat(className ? " " : "", className || "")}>
       {children}
       {label}
     </label>
