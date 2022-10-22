@@ -1,27 +1,43 @@
 {
-  "name": "react-deformed",
+  "name": "forms-go-brrr",
   "version": "0.1.0",
-  "description": "Embrace uncontrolled forms and inputs in React. They're lighting fast, and incredibly robust. `npm install react-deformed`",
+  "description": "Embrace uncontrolled forms and inputs in React. They're lighting fast, and incredibly robust. `npm install forms-go-brrr`",
   "main": "build/index.bundle.js",
   "module": "build/index.js",
   "scripts": {
-    "test": "npx jest",
-    "build:gzip": "gzip -k -9 ./build/index.bundle.min.js && wc -c ./build/index.bundle.min.js",
+    "build:gzip": "gzip -k -9 ./build/esm/index.bundle.min.js && wc -c ./build/esm/index.bundle.min.js.gz",
     "build:types": "npx tsc --project ./tsconfig.json --emitDeclarationOnly",
-    "build:full": "npx esbuild ./src/* ./src/core/* ./src/components/* --target=chrome58,firefox57,safari11,edge18 --outdir=build --format=esm",
-    "build:bundle": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/index.bundle.js --format=esm --external:react",
-    "build:minified": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/index.bundle.min.js --format=esm --external:react --minify",
-    "build": "rm -rf ./build && npm run build:minified && npm run build:bundle && npm run build:full && npm run build:gzip && npm run build:types"
+    
+    "build:esm-raw": "npx esbuild ./src/* ./src/core/* ./src/components/* --target=chrome58,firefox57,safari11,edge18 --outdir=build/esm --format=esm",
+    "build:esm-bundle": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/esm/index.bundle.js --format=esm --external:react",
+    "build:esm-min": "npx esbuild ./src/index.ts --bundle --minify --target=chrome58,firefox57,safari11,edge18 --outfile=build/esm/index.bundle.min.js --format=esm --external:react",
+    "build:esm": "npm run build:esm-raw && npm run build:esm-bundle && npm run build:esm-min",
+
+    "build:cjs-raw": "npx esbuild ./src/* ./src/core/* ./src/components/* --target=chrome58,firefox57,safari11,edge18 --outdir=build/cjs --format=cjs",
+    "build:cjs-bundle": "npx esbuild ./src/index.ts --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=build/cjs/index.bundle.js --format=cjs --external:react",
+    "build:cjs-min": "npx esbuild ./src/index.ts --bundle --minify --target=chrome58,firefox57,safari11,edge18 --outfile=build/cjs/index.bundle.min.js --format=cjs --external:react",
+    "build:cjs": "npm run build:cjs-raw && npm run build:cjs-bundle && npm run build:cjs-min",
+
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:gzip && npm run build:types",
+    "clean": "rm -rf ./build",
+    "docs": "npx esbuild ./src/docs/index.js --bundle  --minify --target=chrome58,firefox57,safari11,edge18 --outfile=docs/index.bundle.js --servedir=docs"
   },
   "keywords": [
     "React.js",
-    "Forms"
+    "Forms",
+    "HTML forms"
   ],
   "author": "Aaron Goin",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^29.2.0",
     "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "esbuild": "^0.15.11",
+    "esbuild-jest": "^0.5.0",
+    "jest": "^29.2.1",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {

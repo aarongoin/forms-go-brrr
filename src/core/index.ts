@@ -3,4 +3,7 @@ export * from "./getFieldValue";
 export * from "./setFieldValue";
 export * from "./getFormValues";
 export * from "./withValidation";
+export * from "./validateForm";
+export * from "./validationEffectHandler";
+export * from "./wrapWithFieldValidation";
 export * from "./types";

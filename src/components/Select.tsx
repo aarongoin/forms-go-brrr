@@ -9,9 +9,12 @@ export type SelectType = {
   multiple?: boolean;
   size?: number;
   renderOption?: (opt: Option | string) => React.ReactNode;
-  className?: string | undefined;
   optionClassName?: string | undefined;
 };
+
+export type SelectProps = BaseInputProps &
+  SelectType &
+  React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export function Select({
   options,
@@ -22,7 +25,7 @@ export function Select({
   className,
   optionClassName,
   ...props
-}: BaseInputProps & SelectType): React.ReactElement {
+}: SelectProps): React.ReactElement {
   const finalOptionClassName = "df-Select-option".concat(
     optionClassName ? " " : "",
     optionClassName || ""
@@ -30,7 +33,7 @@ export function Select({
   return (
     <select
       name={name}
-      tabindex={0}
+      tabIndex={0}
       aria-describedby={`${name}-hint`}
       {...props}
       className={"df-Select".concat(className ? " " : "", className || "")}

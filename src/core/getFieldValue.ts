@@ -47,5 +47,7 @@ export function getFieldValue<V extends FieldValues>(
   if (isTextareaElement(el)) {
     return el.value as V;
   }
-  return null as V;
+  throw new Error(
+    `Unexpected element found in field name ${name}. Found ${el.tagName}`
+  );
 }

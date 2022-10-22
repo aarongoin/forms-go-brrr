@@ -20,6 +20,8 @@ export function setFieldError(
       : (elOrEls as FieldInputElement);
 
   el.setCustomValidity(error);
-  const hint = el.closest(`.${name}-hint`);
+  const hint = el
+    .closest(".df-Label, .df-Fieldset")
+    ?.querySelector(`#${el.name}-hint`);
   if (hint) hint.textContent = error;
 }

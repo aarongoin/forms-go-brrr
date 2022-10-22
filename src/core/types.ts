@@ -1,10 +1,20 @@
 
+export type ValidationEvents = "onChange" | "onBlur";
+
+export type ValidateFn<V extends FieldValues = FieldValues> = (
+  value: V
+) => string;
+
 export type FieldInputElement =
   | HTMLInputElement
   | HTMLSelectElement
   | HTMLTextAreaElement;
 
 export type FieldElement = FieldInputElement | HTMLButtonElement;
+
+export function isFormElement(el: HTMLElement): el is HTMLFormElement {
+  return el.tagName === "FORM";
+}
 
 export function isInputElement(el: HTMLElement): el is HTMLInputElement {
   return el.tagName === "INPUT";

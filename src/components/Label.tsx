@@ -1,28 +1,31 @@
 import * as React from "react";
 
-export type LabelProps = React.PropsWithChildren<{
-  label: React.ReactNode;
-  name: string;
-  hint?: string | null;
-  className?: string | undefined;
-  textClassName?: undefined | string;
-  hintClassName?: undefined | string;
-}>;
+export type LabelProps = React.PropsWithChildren<
+  Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "htmlFor" | "name"> & {
+    label: React.ReactNode;
+    name: string;
+    hint?: string | null;
+    textClassName?: undefined | string;
+    hintClassName?: undefined | string;
+  }
+>;
 
 export function Label({
   label,
   name,
   children,
   hint,
-  className,
   textClassName,
   hintClassName,
+  className,
+  ...props
 }: LabelProps) {
   const hintId = `${name}-hint`;
   // Input element that is being described by hint should include "aria-describedby": `${name}-hint`
   return (
     <label
       htmlFor={name}
+      {...props}
       className={"df-Label".concat(className ? " " : "", className || "")}
     >
       {typeof label === "string" ? (

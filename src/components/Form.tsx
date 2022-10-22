@@ -12,27 +12,47 @@ import {
   FormHandler,
   FormValues,
 } from "../core/types";
+import { validateForm } from "../core/validateForm";
+import { validationEffectHandler } from "../core/validationEffectHandler";
 
-export type FormProps<FV extends FormValues = FormValues> = {
-  dialog?: boolean;
-  // action & method as helpful fallback for when no JS support
-  method?: "post" | "get";
-  action?: string;
-  onChange?: FormHandler<FV>;
-  onBlur?: FormHandler<FV>;
-  className?: string | undefined;
-} & (
-  | {
-      submitFormData: (data: FormData) => Promise<void | FormErrors<FV>>;
-      submitJson?: void;
-    }
-  | {
-      submitFormData?: void;
-      submitJson: (
-        data: Record<string, unknown>
-      ) => Promise<void | FormErrors<FV>>;
-    }
-);
+export type FormProps<FV extends FormValues = FormValues> =
+  React.PropsWithChildren<
+    Omit<
+      React.FormHTMLAttributes<HTMLFormElement>,
+      "method" | "noValidate" | "autoComplete" | "target" | "encType"
+    > & {
+      dialog?: boolean;
+      // action & method as helpful fallback for when no JS support
+      method?: "post" | "get";
+      action?: string;
+      target?: "_self" | "_blank" | "_parent" | "_top";
+      encType?:
+        | "application/x-www-form-urlencoded"
+        | "multipart/form-data"
+        | "text/plain";
+      autoComplete?: boolean;
+      validate?:
+        | "onChange"
+        | "onBlur"
+        | "onSubmit"
+        | "onChangeOrSubmit"
+        | "onBlurOrSubmit";
+      validator?: FormHandler<FV>;
+    } & (
+        | {
+            submitFormData: (
+              data: FormData
+            ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>;
+            submitJson?: void;
+          }
+        | {
+            submitFormData?: void;
+            submitJson: (
+              data: Record<string, unknown>
+            ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>;
+          }
+      )
+  >;
 
 export function Form({
   dialog,
@@ -40,9 +60,10 @@ export function Form({
   action,
   submitFormData,
   submitJson,
-  onChange,
-  onBlur,
+  validate,
+  validator,
   className,
+  autoComplete = false,
   ...props
 }: FormProps): React.ReactElement {
   if (!submitFormData && !submitJson)
@@ -50,50 +71,48 @@ export function Form({
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
 
-  const smartProps = {} as Record<string, unknown>;
-  if (onChange)
-    smartProps["onChange"] = (event: React.ChangeEvent<FieldInputElement>) => {
-      const form = event.target.form!;
-      const formErrors = onChange(
-        (name) => getFieldValue(form, name),
-        (name, value) => setFieldValue(form, name, value)
-      );
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          setFieldError(form, name, formErrors[name]);
-    };
-
-  if (onBlur)
-    smartProps["onBlur"] = (event: React.FocusEvent<FieldInputElement>) => {
-      const form = event.target.form!;
-      const formErrors = onBlur(
-        (name) => getFieldValue(form, name),
-        (name, value) => setFieldValue(form, name, value)
-      );
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          setFieldError(form, name, formErrors[name]);
-    };
-
   return (
     <form
       {...props}
       className={"df-Form".concat(className ? " " : "", className || "")}
       // skip built-in form validation if we're running JS in the client environment
       // otherwise if prerendering on the server, we fallback to built-in form validation so things work okay in js-less env
-      noValidate={typeof window !== "undefined"}
+      noValidate={typeof window !== undefined}
+      autoComplete={autoComplete ? "on" : "off"}
       method={dialog ? "dialog" : method}
       action={action}
-      {...smartProps}
+      onChange={
+        validator && validate?.startsWith("onChange")
+          ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
+              validator,
+              props.onChange
+            )
+          : undefined
+      }
+      onBlur={
+        validator && validate?.startsWith("onBlur")
+          ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
+              validator,
+              props.onBlur
+            )
+          : undefined
+      }
       onSubmit={(event) => {
         const form = event.target as HTMLFormElement;
-        // if this is a regular html form, then prevent the default form submission
-        if (!dialog) event.preventDefault();
-        if (form.reportValidity()) {
-          (submitFormData
+        event.preventDefault();
+        if (
+          validateForm(
+            form,
+            (validate?.endsWith("Submit") && validator) || undefined
+          )
+        ) {
+          const submit = submitFormData
             ? // FormData is the preferred, browser native way, but may not be ideal in all instances
               submitFormData(getFormValuesAsFormData(form))
-            : submitJson!(getFormValuesAsJson(form))
+            : submitJson!(getFormValuesAsJson(form));
+          (submit && submit instanceof Promise
+            ? submit
+            : Promise.resolve(submit)
           ).then((formErrors) => {
             if (!formErrors) return;
             for (const name of Object.keys(formErrors))

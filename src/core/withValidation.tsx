@@ -1,13 +1,13 @@
 import * as React from "react";
 import { getErrorMessage } from "./errorMessages";
 import { getFieldValue } from "./getFieldValue";
-import { FieldInputElement, FieldValues } from "./types";
-
-export type ValidateFn<V extends FieldValues = FieldValues> = (
-  value: V
-) => string;
-
-export type ValidationEvents = "onChange" | "onBlur";
+import {
+  FieldInputElement,
+  FieldValues,
+  ValidationEvents,
+  ValidateFn,
+} from "./types";
+import { wrapWithFieldValidation } from "./wrapWithFieldValidation";
 
 export function withValidation<E extends ValidationEvents>(onEvent: E) {
   // return HOC for binding an input component to a validation function
@@ -21,32 +21,23 @@ export function withValidation<E extends ValidationEvents>(onEvent: E) {
   ) => {
     const validatorList = Array.isArray(validators) ? validators : [validators];
     // return component which can be rendered with the validation
-    return function Validated(
-      props: P & { [K in E]?: React.HTMLAttributes<I>[K] }
-    ) {
+    return function Validated({
+      validators: _validators,
+      ...props
+    }: P & { [K in E]?: React.HTMLAttributes<I>[K] } & {
+      validators?: Array<ValidateFn<V>>;
+    }) {
       return (
         // render the component and bind it's handler to the validation function
+        // @ts-expect-error - fun with generics
         <Cmp
           {...props}
-          {...{
-            [onEvent]: (event: React.ChangeEvent<I> | React.FocusEvent<I>) => {
-              const input = event.target;
-              let error = !input.checkValidity() ? getErrorMessage(input) : "";
-              if (!error) {
-                const value = getFieldValue<V>(input.form!, input.name);
-                for (const validator of validatorList) {
-                  error = validator(value);
-                  if (error) break;
-                }
-              }
-
-              input.setCustomValidity(error);
-              const hint = input.closest(`.${input.name}-hint`);
-              if (hint) hint.textContent = error;
-              // @ts-expect-error - oh well
-              return props[onEvent]?.(event);
-            },
-          }}
+          {...wrapWithFieldValidation(
+            onEvent,
+            _validators ? validatorList.concat(_validators) : validatorList,
+            // @ts-expect-error - maybe later
+            props[onEvent]
+          )}
         />
       );
     };

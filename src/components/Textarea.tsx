@@ -1,15 +1,17 @@
+import * as React from "react";
 import { BaseInputProps } from "./Input";
 
 export type TextareaType = {
   type: "textarea";
   minRows?: number;
   maxRows?: number;
-  minlength?: number;
-  maxlength?: number;
   spellcheck?: boolean;
   autosize?: boolean;
-  className?: string | undefined;
 };
+
+export type TextareaProps = BaseInputProps &
+  TextareaType &
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export function Textarea({
   type,
@@ -17,7 +19,7 @@ export function Textarea({
   autosize,
   className,
   ...props
-}: BaseInputProps & TextareaType) {
+}: TextareaProps) {
   return (
     <textarea
       {...props}

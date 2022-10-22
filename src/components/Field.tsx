@@ -1,26 +1,40 @@
 import * as React from "react";
-import { Checkboxes, CheckboxesType } from "./Checkboxes";
-import { Input, BaseInputProps, InputTypes } from "./Input";
-import { RadioGroup, RadioGroupType } from "./RadioGroup";
-import { Select, SelectType } from "./Select";
-import { Textarea, TextareaType } from "./Textarea";
+import { Checkboxes, CheckboxesProps } from "./Checkboxes";
+import { Input, InputProps } from "./Input";
+import { RadioGroup, RadioGroupProps } from "./RadioGroup";
+import { Select, SelectProps } from "./Select";
+import { Textarea, TextareaProps } from "./Textarea";
 import { Label, InlineLabel, LabelProps } from "./Label";
+import { ValidateFn, wrapWithFieldValidation } from "../core";
 
 const inlineFieldTypes = ["radio", "checkbox"];
 
-export type FieldProps = LabelProps &
-  BaseInputProps &
-  (InputTypes | SelectType | TextareaType | CheckboxesType | RadioGroupType) & {
-    validate?: "onInput" | "onChange" | "onBlur";
-    inputClassName?: undefined | string;
-  };
+type FieldsetFieldProps = CheckboxesProps | RadioGroupProps;
+
+type LabelledFieldProps = (SelectProps | TextareaProps | InputProps) &
+  LabelProps;
+
+export type FieldProps = (FieldsetFieldProps | LabelledFieldProps) & {
+  validate?: "onChange" | "onBlur";
+  validator?: ValidateFn;
+  validators?: ValidateFn[];
+  inputClassName?: undefined | string;
+};
 
 export function Field(props: FieldProps): React.ReactElement {
+  const validationProps = props.validate
+    ? (wrapWithFieldValidation(
+        props.validate,
+        props.validators || (props.validator ? [props.validator] : []),
+        // @ts-expect-error - maybe later
+        props[props.validate]
+      ) as Record<string, unknown>) // casting to generic record for simplicity. should probably fix someday
+    : null;
   if (props.type === "checkboxes") {
-    return <Checkboxes {...props} />;
+    return <Checkboxes {...props} {...validationProps} />;
   }
   if (props.type === "radiogroup") {
-    return <RadioGroup {...props} />;
+    return <RadioGroup {...props} {...validationProps} />;
   }
   const { label, hint, className, inputClassName, ...inputProps } = props;
 
@@ -34,11 +48,11 @@ export function Field(props: FieldProps): React.ReactElement {
       className={className}
     >
       {props.type === "select" ? (
-        <Select {...props} className={inputClassName} />
+        <Select {...props} className={inputClassName} {...validationProps} />
       ) : props.type === "textarea" ? (
-        <Textarea {...props} className={inputClassName} />
+        <Textarea {...props} className={inputClassName} {...validationProps} />
       ) : (
-        <Input {...props} className={inputClassName} />
+        <Input {...props} className={inputClassName} {...validationProps} />
       )}
     </LabelCmp>
   );

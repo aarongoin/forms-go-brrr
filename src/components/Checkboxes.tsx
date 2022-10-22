@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Fieldset } from "./Fieldset";
+import { Fieldset, FieldsetProps } from "./Fieldset";
 import { Option } from "../core/types";
 import { Input, BaseInputProps } from "./Input";
 import { InlineLabel } from "./Label";
@@ -11,10 +11,7 @@ export type CheckboxesType = {
   defaultChecked?: string[];
 };
 
-export type CheckboxesProps = BaseInputProps &
-  CheckboxesType & {
-    className?: string | undefined;
-  };
+export type CheckboxesProps = BaseInputProps & CheckboxesType & FieldsetProps;
 
 export function Checkboxes({
   type,

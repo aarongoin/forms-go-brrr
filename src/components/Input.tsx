@@ -1,8 +1,8 @@
 import * as React from "react";
 
 type TextTypeProps = {
-  minlength?: number;
-  maxlength?: number;
+  minLength?: number;
+  maxLength?: number;
   pattern?: string;
   spellcheck?: boolean;
 };
@@ -143,21 +143,20 @@ export type BaseInputProps = {
   disabled?: boolean;
   readonly?: boolean;
   id?: string;
-  tabindex?: number;
+  tabIndex?: number;
   autocorrect?: boolean; // safari only
 };
 
 export type InputProps = BaseInputProps &
-  InputTypes & {
-    className?: string | undefined;
-  };
+  InputTypes &
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby">;
 
 export function Input(props: InputProps): React.ReactElement {
   return (
     <input
-      tabindex={0}
-      aria-describedby={`${props.name}-hint`}
+      tabIndex={0}
       {...props}
+      aria-describedby={`${props.name}-hint`}
       className={"df-Input".concat(
         props.className ? " " : "",
         props.className || ""

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Option } from "../core/types";
-import { Fieldset } from "./Fieldset";
+import { Fieldset, FieldsetProps } from "./Fieldset";
 import { Input, BaseInputProps } from "./Input";
 import { InlineLabel } from "./Label";
 
@@ -11,7 +11,7 @@ export type RadioGroupType = {
   defaultChecked?: string;
 };
 
-export type RadioGroupProps = BaseInputProps & RadioGroupType;
+export type RadioGroupProps = BaseInputProps & RadioGroupType & FieldsetProps;
 
 export function RadioGroup({
   type,
