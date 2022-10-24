@@ -1,6 +1,6 @@
-import { getFieldValue } from "./getFieldValue";
-import { setFieldError } from "./setFieldError";
-import { setFieldValue } from "./setFieldValue";
+import { getFormFieldValue } from "./getFormFieldValue";
+import { setFormFieldError } from "./setFormFieldError";
+import { setFormFieldValue } from "./setFormFieldValue";
 import { FormHandler, FormValues } from "./types";
 
 export function validateForm<FV extends FormValues = FormValues>(
@@ -15,13 +15,14 @@ export function validateForm<FV extends FormValues = FormValues>(
   if (!validator) return is_valid;
 
   const formErrors = validator(
-    (name) => getFieldValue(form, name),
-    (name, value) => setFieldValue(form, name, value)
+    (name) => getFormFieldValue(form, name),
+    (name, value) => setFormFieldValue(form, name, value)
   );
   if (formErrors) {
-    is_valid = false;
-    for (const name of Object.keys(formErrors))
-      setFieldError(form, name, formErrors[name]);
+    for (const name of Object.keys(formErrors)) {
+      if (formErrors[name]) is_valid = false;
+      setFormFieldError(form, name, formErrors[name]);
+    }
   }
 
   return is_valid;

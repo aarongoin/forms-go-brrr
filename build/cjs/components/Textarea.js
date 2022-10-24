@@ -11,7 +11,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -77,7 +77,11 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "brrr-Textarea".concat(className ? " " : "", className || ""),
+    className: "fgb-Textarea".concat(className ? " " : "", className || ""),
     rows: minRows
   }));
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Textarea
+});

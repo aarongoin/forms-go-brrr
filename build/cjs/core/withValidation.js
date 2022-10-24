@@ -9,7 +9,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -52,13 +52,11 @@ var withValidation_exports = {};
 __export(withValidation_exports, {
   withValidation: () => withValidation,
   withValidationOnBlur: () => withValidationOnBlur,
-  withValidationOnChange: () => withValidationOnChange,
-  wrapWithValiation: () => wrapWithValiation
+  withValidationOnChange: () => withValidationOnChange
 });
 module.exports = __toCommonJS(withValidation_exports);
 var React = __toESM(require("react"));
-var import_errorMessages = require("./errorMessages");
-var import_getFieldValue = require("./getFieldValue");
+var import_wrapWithFieldValidation = require("./wrapWithFieldValidation");
 function withValidation(onEvent) {
   return (Cmp, validators) => {
     const validatorList = Array.isArray(validators) ? validators : [validators];
@@ -68,7 +66,7 @@ function withValidation(onEvent) {
       } = _b, props = __objRest(_b, [
         "validators"
       ]);
-      return /* @__PURE__ */ React.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithValiation(
+      return /* @__PURE__ */ React.createElement(Cmp, __spreadValues(__spreadValues({}, props), (0, import_wrapWithFieldValidation.wrapWithFieldValidation)(
         onEvent,
         _validators ? validatorList.concat(_validators) : validatorList,
         props[onEvent]
@@ -76,34 +74,11 @@ function withValidation(onEvent) {
     };
   };
 }
-function wrapWithValiation(onEvent, validators, outerHandler) {
-  const validateInput = (input) => {
-    var _a;
-    let error = !input.validity.valid ? (0, import_errorMessages.getErrorMessage)(input) : "";
-    if (!error) {
-      const value = (0, import_getFieldValue.getFieldValue)(input.form, input.name);
-      for (const validator of validators) {
-        error = validator(value);
-        if (error)
-          break;
-      }
-    }
-    input.setCustomValidity(error);
-    const hint = (_a = input.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
-    if (hint)
-      hint.textContent = error;
-    return !!error;
-  };
-  return {
-    [onEvent]: (event) => {
-      validateInput(event.target);
-      return outerHandler == null ? void 0 : outerHandler(event);
-    },
-    onInvalid: (event) => {
-      if (validateInput(event.target))
-        event.preventDefault();
-    }
-  };
-}
 const withValidationOnChange = withValidation("onChange");
 const withValidationOnBlur = withValidation("onBlur");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  withValidation,
+  withValidationOnBlur,
+  withValidationOnChange
+});

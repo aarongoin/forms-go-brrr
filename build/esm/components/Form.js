@@ -30,14 +30,13 @@ var __objRest = (source, exclude) => {
   return target;
 };
 import * as React from "react";
-import { getFieldValue } from "../core/getFieldValue";
 import {
   getFormValuesAsFormData,
   getFormValuesAsJson
 } from "../core/getFormValues";
-import { setFieldError } from "../core/setFieldError";
-import { setFieldValue } from "../core/setFieldValue";
+import { setFormFieldError } from "../core/setFormFieldError";
 import { validateForm } from "../core/validateForm";
+import { validationEffectHandler } from "../core/validationEffectHandler";
 function Form(_a) {
   var _b = _a, {
     dialog,
@@ -47,7 +46,8 @@ function Form(_a) {
     submitJson,
     validate,
     validator,
-    className
+    className,
+    autoComplete = false
   } = _b, props = __objRest(_b, [
     "dialog",
     "method",
@@ -56,42 +56,27 @@ function Form(_a) {
     "submitJson",
     "validate",
     "validator",
-    "className"
+    "className",
+    "autoComplete"
   ]);
   if (!submitFormData && !submitJson)
     throw new Error(
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
-  const smartProps = {};
-  if (validate == null ? void 0 : validate.startsWith("onChange"))
-    smartProps["onChange"] = (event) => {
-      const form = event.target.form;
-      const formErrors = validator(
-        (name) => getFieldValue(form, name),
-        (name, value) => setFieldValue(form, name, value)
-      );
-      console.log("Form onchange!", { formErrors });
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          setFieldError(form, name, formErrors[name]);
-    };
-  if (validate == null ? void 0 : validate.startsWith("onBlur"))
-    smartProps["onBlur"] = (event) => {
-      const form = event.target.form;
-      const formErrors = validator(
-        (name) => getFieldValue(form, name),
-        (name, value) => setFieldValue(form, name, value)
-      );
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          setFieldError(form, name, formErrors[name]);
-    };
-  return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues(__spreadProps(__spreadValues({}, props), {
-    className: "brrr-Form".concat(className ? " " : "", className || ""),
+  return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues({}, props), {
+    className: "fgb-Form".concat(className ? " " : "", className || ""),
     noValidate: typeof window !== void 0,
+    autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,
-    action
-  }), smartProps), {
+    action,
+    onChange: validator && (validate == null ? void 0 : validate.startsWith("onChange")) ? validationEffectHandler(
+      validator,
+      props.onChange
+    ) : void 0,
+    onBlur: validator && (validate == null ? void 0 : validate.startsWith("onBlur")) ? validationEffectHandler(
+      validator,
+      props.onBlur
+    ) : void 0,
     onSubmit: (event) => {
       const form = event.target;
       event.preventDefault();
@@ -104,7 +89,7 @@ function Form(_a) {
           if (!formErrors)
             return;
           for (const name of Object.keys(formErrors))
-            setFieldError(form, name, formErrors[name]);
+            setFormFieldError(form, name, formErrors[name]);
         });
       }
     }

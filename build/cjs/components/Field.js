@@ -11,7 +11,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -66,7 +66,11 @@ var import_Label = require("./Label");
 var import_core = require("../core");
 const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validate ? (0, import_core.wrapWithValiation)(props.validate, props.validators || [], props[props.validate]) : null;
+  const validationProps = props.validate ? (0, import_core.wrapWithFieldValidation)(
+    props.validate,
+    props.validators || (props.validator ? [props.validator] : []),
+    props[props.validate]
+  ) : null;
   if (props.type === "checkboxes") {
     return /* @__PURE__ */ React.createElement(import_Checkboxes.Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
   }
@@ -88,3 +92,7 @@ function Field(props) {
     className: inputClassName
   }), validationProps)));
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Field
+});

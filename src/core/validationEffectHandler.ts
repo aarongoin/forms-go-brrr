@@ -1,7 +1,7 @@
 import React from "react";
-import { getFieldValue } from "./getFieldValue";
-import { setFieldError } from "./setFieldError";
-import { setFieldValue } from "./setFieldValue";
+import { getFormFieldValue } from "./getFormFieldValue";
+import { setFormFieldError } from "./setFormFieldError";
+import { setFormFieldValue } from "./setFormFieldValue";
 import {
   FieldInputElement,
   FormHandler,
@@ -28,12 +28,12 @@ export function validationEffectHandler<
         "Expected to find a form element attached to wrapped event target."
       );
     const formErrors = validator(
-      (name) => getFieldValue(form, name),
-      (name, value) => setFieldValue(form, name, value)
+      (name) => getFormFieldValue(form, name),
+      (name, value) => setFormFieldValue(form, name, value)
     );
     if (formErrors)
       for (const name of Object.keys(formErrors))
-        setFieldError(form, name, formErrors[name]);
+        setFormFieldError(form, name, formErrors[name]);
     return onEvent?.(event);
   };
 }

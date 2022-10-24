@@ -1,3 +1,6 @@
+function isFormElement(el) {
+  return el.tagName === "FORM";
+}
 function isInputElement(el) {
   return el.tagName === "INPUT";
 }
@@ -8,6 +11,7 @@ function isTextareaElement(el) {
   return el.tagName === "TEXTAREA";
 }
 export {
+  isFormElement,
   isInputElement,
   isSelectElement,
   isTextareaElement

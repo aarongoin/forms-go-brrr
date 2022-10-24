@@ -1,9 +1,28 @@
-import {
-  isInputElement,
-  isSelectElement,
-  isTextareaElement
-} from "./types";
-function setFieldValue(form, name, value) {
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var setFormFieldValue_exports = {};
+__export(setFormFieldValue_exports, {
+  setFormFieldValue: () => setFormFieldValue
+});
+module.exports = __toCommonJS(setFormFieldValue_exports);
+var import_types = require("./types");
+function setFormFieldValue(form, name, value) {
   const elOrEls = form.elements.namedItem(name);
   if (!elOrEls)
     throw new Error(`Cannot find field with name ${name}`);
@@ -30,7 +49,7 @@ function setFieldValue(form, name, value) {
     );
   }
   const el = elOrEls;
-  if (isSelectElement(el)) {
+  if ((0, import_types.isSelectElement)(el)) {
     if (el.multiple) {
       Array.from(el.selectedOptions).forEach(
         Array.isArray(value) ? (el2) => {
@@ -44,7 +63,7 @@ function setFieldValue(form, name, value) {
     el.value = `${value}`;
     return;
   }
-  if (isInputElement(el)) {
+  if ((0, import_types.isInputElement)(el)) {
     if (el.type === "email" && el.multiple && Array.isArray(value)) {
       el.value = value.join(",");
       return;
@@ -60,7 +79,7 @@ function setFieldValue(form, name, value) {
     el.value = `${value}`;
     return;
   }
-  if (isTextareaElement(el)) {
+  if ((0, import_types.isTextareaElement)(el)) {
     el.value = `${value}`;
     return;
   }
@@ -68,6 +87,7 @@ function setFieldValue(form, name, value) {
     `Unexpected element found in field name ${name}. Found type of ${el.type}`
   );
 }
-export {
-  setFieldValue
-};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  setFormFieldValue
+});

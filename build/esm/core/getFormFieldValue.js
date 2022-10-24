@@ -3,7 +3,7 @@ import {
   isSelectElement,
   isTextareaElement
 } from "./types";
-function getFieldValue(form, name) {
+function getFormFieldValue(form, name) {
   var _a;
   const elOrEls = form.elements.namedItem(name);
   if (!elOrEls)
@@ -43,5 +43,5 @@ function getFieldValue(form, name) {
   );
 }
 export {
-  getFieldValue
+  getFormFieldValue
 };

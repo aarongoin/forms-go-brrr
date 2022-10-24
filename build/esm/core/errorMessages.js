@@ -16,18 +16,18 @@ var __spreadValues = (a, b) => {
 };
 import { isSelectElement, isTextareaElement } from "./types";
 let errorMessages = {
-  badInput: "Value is invalid.",
+  badInput: "Malformed input.",
   required: "This field is required.",
   minLength: "Text is too short.",
   maxLength: "Text is too long.",
   pattern: "Value is invalid.",
   min: "Value is too low.",
   max: "Value is high.",
-  step: "Value is invalid.",
-  email: "Value is invalid.",
-  url: "Value is invalid."
+  step: "Value is off-step.",
+  email: "Invalid email address.",
+  url: "Invalid url."
 };
-function setErrorMessages(errs) {
+function setDefaultErrorMessages(errs) {
   errorMessages = __spreadValues(__spreadValues({}, errorMessages), errs);
 }
 function getErrorMessage(input) {
@@ -61,5 +61,5 @@ function getErrorMessage(input) {
 }
 export {
   getErrorMessage,
-  setErrorMessages
+  setDefaultErrorMessages
 };

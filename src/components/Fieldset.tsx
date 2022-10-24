@@ -23,13 +23,13 @@ export function Fieldset({
   return (
     <fieldset
       {...props}
-      className={"brrr-Fieldset".concat(className ? " " : "", className || "")}
+      className={"fgb-Fieldset".concat(className ? " " : "", className || "")}
     >
       <legend>{label}</legend>
       {children}
       <span
         id={hintId}
-        className={"brrr-Fieldset-hint".concat(
+        className={"fgb-Fieldset-hint".concat(
           hintClassName ? " " : "",
           hintClassName || ""
         )}

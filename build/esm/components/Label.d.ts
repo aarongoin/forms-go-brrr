@@ -1,11 +1,10 @@
 import * as React from "react";
-export declare type LabelProps = React.PropsWithChildren<{
+export declare type LabelProps = React.PropsWithChildren<Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "htmlFor" | "name"> & {
     label: React.ReactNode;
     name: string;
     hint?: string | null;
-    className?: string | undefined;
     textClassName?: undefined | string;
     hintClassName?: undefined | string;
 }>;
-export declare function Label({ label, name, children, hint, className, textClassName, hintClassName, }: LabelProps): JSX.Element;
+export declare function Label({ label, name, children, hint, textClassName, hintClassName, className, ...props }: LabelProps): JSX.Element;
 export declare function InlineLabel({ label, children, className, }: Omit<LabelProps, "name" | "hint">): React.ReactElement;

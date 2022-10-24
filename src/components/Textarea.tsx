@@ -34,7 +34,7 @@ export function Textarea({
             }
           : undefined
       }
-      className={"brrr-Textarea".concat(className ? " " : "", className || "")}
+      className={"fgb-Textarea".concat(className ? " " : "", className || "")}
       rows={minRows}
     ></textarea>
   );

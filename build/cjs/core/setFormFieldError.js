@@ -16,19 +16,23 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var setFieldError_exports = {};
-__export(setFieldError_exports, {
-  setFieldError: () => setFieldError
+var setFormFieldError_exports = {};
+__export(setFormFieldError_exports, {
+  setFormFieldError: () => setFormFieldError
 });
-module.exports = __toCommonJS(setFieldError_exports);
-function setFieldError(form, name, error) {
+module.exports = __toCommonJS(setFormFieldError_exports);
+function setFormFieldError(form, name, error) {
   var _a;
   const elOrEls = form.elements.namedItem(name);
   if (!elOrEls)
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = (_a = el.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
   if (hint)
     hint.textContent = error;
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  setFormFieldError
+});

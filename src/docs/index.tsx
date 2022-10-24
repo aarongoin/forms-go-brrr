@@ -1,55 +1,43 @@
 import React from "react";
 import { render } from "react-dom";
 import { Form, Field } from "../index";
+import {
+  CodeBlock,
+  Column,
+  DocLinks,
+  Header,
+  Paragraph,
+  StickyColumnPair,
+  PageWrapper,
+  CodeDemo,
+} from "./components";
+import { API, apiLinks } from "./pages/API";
+import { BasicConcepts, basicConceptLinks } from "./pages/BasicConcepts";
+
+import { GettingStarted, gettingStartedLinks } from "./pages/GettingStarted";
+
+type ExampleFormValues = {
+  text_field: string;
+  text_area: string;
+};
 
 function ExampleApp() {
   return (
-    <Form
-      submitJson={(v) => console.log(v)}
-      validate="onChangeOrSubmit"
-      validator={(getValue, setValue) => {
-        const a = getValue("text_field");
-        const b = getValue("text_area");
-        return {
-          text_area: a.length > b.length ? "Too short!" : "",
-        };
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
-        <Field
-          label="Text field"
-          name="text_field"
-          type="text"
-          defaultValue="Text field"
-          required
-          minLength={5}
-          maxLength={10}
-          validate="onChange"
-        />
-        <Field
-          label="Textarea field"
-          name="text_area"
-          type="textarea"
-          autosize
-          required
-          validate="onChange"
-        />
-        <Field
-          label="Custom field"
-          name="custom"
-          type="text"
-          validate="onChange"
-          validators={[(v) => (v !== "foo" ? "This field is in error!" : "")]}
-        />
-        <button type="submit">Submit test form</button>
-      </div>
-    </Form>
+    <PageWrapper>
+      <DocLinks
+        links={[
+          ...gettingStartedLinks,
+          ...basicConceptLinks,
+          ...apiLinks
+        ]}
+      />
+      <Column>
+        <Header level={1} name="forms-go-brrr" />
+        <GettingStarted />
+        <BasicConcepts />
+        <API />
+      </Column>
+    </PageWrapper>
   );
 }
 

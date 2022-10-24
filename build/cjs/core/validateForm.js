@@ -21,9 +21,9 @@ __export(validateForm_exports, {
   validateForm: () => validateForm
 });
 module.exports = __toCommonJS(validateForm_exports);
-var import_getFieldValue = require("./getFieldValue");
-var import_setFieldError = require("./setFieldError");
-var import_setFieldValue = require("./setFieldValue");
+var import_getFormFieldValue = require("./getFormFieldValue");
+var import_setFormFieldError = require("./setFormFieldError");
+var import_setFormFieldValue = require("./setFormFieldValue");
 function validateForm(form, validator) {
   let is_valid = true;
   for (const input of Array.from(form.elements))
@@ -32,13 +32,19 @@ function validateForm(form, validator) {
   if (!validator)
     return is_valid;
   const formErrors = validator(
-    (name) => (0, import_getFieldValue.getFieldValue)(form, name),
-    (name, value) => (0, import_setFieldValue.setFieldValue)(form, name, value)
+    (name) => (0, import_getFormFieldValue.getFormFieldValue)(form, name),
+    (name, value) => (0, import_setFormFieldValue.setFormFieldValue)(form, name, value)
   );
   if (formErrors) {
-    is_valid = false;
-    for (const name of Object.keys(formErrors))
-      (0, import_setFieldError.setFieldError)(form, name, formErrors[name]);
+    for (const name of Object.keys(formErrors)) {
+      if (formErrors[name])
+        is_valid = false;
+      (0, import_setFormFieldError.setFormFieldError)(form, name, formErrors[name]);
+    }
   }
   return is_valid;
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  validateForm
+});

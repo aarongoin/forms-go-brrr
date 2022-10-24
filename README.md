@@ -1,7 +1,8 @@
 # forms-go-brrr
-[![npm](https://img.shields.io/npm/v/forms-go-brrr)](https://npmjs.com/package/forms-go-brrr)
-[![npm](https://img.shields.io/github/size/aarongoin/forms-go-brrr/build/esm/index.bundle.min.js.gz)](https://npm.com/forms-go-brrr)
 [![license](https://img.shields.io/github/license/aarongoin/forms-go-brrr)](https://github.com/aarongoin/forms-go-brrr/blob/main/LICENSE)
+![minified](https://img.shields.io/github/size/aarongoin/forms-go-brrr/build/esm/index.bundle.min.js?label=minified)
+![gzipped](https://img.shields.io/github/size/aarongoin/forms-go-brrr/build/esm/index.bundle.min.js.gz?label=gzipped)
+[![npm](https://img.shields.io/npm/v/forms-go-brrr)](https://npmjs.com/package/forms-go-brrr)
 [![issues](https://img.shields.io/github/issues/aarongoin/forms-go-brrr)](https://github.com/aarongoin/forms-go-brrr/issues)
 
 ![Use the DOM. Forms go brrr.](./docs/forms-go-brrr.png)
@@ -39,14 +40,14 @@ We impose no styling of our own, so all form and field components in the library
 
 You can style the form and field components using:
 
-#### A. Native CSS targeting `.brrr-*` class names on all elements
+#### A. Native CSS targeting `.fgb-*` class names on all elements
 ```css
 
-.brrr-Label-text, .brrr-Label-hint {
+.fgb-Label-text, .fgb-Label-hint {
   display: block;
 }
 
-.brrr-Input:invalid ~ .brrr-Label-hint {
+.fgb-Input:invalid ~ .fgb-Label-hint {
   color: red;
 }
 

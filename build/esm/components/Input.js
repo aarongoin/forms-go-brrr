@@ -20,10 +20,10 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import * as React from "react";
 function Input(props) {
   return /* @__PURE__ */ React.createElement("input", __spreadProps(__spreadValues({
-    tabIndex: 0,
-    "aria-describedby": `${props.name}-hint`
+    tabIndex: 0
   }, props), {
-    className: "brrr-Input".concat(
+    "aria-describedby": `${props.name}-hint`,
+    className: "fgb-Input".concat(
       props.className ? " " : "",
       props.className || ""
     )

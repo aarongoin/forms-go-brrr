@@ -1,14 +1,18 @@
 import * as React from "react";
-import { CheckboxesType } from "./Checkboxes";
-import { BaseInputProps, InputTypes } from "./Input";
-import { RadioGroupType } from "./RadioGroup";
-import { SelectType } from "./Select";
-import { TextareaType } from "./Textarea";
+import { CheckboxesProps } from "./Checkboxes";
+import { InputProps } from "./Input";
+import { RadioGroupProps } from "./RadioGroup";
+import { SelectProps } from "./Select";
+import { TextareaProps } from "./Textarea";
 import { LabelProps } from "./Label";
 import { ValidateFn } from "../core";
-export declare type FieldProps = LabelProps & BaseInputProps & (InputTypes | SelectType | TextareaType | CheckboxesType | RadioGroupType) & {
+declare type FieldsetFieldProps = CheckboxesProps | RadioGroupProps;
+declare type LabelledFieldProps = (SelectProps | TextareaProps | InputProps) & LabelProps;
+export declare type FieldProps = (FieldsetFieldProps | LabelledFieldProps) & {
     validate?: "onChange" | "onBlur";
+    validator?: ValidateFn;
     validators?: ValidateFn[];
     inputClassName?: undefined | string;
 };
 export declare function Field(props: FieldProps): React.ReactElement;
+export {};

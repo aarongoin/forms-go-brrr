@@ -27,8 +27,7 @@ var __objRest = (source, exclude) => {
   return target;
 };
 import * as React from "react";
-import { getErrorMessage } from "./errorMessages";
-import { getFieldValue } from "./getFieldValue";
+import { wrapWithFieldValidation } from "./wrapWithFieldValidation";
 function withValidation(onEvent) {
   return (Cmp, validators) => {
     const validatorList = Array.isArray(validators) ? validators : [validators];
@@ -38,7 +37,7 @@ function withValidation(onEvent) {
       } = _b, props = __objRest(_b, [
         "validators"
       ]);
-      return /* @__PURE__ */ React.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithValiation(
+      return /* @__PURE__ */ React.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithFieldValidation(
         onEvent,
         _validators ? validatorList.concat(_validators) : validatorList,
         props[onEvent]
@@ -46,40 +45,10 @@ function withValidation(onEvent) {
     };
   };
 }
-function wrapWithValiation(onEvent, validators, outerHandler) {
-  const validateInput = (input) => {
-    var _a;
-    let error = !input.validity.valid ? getErrorMessage(input) : "";
-    if (!error) {
-      const value = getFieldValue(input.form, input.name);
-      for (const validator of validators) {
-        error = validator(value);
-        if (error)
-          break;
-      }
-    }
-    input.setCustomValidity(error);
-    const hint = (_a = input.closest(".brrr-Label, .brrr-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
-    if (hint)
-      hint.textContent = error;
-    return !!error;
-  };
-  return {
-    [onEvent]: (event) => {
-      validateInput(event.target);
-      return outerHandler == null ? void 0 : outerHandler(event);
-    },
-    onInvalid: (event) => {
-      if (validateInput(event.target))
-        event.preventDefault();
-    }
-  };
-}
 const withValidationOnChange = withValidation("onChange");
 const withValidationOnBlur = withValidation("onBlur");
 export {
   withValidation,
   withValidationOnBlur,
-  withValidationOnChange,
-  wrapWithValiation
+  withValidationOnChange
 };

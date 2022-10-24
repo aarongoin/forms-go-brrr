@@ -1,12 +1,8 @@
 import {
   FieldInputElement,
-  FieldValues,
-  isInputElement,
-  isSelectElement,
-  isTextareaElement,
 } from "./types";
 
-export function setFieldError(
+export function setFormFieldError(
   form: HTMLFormElement,
   name: string,
   error: string
@@ -21,7 +17,7 @@ export function setFieldError(
 
   el.setCustomValidity(error);
   const hint = el
-    .closest(".brrr-Label, .brrr-Fieldset")
+    .closest(".fgb-Label, .fgb-Fieldset")
     ?.querySelector(`#${el.name}-hint`);
   if (hint) hint.textContent = error;
 }

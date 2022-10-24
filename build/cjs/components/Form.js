@@ -11,7 +11,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -57,11 +57,10 @@ __export(Form_exports, {
 });
 module.exports = __toCommonJS(Form_exports);
 var React = __toESM(require("react"));
-var import_getFieldValue = require("../core/getFieldValue");
 var import_getFormValues = require("../core/getFormValues");
-var import_setFieldError = require("../core/setFieldError");
-var import_setFieldValue = require("../core/setFieldValue");
+var import_setFormFieldError = require("../core/setFormFieldError");
 var import_validateForm = require("../core/validateForm");
+var import_validationEffectHandler = require("../core/validationEffectHandler");
 function Form(_a) {
   var _b = _a, {
     dialog,
@@ -71,7 +70,8 @@ function Form(_a) {
     submitJson,
     validate,
     validator,
-    className
+    className,
+    autoComplete = false
   } = _b, props = __objRest(_b, [
     "dialog",
     "method",
@@ -80,42 +80,27 @@ function Form(_a) {
     "submitJson",
     "validate",
     "validator",
-    "className"
+    "className",
+    "autoComplete"
   ]);
   if (!submitFormData && !submitJson)
     throw new Error(
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
-  const smartProps = {};
-  if (validate == null ? void 0 : validate.startsWith("onChange"))
-    smartProps["onChange"] = (event) => {
-      const form = event.target.form;
-      const formErrors = validator(
-        (name) => (0, import_getFieldValue.getFieldValue)(form, name),
-        (name, value) => (0, import_setFieldValue.setFieldValue)(form, name, value)
-      );
-      console.log("Form onchange!", { formErrors });
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          (0, import_setFieldError.setFieldError)(form, name, formErrors[name]);
-    };
-  if (validate == null ? void 0 : validate.startsWith("onBlur"))
-    smartProps["onBlur"] = (event) => {
-      const form = event.target.form;
-      const formErrors = validator(
-        (name) => (0, import_getFieldValue.getFieldValue)(form, name),
-        (name, value) => (0, import_setFieldValue.setFieldValue)(form, name, value)
-      );
-      if (formErrors)
-        for (const name of Object.keys(formErrors))
-          (0, import_setFieldError.setFieldError)(form, name, formErrors[name]);
-    };
-  return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues(__spreadProps(__spreadValues({}, props), {
-    className: "brrr-Form".concat(className ? " " : "", className || ""),
+  return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues({}, props), {
+    className: "fgb-Form".concat(className ? " " : "", className || ""),
     noValidate: typeof window !== void 0,
+    autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,
-    action
-  }), smartProps), {
+    action,
+    onChange: validator && (validate == null ? void 0 : validate.startsWith("onChange")) ? (0, import_validationEffectHandler.validationEffectHandler)(
+      validator,
+      props.onChange
+    ) : void 0,
+    onBlur: validator && (validate == null ? void 0 : validate.startsWith("onBlur")) ? (0, import_validationEffectHandler.validationEffectHandler)(
+      validator,
+      props.onBlur
+    ) : void 0,
     onSubmit: (event) => {
       const form = event.target;
       event.preventDefault();
@@ -128,9 +113,13 @@ function Form(_a) {
           if (!formErrors)
             return;
           for (const name of Object.keys(formErrors))
-            (0, import_setFieldError.setFieldError)(form, name, formErrors[name]);
+            (0, import_setFormFieldError.setFormFieldError)(form, name, formErrors[name]);
         });
       }
     }
   }));
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Form
+});

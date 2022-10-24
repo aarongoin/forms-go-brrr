@@ -48,7 +48,7 @@ function Select(_a) {
     "className",
     "optionClassName"
   ]);
-  const finalOptionClassName = "brrr-Select-option".concat(
+  const finalOptionClassName = "fgb-Field-option".concat(
     optionClassName ? " " : "",
     optionClassName || ""
   );
@@ -57,7 +57,7 @@ function Select(_a) {
     tabIndex: 0,
     "aria-describedby": `${name}-hint`
   }, props), {
-    className: "brrr-Select".concat(className ? " " : "", className || "")
+    className: "fgb-Select".concat(className ? " " : "", className || "")
   }), options.map((opt) => /* @__PURE__ */ React.createElement("option", {
     key: typeof opt === "string" ? opt : opt.id,
     value: typeof opt === "string" ? opt : opt.id,

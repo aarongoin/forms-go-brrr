@@ -11,7 +11,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -47,12 +47,16 @@ module.exports = __toCommonJS(Input_exports);
 var React = __toESM(require("react"));
 function Input(props) {
   return /* @__PURE__ */ React.createElement("input", __spreadProps(__spreadValues({
-    tabIndex: 0,
-    "aria-describedby": `${props.name}-hint`
+    tabIndex: 0
   }, props), {
-    className: "brrr-Input".concat(
+    "aria-describedby": `${props.name}-hint`,
+    className: "fgb-Input".concat(
       props.className ? " " : "",
       props.className || ""
     )
   }));
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Input
+});

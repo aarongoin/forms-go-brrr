@@ -1,11 +1,11 @@
 import * as React from "react";
-import { getFieldValue } from "../core/getFieldValue";
+import { getFormFieldValue } from "../core/getFormFieldValue";
 import {
   getFormValuesAsFormData,
   getFormValuesAsJson,
 } from "../core/getFormValues";
-import { setFieldError } from "../core/setFieldError";
-import { setFieldValue } from "../core/setFieldValue";
+import { setFormFieldError } from "../core/setFormFieldError";
+import { setFormFieldValue } from "../core/setFormFieldValue";
 import {
   FieldInputElement,
   FormErrors,
@@ -54,7 +54,7 @@ export type FormProps<FV extends FormValues = FormValues> =
       )
   >;
 
-export function Form({
+export function Form<FV extends FormValues = FormValues>({
   dialog,
   method = "post",
   action,
@@ -65,7 +65,7 @@ export function Form({
   className,
   autoComplete = false,
   ...props
-}: FormProps): React.ReactElement {
+}: FormProps<FV>): React.ReactElement {
   if (!submitFormData && !submitJson)
     throw new Error(
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
@@ -74,7 +74,7 @@ export function Form({
   return (
     <form
       {...props}
-      className={"brrr-Form".concat(className ? " " : "", className || "")}
+      className={"fgb-Form".concat(className ? " " : "", className || "")}
       // skip built-in form validation if we're running JS in the client environment
       // otherwise if prerendering on the server, we fallback to built-in form validation so things work okay in js-less env
       noValidate={typeof window !== undefined}
@@ -116,7 +116,7 @@ export function Form({
           ).then((formErrors) => {
             if (!formErrors) return;
             for (const name of Object.keys(formErrors))
-              setFieldError(form, name, formErrors[name]);
+              setFormFieldError(form, name, formErrors[name]);
           });
         }
       }}

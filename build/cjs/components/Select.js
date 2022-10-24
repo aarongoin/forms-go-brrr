@@ -11,7 +11,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -75,7 +75,7 @@ function Select(_a) {
     "className",
     "optionClassName"
   ]);
-  const finalOptionClassName = "brrr-Select-option".concat(
+  const finalOptionClassName = "fgb-Field-option".concat(
     optionClassName ? " " : "",
     optionClassName || ""
   );
@@ -84,7 +84,7 @@ function Select(_a) {
     tabIndex: 0,
     "aria-describedby": `${name}-hint`
   }, props), {
-    className: "brrr-Select".concat(className ? " " : "", className || "")
+    className: "fgb-Select".concat(className ? " " : "", className || "")
   }), options.map((opt) => /* @__PURE__ */ React.createElement("option", {
     key: typeof opt === "string" ? opt : opt.id,
     value: typeof opt === "string" ? opt : opt.id,
@@ -94,3 +94,7 @@ function Select(_a) {
     ) : defaultSelected === (typeof opt === "string" ? opt : opt.id))
   }, renderOption ? renderOption(opt) : typeof opt === "string" ? opt : opt.name)));
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Select
+});

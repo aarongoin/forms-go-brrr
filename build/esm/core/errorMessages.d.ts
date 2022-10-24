@@ -11,6 +11,6 @@ declare let errorMessages: {
     email: string;
     url: string;
 };
-export declare function setErrorMessages<K extends keyof typeof errorMessages>(errs: Pick<typeof errorMessages, K>): void;
+export declare function setDefaultErrorMessages<K extends keyof typeof errorMessages>(errs: Pick<typeof errorMessages, K>): void;
 export declare function getErrorMessage(input: FieldInputElement): string;
 export {};

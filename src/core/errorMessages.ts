@@ -1,19 +1,19 @@
 import { FieldInputElement, isSelectElement, isTextareaElement } from "./types";
 
 let errorMessages = {
-  badInput: "Value is invalid.",
+  badInput: "Malformed input.",
   required: "This field is required.",
   minLength: "Text is too short.",
   maxLength: "Text is too long.",
   pattern: "Value is invalid.",
   min: "Value is too low.",
   max: "Value is high.",
-  step: "Value is invalid.",
-  email: "Value is invalid.",
-  url: "Value is invalid."
+  step: "Value is off-step.",
+  email: "Invalid email address.",
+  url: "Invalid url."
 };
 
-export function setErrorMessages<K extends keyof typeof errorMessages>(
+export function setDefaultErrorMessages<K extends keyof typeof errorMessages>(
   errs: Pick<typeof errorMessages, K>
 ): void {
   errorMessages = { ...errorMessages, ...errs };

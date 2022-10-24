@@ -36,10 +36,14 @@ import { RadioGroup } from "./RadioGroup";
 import { Select } from "./Select";
 import { Textarea } from "./Textarea";
 import { Label, InlineLabel } from "./Label";
-import { wrapWithValiation } from "../core";
+import { wrapWithFieldValidation } from "../core";
 const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validate ? wrapWithValiation(props.validate, props.validators || [], props[props.validate]) : null;
+  const validationProps = props.validate ? wrapWithFieldValidation(
+    props.validate,
+    props.validators || (props.validator ? [props.validator] : []),
+    props[props.validate]
+  ) : null;
   if (props.type === "checkboxes") {
     return /* @__PURE__ */ React.createElement(Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
   }

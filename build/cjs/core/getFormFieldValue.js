@@ -16,13 +16,13 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var getFieldValue_exports = {};
-__export(getFieldValue_exports, {
-  getFieldValue: () => getFieldValue
+var getFormFieldValue_exports = {};
+__export(getFormFieldValue_exports, {
+  getFormFieldValue: () => getFormFieldValue
 });
-module.exports = __toCommonJS(getFieldValue_exports);
+module.exports = __toCommonJS(getFormFieldValue_exports);
 var import_types = require("./types");
-function getFieldValue(form, name) {
+function getFormFieldValue(form, name) {
   var _a;
   const elOrEls = form.elements.namedItem(name);
   if (!elOrEls)
@@ -61,3 +61,7 @@ function getFieldValue(form, name) {
     `Unexpected element found in field name ${name}. Found ${el.tagName}`
   );
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  getFormFieldValue
+});

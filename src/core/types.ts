@@ -1,4 +1,3 @@
-
 export type ValidationEvents = "onChange" | "onBlur";
 
 export type ValidateFn<V extends FieldValues = FieldValues> = (
@@ -56,9 +55,8 @@ export type SetValue<FV extends FormValues = FormValues> = <
   value: FV[K]
 ) => void;
 
-export type FormErrors<FV extends FormValues = FormValues> = Record<
-  keyof FV,
-  string
+export type FormErrors<FV extends FormValues = FormValues> = Partial<
+  Record<keyof FV, string>
 >;
 
 export type FormHandler<FV extends FormValues = FormValues> = (

@@ -18,11 +18,15 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var types_exports = {};
 __export(types_exports, {
+  isFormElement: () => isFormElement,
   isInputElement: () => isInputElement,
   isSelectElement: () => isSelectElement,
   isTextareaElement: () => isTextareaElement
 });
 module.exports = __toCommonJS(types_exports);
+function isFormElement(el) {
+  return el.tagName === "FORM";
+}
 function isInputElement(el) {
   return el.tagName === "INPUT";
 }
@@ -32,3 +36,10 @@ function isSelectElement(el) {
 function isTextareaElement(el) {
   return el.tagName === "TEXTAREA";
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  isFormElement,
+  isInputElement,
+  isSelectElement,
+  isTextareaElement
+});

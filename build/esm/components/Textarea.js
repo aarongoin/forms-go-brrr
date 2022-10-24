@@ -50,7 +50,7 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "brrr-Textarea".concat(className ? " " : "", className || ""),
+    className: "fgb-Textarea".concat(className ? " " : "", className || ""),
     rows: minRows
   }));
 }

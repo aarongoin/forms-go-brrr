@@ -6,7 +6,7 @@ import {
   isTextareaElement,
 } from "./types";
 
-export function setFieldValue<V extends FieldValues>(
+export function setFormFieldValue<V extends FieldValues>(
   form: HTMLFormElement,
   name: string,
   value: V

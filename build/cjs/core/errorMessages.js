@@ -7,7 +7,7 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
+  for (var prop in b ||= {})
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols)
@@ -33,23 +33,23 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var errorMessages_exports = {};
 __export(errorMessages_exports, {
   getErrorMessage: () => getErrorMessage,
-  setErrorMessages: () => setErrorMessages
+  setDefaultErrorMessages: () => setDefaultErrorMessages
 });
 module.exports = __toCommonJS(errorMessages_exports);
 var import_types = require("./types");
 let errorMessages = {
-  badInput: "Value is invalid.",
+  badInput: "Malformed input.",
   required: "This field is required.",
   minLength: "Text is too short.",
   maxLength: "Text is too long.",
   pattern: "Value is invalid.",
   min: "Value is too low.",
   max: "Value is high.",
-  step: "Value is invalid.",
-  email: "Value is invalid.",
-  url: "Value is invalid."
+  step: "Value is off-step.",
+  email: "Invalid email address.",
+  url: "Invalid url."
 };
-function setErrorMessages(errs) {
+function setDefaultErrorMessages(errs) {
   errorMessages = __spreadValues(__spreadValues({}, errorMessages), errs);
 }
 function getErrorMessage(input) {
@@ -81,3 +81,8 @@ function getErrorMessage(input) {
   }
   return "";
 }
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  getErrorMessage,
+  setDefaultErrorMessages
+});

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getErrorMessage } from "./errorMessages";
-import { getFieldValue } from "./getFieldValue";
+import { getFormFieldValue } from "./getFormFieldValue";
 import {
   FieldInputElement,
   FieldValues,

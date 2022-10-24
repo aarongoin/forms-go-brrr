@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getErrorMessage } from "./errorMessages";
-import { getFieldValue } from "./getFieldValue";
+import { getFormFieldValue } from "./getFormFieldValue";
 import {
   FieldInputElement,
   FieldValues,
@@ -19,7 +19,7 @@ export function wrapWithFieldValidation<
   const validateInput = (input: I): boolean => {
     let error = !input.validity.valid ? getErrorMessage(input) : "";
     if (!error) {
-      const value = getFieldValue<V>(input.form!, input.name);
+      const value = getFormFieldValue<V>(input.form!, input.name);
       for (const validator of validators) {
         error = validator(value);
         if (error) break;
@@ -28,7 +28,7 @@ export function wrapWithFieldValidation<
 
     input.setCustomValidity(error);
     const hint = input
-      .closest(".brrr-Label, .brrr-Fieldset")
+      .closest(".fgb-Label, .fgb-Fieldset")
       ?.querySelector(`#${input.name}-hint`);
     if (hint) hint.textContent = error;
     return !!error;
