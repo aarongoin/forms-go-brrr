@@ -31,7 +31,7 @@ function ExampleApp() {
           ...apiLinks
         ]}
       />
-      <Column>
+      <Column space={4}>
         <Header level={1} name="forms-go-brrr" />
         <GettingStarted />
         <BasicConcepts />

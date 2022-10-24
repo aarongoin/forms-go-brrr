@@ -22,6 +22,7 @@ import {
   formWrapperStyle,
   columnItemStyle,
   inlineCodeStyle,
+  inlineLinkStyle,
 } from "./components.css";
 
 export function Header({
@@ -44,6 +45,17 @@ export function Header({
       {children || name}
     </Tag>
   );
+}
+
+export function DocLink({name}: {name: string}) {
+  return (
+    <a
+      href={`#${encodeURIComponent(name.replaceAll(/\s+/g, "-"))}`}
+      className={inlineLinkStyle}
+    >
+      {name}
+    </a>
+  )
 }
 
 function NestedLinks({ links, level }) {
@@ -167,8 +179,10 @@ export function PageWrapper({ children }: React.PropsWithChildren<{}>) {
 
 export function Column({
   className,
+  space,
   children,
 }: React.PropsWithChildren<{
+  space: keyof typeof columnItemStyle;
   className?: string | undefined;
 }>) {
   return (
@@ -179,7 +193,7 @@ export function Column({
               ...c,
               props: {
                 ...c.props,
-                className: `${columnItemStyle} ${c.props.className}`,
+                className: `${columnItemStyle[space]} ${c.props.className || ""}`,
               },
             }
           : c

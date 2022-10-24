@@ -36,7 +36,7 @@ export const apiLinks = [
 
 export function API({ className }: { className?: string | undefined }) {
   return (
-    <Column className={className}>
+    <Column space={2} className={className}>
       <Header level={2} name="API" />
       <Header level={3} name="Components" />
       <Header level={4} name="Form" />

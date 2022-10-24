@@ -19,7 +19,7 @@ export const basicConceptLinks = [
     "Submitting form data",
     "Native submit fallback",
     "Error messages",
-    "Styling fields"
+    "Styling fields",
   ],
 ];
 
@@ -29,7 +29,7 @@ export function BasicConcepts({
   className?: string | undefined;
 }) {
   return (
-    <Column className={className}>
+    <Column space={2} className={className}>
       <Header level={2} name="Basic concepts" />
       <Header level={3} name="Native DOM forms" />
       <Header level={3} name="Native DOM validation" />
@@ -49,7 +49,7 @@ export function BasicConcepts({
       <Header level={4} name="Native CSS" />
       <StickyColumnPair
         left={
-          <Column>
+          <Column space={2}>
             <Paragraph>
               Native css styles that target forms-go-brrr elements using their{" "}
               <Code>.fgb-*</Code> class names.
@@ -69,7 +69,7 @@ export function BasicConcepts({
       <Header level={4} name="CSS classes" />
       <StickyColumnPair
         left={
-          <Column>
+          <Column space={2}>
             <Paragraph>
               All components accept the <Code>className</Code> prop. In cases
               where the component is composed of nested elements, additional
@@ -90,7 +90,7 @@ export function BasicConcepts({
       <Header level={4} name="Inline styles" />
       <StickyColumnPair
         left={
-          <Column>
+          <Column space={2}>
             <Paragraph>
               All components accept the <Code>style</Code> prop. In cases where
               the component is composed of nested elements, additional props are
@@ -108,6 +108,19 @@ export function BasicConcepts({
 />`}</CodeBlock>
         }
       />
+      <Header level={4} name="Styling limitations" />
+      <Paragraph>
+        While there's no styles declared in the library, there is an implicit
+        style, and an explicit heirarchy of elements. As you use and style
+        forms-go-brrr you might find there's certain kinds of styling that's
+        made more difficult by the imposed structure of elements in the Field
+        component.
+      </Paragraph>
+      <Paragraph>
+        If you find the imposed structure of the elements impedes your work you
+        can leverage all the individual components, such as the Input, Label,
+        etc. and compose them yourself.
+      </Paragraph>
     </Column>
   );
 }

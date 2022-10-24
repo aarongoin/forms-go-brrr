@@ -6,6 +6,7 @@ import {
   Header,
   Paragraph,
   StickyColumnPair,
+  DocLink,
 } from "../components";
 
 export const gettingStartedLinks = [
@@ -19,7 +20,7 @@ export function GettingStarted({
   className?: string | undefined;
 }) {
   return (
-    <Column className={className}>
+    <Column space={2} className={className}>
       <Header level={2} name="Getting started" />
       <Paragraph>
         Follow these instructions to get forms-go-brrr setup in your project.
@@ -27,7 +28,7 @@ export function GettingStarted({
       <Header level={3} name="Install the library" />
       <StickyColumnPair
         left={
-          <Column>
+          <Column space={2}>
             <Paragraph>
               Forms-go-brrr is hosted on npm, so you can use npm or any
               npm-compatible package manager to install it.
@@ -39,17 +40,15 @@ export function GettingStarted({
       <Header level={3} name="Pick your styles" />
       <Paragraph>
         Forms-go-brrr imparts no styling of its own, so all form and field
-        components in the library use the default browser styling. So before you
-        dive into serious use within your app you may want to work out your
-        field styles.
+        components in the library use the default browser styling. If you're
+        just trying to get moving fast, you can view some premade styles.
       </Paragraph>
       <Paragraph>
-        If you're just trying to get moving fast, you can view some premade
-        styles. If you want to style things custom you have all the same tools
-        you'd get from styling in React: the <Code>className</Code> and{" "}
-        <Code>style</Code> props, as well as some empty forms-go-brrr class names
-        for use in css selectors. You can view the specifics of this in the
-        Styling fields documentation.
+        If you want to style things custom you have all the same tools you'd get
+        from styling in React: the <Code>className</Code> and <Code>style</Code>{" "}
+        props, as well as some empty forms-go-brrr class names for use in css
+        selectors. You can view the specifics of this in the{" "}
+        <DocLink name="Styling fields" />{" "}documentation.
       </Paragraph>
       <Header level={3} name="Build a form" />
       <Paragraph>

@@ -7,7 +7,7 @@ export const headerStyle = style({
   fontFamily,
   fontWeight: 700,
   color: "#e94343",
-  margin: "0 0 8px 16px",
+  margin: "0 0 0 16px",
 });
 
 export const headerLevelStyle = styleVariants({
@@ -21,7 +21,7 @@ export const headerLevelStyle = styleVariants({
 
 export const paragraphStyle = style({
   fontFamily,
-  padding: 16,
+  padding: "0 16px 0 16px",
   margin: 0,
   fontSize: "16px",
   lineHeight: "26px",
@@ -65,10 +65,34 @@ export const columnStyle = style({
   flexDirection: "column",
 });
 
-export const columnItemStyle = style({
-  selectors: {
-    [`${columnStyle} > &:not(:first-child)`]: {
-      marginTop: 16,
+export const columnItemStyle = styleVariants({
+  0: {},
+  1: {
+    selectors: {
+      [`${columnStyle} > &:not(:first-child)`]: {
+        marginTop: 8,
+      },
+    },
+  },
+  2: {
+    selectors: {
+      [`${columnStyle} > &:not(:first-child)`]: {
+        marginTop: 16,
+      },
+    },
+  },
+  3: {
+    selectors: {
+      [`${columnStyle} > &:not(:first-child)`]: {
+        marginTop: 24,
+      },
+    },
+  },
+  4: {
+    selectors: {
+      [`${columnStyle} > &:not(:first-child)`]: {
+        marginTop: 32,
+      },
     },
   },
 });
@@ -147,8 +171,8 @@ export const codeBlockStyle = style({
 });
 
 export const inlineCodeStyle = style({
-  margin: "0 auto 16px auto",
-  borderRadius: 8,
+  margin: "0 2px 16px 2px",
+  borderRadius: 6,
   fontSize: "14px",
   overflowX: "scroll",
   border: "solid 1px #ffffff33",
@@ -193,6 +217,20 @@ export const topNavLinkStyle = style({
   ":hover": { textDecoration: "underline", color: "#fff" },
   ":focus": { textDecoration: "underline", color: "#fff" },
   ":active": { textDecoration: "underline", color: "#fff" },
+});
+
+export const inlineLinkStyle = style({
+  fontFamily,
+  color: "#d13838",
+  textDecoration: "none",
+  outline: "none",
+  ":hover": { textDecoration: "underline" },
+  ":focus": { textDecoration: "underline" },
+  ":active": { textDecoration: "underline" },
+  "@media": {
+    "(prefers-color-scheme: dark)": { color: "#ec4545" },
+    "(prefers-color-scheme: light)": { color: "#d13838" },
+  },
 });
 
 export const navStyle = style({
