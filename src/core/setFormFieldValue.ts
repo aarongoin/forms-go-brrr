@@ -1,12 +1,12 @@
 import {
   FieldInputElement,
-  FieldValues,
+  FieldValue,
   isInputElement,
   isSelectElement,
   isTextareaElement,
 } from "./types";
 
-export function setFormFieldValue<V extends FieldValues>(
+export function setFormFieldValue<V extends FieldValue>(
   form: HTMLFormElement,
   name: string,
   value: V

@@ -6,8 +6,10 @@ const fontFamily =
 export const headerStyle = style({
   fontFamily,
   fontWeight: 700,
-  color: "#e94343",
+  color: "#ce0745",
   margin: "0 0 0 16px",
+  paddingTop: "8px",
+  borderTop: "solid 1px #999",
 });
 
 export const headerLevelStyle = styleVariants({
@@ -124,7 +126,7 @@ export const codeLineStyle = styleVariants({
   highlighted: {
     display: "block",
     color: "#ff9b6b",
-    backgroundColor: "#684b54",
+    backgroundColor: "#942447",
     padding: "4px 8px",
   },
   comment: { display: "block", color: "#ffedd3", padding: "4px 8px" },
@@ -152,9 +154,10 @@ export const codeDemoWrapperStyle = style({
 
 export const codeBlockStyle = style({
   padding: 8,
-  margin: "0 auto 16px auto",
+  margin: "0 0 16px 0",
   borderRadius: 8,
   fontSize: "14px",
+  lineHeight: "16px",
   overflowX: "scroll",
   boxSizing: "border-box",
   border: "solid 1px #ffffff33",
@@ -171,7 +174,7 @@ export const codeBlockStyle = style({
 });
 
 export const inlineCodeStyle = style({
-  margin: "0 2px 16px 2px",
+  margin: "0 0 16px 0",
   borderRadius: 6,
   fontSize: "14px",
   overflowX: "scroll",
@@ -207,7 +210,7 @@ export const navLinkListStyle = style({
 
 export const topNavLinkStyle = style({
   fontFamily,
-  color: "#ddd",
+  color: "#eee",
   fontWeight: 700,
   fontSize: "32px",
   lineHeight: "36px",
@@ -221,7 +224,6 @@ export const topNavLinkStyle = style({
 
 export const inlineLinkStyle = style({
   fontFamily,
-  color: "#d13838",
   textDecoration: "none",
   outline: "none",
   ":hover": { textDecoration: "underline" },
@@ -230,6 +232,19 @@ export const inlineLinkStyle = style({
   "@media": {
     "(prefers-color-scheme: dark)": { color: "#ec4545" },
     "(prefers-color-scheme: light)": { color: "#d13838" },
+  },
+});
+
+export const mdnLinkStyle = style({
+  fontFamily,
+  textDecoration: "none",
+  outline: "none",
+  ":hover": { textDecoration: "underline" },
+  ":focus": { textDecoration: "underline" },
+  ":active": { textDecoration: "underline" },
+  "@media": {
+    "(prefers-color-scheme: dark)": { color: "#8cb4ff" },
+    "(prefers-color-scheme: light)": { color: "#0069c2" },
   },
 });
 
@@ -259,10 +274,10 @@ export const navStyle = style({
       transform: "translateX(0)",
     },
     "(prefers-color-scheme: dark)": {
-      backgroundColor: "#d13838",
+      backgroundColor: "#ce0745",
     },
     "(prefers-color-scheme: light)": {
-      backgroundColor: "#d13838",
+      backgroundColor: "#942447",
     },
   },
 });

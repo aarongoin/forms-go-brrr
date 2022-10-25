@@ -1,2 +1,2 @@
-import { FieldValues } from "./types";
-export declare function getFormFieldValue<V extends FieldValues>(form: HTMLFormElement, name: string): V;
+import { FieldValue } from "./types";
+export declare function getFormFieldValue<V extends FieldValue>(form: HTMLFormElement, name: string): V;

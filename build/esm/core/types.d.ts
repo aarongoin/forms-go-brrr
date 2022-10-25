@@ -1,14 +1,14 @@
 /// <reference types="react" />
 export declare type ValidationEvents = "onChange" | "onBlur";
-export declare type ValidateFn<V extends FieldValues = FieldValues> = (value: V) => string;
+export declare type ValidateFn<V extends FieldValue = FieldValue> = (value: V) => string;
 export declare type FieldInputElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 export declare type FieldElement = FieldInputElement | HTMLButtonElement;
 export declare function isFormElement(el: HTMLElement): el is HTMLFormElement;
 export declare function isInputElement(el: HTMLElement): el is HTMLInputElement;
 export declare function isSelectElement(el: HTMLElement): el is HTMLSelectElement;
 export declare function isTextareaElement(el: HTMLElement): el is HTMLTextAreaElement;
-export declare type FieldValues = string | boolean | (string | null)[] | FileList | null | undefined;
-export declare type FormValues = Record<string, FieldValues>;
+export declare type FieldValue = string | boolean | (string | null)[] | FileList | null | undefined;
+export declare type FormValues = Record<string, FieldValue>;
 export declare type Option = {
     id: number | string;
     name: string;

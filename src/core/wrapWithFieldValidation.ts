@@ -3,14 +3,14 @@ import { getErrorMessage } from "./errorMessages";
 import { getFormFieldValue } from "./getFormFieldValue";
 import {
   FieldInputElement,
-  FieldValues,
+  FieldValue,
   ValidationEvents,
   ValidateFn,
 } from "./types";
 
 export function wrapWithFieldValidation<
   I extends FieldInputElement,
-  V extends FieldValues = FieldValues
+  V extends FieldValue = FieldValue
 >(
   onEvent: ValidationEvents,
   validators: ValidateFn<V>[],

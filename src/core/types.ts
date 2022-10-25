@@ -1,6 +1,6 @@
 export type ValidationEvents = "onChange" | "onBlur";
 
-export type ValidateFn<V extends FieldValues = FieldValues> = (
+export type ValidateFn<V extends FieldValue = FieldValue> = (
   value: V
 ) => string;
 
@@ -27,7 +27,7 @@ export function isTextareaElement(el: HTMLElement): el is HTMLTextAreaElement {
   return el.tagName === "TEXTAREA";
 }
 
-export type FieldValues =
+export type FieldValue =
   | string
   | boolean
   | (string | null)[]
@@ -35,7 +35,7 @@ export type FieldValues =
   | null
   | undefined;
 
-export type FormValues = Record<string, FieldValues>;
+export type FormValues = Record<string, FieldValue>;
 
 export type Option = { id: number | string; name: string };
 

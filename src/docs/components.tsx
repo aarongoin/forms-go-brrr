@@ -23,6 +23,7 @@ import {
   columnItemStyle,
   inlineCodeStyle,
   inlineLinkStyle,
+  mdnLinkStyle,
 } from "./components.css";
 
 export function Header({
@@ -47,7 +48,15 @@ export function Header({
   );
 }
 
-export function DocLink({name}: {name: string}) {
+export function MdnLink({ children, href }: React.PropsWithChildren<{ href: string }>) {
+  return (
+    <a href={href} className={mdnLinkStyle} target="_blank">
+      {children}
+    </a>
+  );
+}
+
+export function DocLink({ name }: { name: string }) {
   return (
     <a
       href={`#${encodeURIComponent(name.replaceAll(/\s+/g, "-"))}`}
@@ -55,7 +64,7 @@ export function DocLink({name}: {name: string}) {
     >
       {name}
     </a>
-  )
+  );
 }
 
 function NestedLinks({ links, level }) {
@@ -135,10 +144,8 @@ export function CodeBlock({
   );
 }
 
-export function Code({children}: React.PropsWithChildren<{}>) {
-  return (
-    <code className={inlineCodeStyle}>{children}</code>
-  )
+export function Code({ children }: React.PropsWithChildren<{}>) {
+  return <code className={inlineCodeStyle}>{children}</code>;
 }
 
 export function LogLine({
@@ -193,7 +200,9 @@ export function Column({
               ...c,
               props: {
                 ...c.props,
-                className: `${columnItemStyle[space]} ${c.props.className || ""}`,
+                className: `${columnItemStyle[space]} ${
+                  c.props.className || ""
+                }`,
               },
             }
           : c

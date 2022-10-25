@@ -3,7 +3,7 @@ import { getErrorMessage } from "./errorMessages";
 import { getFormFieldValue } from "./getFormFieldValue";
 import {
   FieldInputElement,
-  FieldValues,
+  FieldValue,
   ValidationEvents,
   ValidateFn,
 } from "./types";
@@ -13,7 +13,7 @@ export function withValidation<E extends ValidationEvents>(onEvent: E) {
   // return HOC for binding an input component to a validation function
   return <
     I extends FieldInputElement,
-    V extends FieldValues = FieldValues,
+    V extends FieldValue = FieldValue,
     P extends Record<string, unknown> = Record<string, unknown>
   >(
     Cmp: React.ComponentType<P & { [K in E]: React.HTMLAttributes<I>[K] }>,

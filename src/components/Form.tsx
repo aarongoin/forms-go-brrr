@@ -1,13 +1,10 @@
 import * as React from "react";
-import { getFormFieldValue } from "../core/getFormFieldValue";
 import {
   getFormValuesAsFormData,
   getFormValuesAsJson,
 } from "../core/getFormValues";
 import { setFormFieldError } from "../core/setFormFieldError";
-import { setFormFieldValue } from "../core/setFormFieldValue";
 import {
-  FieldInputElement,
   FormErrors,
   FormHandler,
   FormValues,

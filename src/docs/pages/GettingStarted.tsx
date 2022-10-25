@@ -48,7 +48,7 @@ export function GettingStarted({
         from styling in React: the <Code>className</Code> and <Code>style</Code>{" "}
         props, as well as some empty forms-go-brrr class names for use in css
         selectors. You can view the specifics of this in the{" "}
-        <DocLink name="Styling fields" />{" "}documentation.
+        <DocLink name="Styling fields" /> documentation.
       </Paragraph>
       <Header level={3} name="Build a form" />
       <Paragraph>
@@ -57,6 +57,14 @@ export function GettingStarted({
         and the Textarea) are available using the singular Field component
         interface which uses the <Code>type</Code> prop to determine the
         resulting element.
+      </Paragraph>
+      <Paragraph>
+        You'll primarily want to reach for the <Code>{"<Form />"}</Code> and{" "}
+        <Code>{"<Field />"}</Code> components or your custom wrappers around
+        these two components. These two components are considered as the core
+        interface by which this library is used. A great deal of the interal
+        components and utils have been written to be consumed in the library's
+        public api, but these are not intended as the primary avenues of use.
       </Paragraph>
     </Column>
   );
