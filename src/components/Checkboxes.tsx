@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Fieldset, FieldsetProps } from "./Fieldset";
-import { Option } from "../core/types";
+import { Option, Optional } from "../core/types";
 import { Input, BaseInputProps } from "./Input";
 import { InlineLabel } from "./Label";
 
@@ -11,7 +11,9 @@ export type CheckboxesType = {
   defaultChecked?: string[];
 };
 
-export type CheckboxesProps = BaseInputProps & CheckboxesType & FieldsetProps;
+export type CheckboxesProps = BaseInputProps &
+  Optional<CheckboxesType, "type"> &
+  FieldsetProps;
 
 export function Checkboxes({
   type,
@@ -24,19 +26,19 @@ export function Checkboxes({
   return (
     <Fieldset label={label} name={name} {...props}>
       {options.map((opt) => (
-        <InlineLabel label={typeof opt === "string" ? opt : opt.name}>
+        <InlineLabel label={typeof opt === "string" ? opt : opt.label}>
           <Input
-            key={typeof opt === "string" ? opt : opt.id}
+            key={typeof opt === "string" ? opt : opt.value}
             type="checkbox"
             name={name}
-            value={typeof opt === "string" ? opt : String(opt.id)}
+            value={typeof opt === "string" ? opt : String(opt.value)}
             data-group={name}
             defaultChecked={
               defaultChecked
                 ? defaultChecked.some(
                     typeof opt === "string"
                       ? (e) => e === opt
-                      : (e) => e === opt.id
+                      : (e) => e === opt.value
                   )
                 : false
             }

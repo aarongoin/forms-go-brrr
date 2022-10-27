@@ -16,13 +16,13 @@ export const apiLinks = [
     [
       "Form",
       "Field",
-      "Input",
-      "Label",
-      "Textarea",
-      "Select",
-      "Fieldset",
-      "RadioGroup",
-      "Checkboxes",
+      // "Input",
+      // "Label",
+      // "Textarea",
+      // "Select",
+      // "Fieldset",
+      // "RadioGroup",
+      // "Checkboxes",
     ],
     "Core",
     [
@@ -50,11 +50,50 @@ export function API({ className }: { className?: string | undefined }) {
       <Paragraph>Prop details</Paragraph>
 
       <Header level={4} name="Field" />
-      <Paragraph>Description</Paragraph>
-      <Paragraph>Typed Interface</Paragraph>
-      <Paragraph>Prop details</Paragraph>
+      <Paragraph>
+        A group of checkbox inputs, collected in a labeled Fieldset component.
+        This is the component you get from a{" "}
+        <Code>{'<Field type="checkboxes" />'}</Code>, but it comes without field
+        validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="Field Options">
+          Options
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>Option[] | string[]</Code>
+          <br />A list of string options which will be used as both the field
+          value and the field label, or an Option object which contains a{" "}
+          <Code>value</Code> key/value pair and a <Code>name</Code> key/value
+          pair used exactly as they are named.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field defaultChecked">
+          defaultChecked
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>null | undefined | string[]</Code>
+          <br />
+          An optional prop specifying which, if any, of the option values will
+          be initially selected.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Field
+  name="topping"
+  label="Pick your toppings:"
+  options={["Lettuce","Onion","Tomato","Bacon","Pickle"]}
+  defaultChecked={["Lettuce", "Tomato"]}
+/>`}</CodeBlock>
+      </Paragraph>
 
-      <Header level={4} name="Input" />
+      {/* <Header level={4} name="Input" />
       <Paragraph>Description</Paragraph>
       <Paragraph>Typed Interface</Paragraph>
       <Paragraph>Prop details</Paragraph>
@@ -85,9 +124,7 @@ export function API({ className }: { className?: string | undefined }) {
       <Paragraph>Prop details</Paragraph>
 
       <Header level={4} name="Checkboxes" />
-      <Paragraph>Description</Paragraph>
-      <Paragraph>Typed Interface</Paragraph>
-      <Paragraph>Prop details</Paragraph>
+      */}
 
       <Header level={3} name="Core" />
       <Paragraph>
@@ -104,13 +141,13 @@ export function API({ className }: { className?: string | undefined }) {
       <Paragraph>
         <CodeBlock>{`let defaultErrorMessages = {
   badInput: "Malformed input.",
-  required: "This field is required.",
-  minLength: "Text is too short.",
-  maxLength: "Text is too long.",
-  pattern: "Value is invalid.",
-  min: "Value is too low.",
-  max: "Value is high.",
-  step: "Value is off-step.",
+  required: "Required.",
+  minLength: "Too short.",
+  maxLength: "Too long.",
+  pattern: "Invalid value.",
+  min: "Too low.",
+  max: "Too high.",
+  step: "Off-step.",
   email: "Invalid email address.",
   url: "Invalid url."
 };`}</CodeBlock>

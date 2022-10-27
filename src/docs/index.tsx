@@ -13,7 +13,7 @@ import {
 } from "./components";
 import { API, apiLinks } from "./pages/API";
 import { BasicConcepts, basicConceptLinks } from "./pages/BasicConcepts";
-
+import { Examples, exampleLinks } from "./pages/Examples";
 import { GettingStarted, gettingStartedLinks } from "./pages/GettingStarted";
 
 type ExampleFormValues = {
@@ -28,7 +28,8 @@ function ExampleApp() {
         links={[
           ...gettingStartedLinks,
           ...basicConceptLinks,
-          ...apiLinks
+          ...apiLinks,
+          ...exampleLinks
         ]}
       />
       <Column space={4}>
@@ -36,6 +37,7 @@ function ExampleApp() {
         <GettingStarted />
         <BasicConcepts />
         <API />
+        <Examples />
       </Column>
     </PageWrapper>
   );

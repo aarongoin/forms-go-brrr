@@ -48,11 +48,11 @@ export function Field(props: FieldProps): React.ReactElement {
       className={className}
     >
       {props.type === "select" ? (
-        <Select {...props} className={inputClassName} {...validationProps} />
+        <Select {...inputProps} className={inputClassName} {...validationProps} />
       ) : props.type === "textarea" ? (
-        <Textarea {...props} className={inputClassName} {...validationProps} />
+        <Textarea {...inputProps} className={inputClassName} {...validationProps} />
       ) : (
-        <Input {...props} className={inputClassName} {...validationProps} />
+        <Input {...inputProps} className={inputClassName} {...validationProps} />
       )}
     </LabelCmp>
   );

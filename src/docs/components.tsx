@@ -48,7 +48,10 @@ export function Header({
   );
 }
 
-export function MdnLink({ children, href }: React.PropsWithChildren<{ href: string }>) {
+export function MdnLink({
+  children,
+  href,
+}: React.PropsWithChildren<{ href: string }>) {
   return (
     <a href={href} className={mdnLinkStyle} target="_blank">
       {children}
@@ -154,9 +157,8 @@ export function LogLine({
 }: React.PropsWithChildren<{ time: string; children: string }>) {
   return (
     <code className={logLineStyle}>
-      {time}
-      {"   "}
-      {children}
+      <div style={{width: "10rem", display: "inline-block", marginRight: "16px"}}>{time}</div>
+      <div style={{display: "inline-block"}}>{children}</div>
     </code>
   );
 }
@@ -170,8 +172,6 @@ export function StickyColumnPair({
   right: React.ReactNode;
   className?: string | undefined;
 }>) {
-  let leftHeight = 0;
-  let rightHeight = 0;
   return (
     <div className={`${stickyColumnPairStyle} ${className || ""}`}>
       <div className={stickyColumnLeftStyle}>{left}</div>
@@ -216,36 +216,56 @@ type LogT = {
   text: string;
 };
 
+export const DemoContext = React.createContext({ log: (text: string) => {} });
+
 export class CodeDemo extends React.Component<
   {
     code: string;
-    renderForm: (onSubmit: (values: {}) => unknown) => React.ReactElement;
+    Form: React.ComponentType<{
+      onSubmit: (onSubmit: (values: {}) => unknown) => React.ReactElement;
+    }>;
     className?: string | undefined;
   },
   { logs: LogT[] }
 > {
-  state = { logs: [] };
+  state: { logs: LogT[] };
+  log: (text: string) => unknown;
+  demoContext: { log: (text: string) => unknown };
+
+  constructor(props) {
+    super(props);
+
+    this.state = { logs: [] };
+
+    this.log = (text: string) =>
+      this.setState(({ logs }) => {
+        logs.unshift({
+          time: window.performance.now(),
+          text,
+        });
+        return { logs };
+      });
+
+    this.submitJson = (values) =>
+      this.log(`Form submit: ${JSON.stringify(values)}`);
+
+    this.demoContext = { log: this.log };
+  }
 
   render() {
-    const { code, renderForm, className } = this.props;
+    const { code, Form, className } = this.props;
     return (
       <div className={`${codeDemoWrapperStyle} ${className || ""}`}>
         <CodeBlock>{code}</CodeBlock>
         <div className={formWrapperStyle}>
-          {renderForm((values) =>
-            this.setState(({ logs }) => {
-              logs.push({
-                time: Date.now(),
-                text: `Form submit w/ values: ${JSON.stringify(values)}`,
-              });
-              return { logs };
-            })
-          )}
+          <DemoContext.Provider value={this.demoContext}>
+            <Form submitJson={this.submitJson} />
+          </DemoContext.Provider>
         </div>
         <pre className={logsWrapperStyle}>
           {this.state.logs.length ? (
-            this.state.logs.map((l) => (
-              <LogLine key={l.time} time={l.time}>
+            this.state.logs.map((l, i) => (
+              <LogLine key={`${l.time}${i}`} time={l.time}>
                 {l.text}
               </LogLine>
             ))

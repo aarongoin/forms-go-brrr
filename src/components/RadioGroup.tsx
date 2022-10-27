@@ -7,7 +7,6 @@ import { InlineLabel } from "./Label";
 export type RadioGroupType = {
   type: "radiogroup";
   options: Option[] | string[];
-  label: string;
   defaultChecked?: string;
 };
 
@@ -24,16 +23,16 @@ export function RadioGroup({
   return (
     <Fieldset label={label} name={name} {...props}>
       {options.map((opt) => (
-        <InlineLabel label={typeof opt === "string" ? opt : opt.name}>
+        <InlineLabel label={typeof opt === "string" ? opt : opt.label}>
           <Input
-            key={typeof opt === "string" ? opt : opt.id}
+            key={typeof opt === "string" ? opt : opt.value}
             type="radio"
             name={name}
-            value={typeof opt === "string" ? opt : String(opt.id)}
+            value={typeof opt === "string" ? opt : String(opt.value)}
             data-group={name}
             defaultChecked={
               !!defaultChecked &&
-              defaultChecked === (typeof opt === "string" ? opt : opt.id)
+              defaultChecked === (typeof opt === "string" ? opt : opt.value)
             }
           />
         </InlineLabel>

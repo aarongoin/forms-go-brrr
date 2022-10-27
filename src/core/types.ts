@@ -37,7 +37,7 @@ export type FieldValue =
 
 export type FormValues = Record<string, FieldValue>;
 
-export type Option = { id: number | string; name: string };
+export type Option = { value: number | string; label: string };
 
 export type ChangeEventT = React.ChangeEvent<FieldInputElement>;
 export type BlurEventT = React.FocusEvent<FieldInputElement>;
@@ -63,3 +63,8 @@ export type FormHandler<FV extends FormValues = FormValues> = (
   getValue: GetValue<FV>,
   setValue: SetValue<FV>
 ) => FormErrors<FV> | undefined | null;
+
+export type Optional<
+  P extends Record<string, unknown> = Record<string, unknown>,
+  K extends string = string
+> = Omit<P, K> & Partial<Pick<P, K>>;

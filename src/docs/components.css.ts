@@ -52,6 +52,8 @@ export const logsWrapperStyle = style({
   border: "solid 1px #ffffff33",
   overflowX: "scroll",
   maxWidth: "calc(min(100vw, 50rem) - 32px)",
+  maxHeight: "240px",
+  overflowY: "scroll",
 });
 
 export const formWrapperStyle = style({
