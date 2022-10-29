@@ -39,10 +39,10 @@ import { Label, InlineLabel } from "./Label";
 import { wrapWithFieldValidation } from "../core";
 const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validate ? wrapWithFieldValidation(
-    props.validate,
-    props.validators || (props.validator ? [props.validator] : []),
-    props[props.validate]
+  const validationProps = props.validateOnChange || props.validateOnBlur ? wrapWithFieldValidation(
+    props.validateOnChange ? "onChange" : "onBlur",
+    props.validateOnChange || props.validateOnBlur,
+    props[props.validateOnChange ? "onChange" : "onBlur"]
   ) : null;
   if (props.type === "checkboxes") {
     return /* @__PURE__ */ React.createElement(Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
@@ -51,17 +51,17 @@ function Field(props) {
     return /* @__PURE__ */ React.createElement(RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
   }
   const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(props.type) ? InlineLabel : Label;
+  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? InlineLabel : Label;
   return /* @__PURE__ */ React.createElement(LabelCmp, {
     label,
     name: inputProps.name,
     hint,
     className
-  }, props.type === "select" ? /* @__PURE__ */ React.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }, inputProps.type === "select" ? /* @__PURE__ */ React.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : props.type === "textarea" ? /* @__PURE__ */ React.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : /* @__PURE__ */ React.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
   }), validationProps)));
 }

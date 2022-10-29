@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Option } from "../core/types";
+import { Option, Optional } from "../core/types";
 import { BaseInputProps } from "./Input";
 
 export type SelectType = {
@@ -11,9 +11,12 @@ export type SelectType = {
   renderOption?: (opt: Option | string) => React.ReactNode;
   optionClassName?: string | undefined;
 };
+export type SelectFieldProps = BaseInputProps &
+  SelectType &
+  React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export type SelectProps = BaseInputProps &
-  SelectType &
+  Optional<SelectType, "type"> &
   React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export function Select({

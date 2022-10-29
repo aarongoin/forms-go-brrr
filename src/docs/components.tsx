@@ -13,7 +13,7 @@ import {
   codeNameStyle,
   codeDemoWrapperStyle,
   navStyle,
-  topNavLinkStyle,
+  topNavHeaderStyle,
   navLinkStyle,
   navLinkListStyle,
   pageWrapperStyle,
@@ -98,9 +98,9 @@ export function DocLinks({
 }) {
   return (
     <nav className={navStyle}>
-      <a href="/" className={topNavLinkStyle}>
+      <span className={topNavHeaderStyle}>
         forms-go-brrr
-      </a>
+      </span>
       <NestedLinks links={links} level={0} />
     </nav>
   );

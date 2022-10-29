@@ -5,7 +5,6 @@ import { BaseInputProps } from "./Input";
 export declare type RadioGroupType = {
     type: "radiogroup";
     options: Option[] | string[];
-    label: string;
     defaultChecked?: string;
 };
 export declare type RadioGroupProps = BaseInputProps & RadioGroupType & FieldsetProps;

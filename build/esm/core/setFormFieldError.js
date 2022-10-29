@@ -7,7 +7,7 @@ function setFormFieldError(form, name, error) {
   el.setCustomValidity(error);
   const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
   if (hint)
-    hint.textContent = error;
+    hint.textContent = error || hint.dataset.hint || "";
 }
 export {
   setFormFieldError

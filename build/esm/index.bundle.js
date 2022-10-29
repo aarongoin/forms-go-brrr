@@ -60,7 +60,8 @@ function Fieldset(_a) {
       hintClassName ? " " : "",
       hintClassName || ""
     ),
-    "aria-live": "polite"
+    "aria-live": "polite",
+    "data-hint": hint
   }, hint));
 }
 
@@ -114,7 +115,8 @@ function Label(_a) {
       hintClassName ? " " : "",
       hintClassName || ""
     ),
-    "aria-live": "polite"
+    "aria-live": "polite",
+    "data-hint": hint
   }, hint));
 }
 function InlineLabel({
@@ -146,15 +148,15 @@ function Checkboxes(_a) {
     label,
     name
   }, props), options.map((opt) => /* @__PURE__ */ React4.createElement(InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.name
+    label: typeof opt === "string" ? opt : opt.label
   }, /* @__PURE__ */ React4.createElement(Input, {
-    key: typeof opt === "string" ? opt : opt.id,
+    key: typeof opt === "string" ? opt : opt.value,
     type: "checkbox",
     name,
-    value: typeof opt === "string" ? opt : String(opt.id),
+    value: typeof opt === "string" ? opt : String(opt.value),
     "data-group": name,
     defaultChecked: defaultChecked ? defaultChecked.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.id
+      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.value
     ) : false
   }))));
 }
@@ -182,14 +184,14 @@ function RadioGroup(_a) {
     label,
     name
   }, props), options.map((opt) => /* @__PURE__ */ React5.createElement(InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.name
+    label: typeof opt === "string" ? opt : opt.label
   }, /* @__PURE__ */ React5.createElement(Input, {
-    key: typeof opt === "string" ? opt : opt.id,
+    key: typeof opt === "string" ? opt : opt.value,
     type: "radio",
     name,
-    value: typeof opt === "string" ? opt : String(opt.id),
+    value: typeof opt === "string" ? opt : String(opt.value),
     "data-group": name,
-    defaultChecked: !!defaultChecked && defaultChecked === (typeof opt === "string" ? opt : opt.id)
+    defaultChecked: !!defaultChecked && defaultChecked === (typeof opt === "string" ? opt : opt.value)
   }))));
 }
 
@@ -277,13 +279,13 @@ function isTextareaElement(el) {
 // src/core/errorMessages.ts
 var errorMessages = {
   badInput: "Malformed input.",
-  required: "This field is required.",
-  minLength: "Text is too short.",
-  maxLength: "Text is too long.",
-  pattern: "Value is invalid.",
-  min: "Value is too low.",
-  max: "Value is high.",
-  step: "Value is off-step.",
+  required: "Required.",
+  minLength: "Too short.",
+  maxLength: "Too long.",
+  pattern: "Invalid value.",
+  min: "Too low.",
+  max: "Too high.",
+  step: "Off-step.",
   email: "Invalid email address.",
   url: "Invalid url."
 };
@@ -494,23 +496,26 @@ var getFormValuesAsJson = (form) => {
 // src/core/withValidation.tsx
 import * as React8 from "react";
 
+// src/core/setFormFieldError.ts
+function setFormFieldError(form, name, error) {
+  var _a;
+  const elOrEls = form.elements.namedItem(name);
+  if (!elOrEls)
+    throw new Error(`Cannot find field with name ${name}`);
+  const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
+  el.setCustomValidity(error);
+  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  if (hint)
+    hint.textContent = error || hint.dataset.hint || "";
+}
+
 // src/core/wrapWithFieldValidation.ts
-function wrapWithFieldValidation(onEvent, validators, outerHandler) {
+function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   const validateInput = (input) => {
-    var _a;
     let error = !input.validity.valid ? getErrorMessage(input) : "";
-    if (!error) {
-      const value = getFormFieldValue(input.form, input.name);
-      for (const validator of validators) {
-        error = validator(value);
-        if (error)
-          break;
-      }
-    }
-    input.setCustomValidity(error);
-    const hint = (_a = input.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
-    if (hint)
-      hint.textContent = error;
+    const value = getFormFieldValue(input.form, input.name);
+    error = validator(value) || error;
+    setFormFieldError(input.form, input.name, error);
     return !!error;
   };
   return {
@@ -546,39 +551,24 @@ function withValidation(onEvent) {
 var withValidationOnChange = withValidation("onChange");
 var withValidationOnBlur = withValidation("onBlur");
 
-// src/core/setFormFieldError.ts
-function setFormFieldError(form, name, error) {
-  var _a;
-  const elOrEls = form.elements.namedItem(name);
-  if (!elOrEls)
-    throw new Error(`Cannot find field with name ${name}`);
-  const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
-  el.setCustomValidity(error);
-  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-  if (hint)
-    hint.textContent = error;
-}
-
 // src/core/validateForm.ts
 function validateForm(form, validator) {
-  let is_valid = true;
-  for (const input of Array.from(form.elements))
-    if (!input.dispatchEvent(new Event("invalid", { cancelable: true })))
-      is_valid = false;
-  if (!validator)
-    return is_valid;
-  const formErrors = validator(
+  let form_valid = true;
+  const formErrors = validator == null ? void 0 : validator(
     (name) => getFormFieldValue(form, name),
     (name, value) => setFormFieldValue(form, name, value)
   );
-  if (formErrors) {
-    for (const name of Object.keys(formErrors)) {
-      if (formErrors[name])
-        is_valid = false;
-      setFormFieldError(form, name, formErrors[name]);
-    }
+  for (const el of Array.from(form.elements)) {
+    if (!el.name)
+      continue;
+    const err = (formErrors == null ? void 0 : formErrors[el.name]) || "";
+    let is_valid = el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;
+    if (is_valid || err)
+      setFormFieldError(form, el.name, err);
+    if (!is_valid)
+      form_valid = false;
   }
-  return is_valid;
+  return form_valid;
 }
 
 // src/core/validationEffectHandler.ts
@@ -603,10 +593,10 @@ function validationEffectHandler(validator, onEvent) {
 // src/components/Field.tsx
 var inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validate ? wrapWithFieldValidation(
-    props.validate,
-    props.validators || (props.validator ? [props.validator] : []),
-    props[props.validate]
+  const validationProps = props.validateOnChange || props.validateOnBlur ? wrapWithFieldValidation(
+    props.validateOnChange ? "onChange" : "onBlur",
+    props.validateOnChange || props.validateOnBlur,
+    props[props.validateOnChange ? "onChange" : "onBlur"]
   ) : null;
   if (props.type === "checkboxes") {
     return /* @__PURE__ */ React9.createElement(Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
@@ -615,17 +605,17 @@ function Field(props) {
     return /* @__PURE__ */ React9.createElement(RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
   }
   const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(props.type) ? InlineLabel : Label;
+  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? InlineLabel : Label;
   return /* @__PURE__ */ React9.createElement(LabelCmp, {
     label,
     name: inputProps.name,
     hint,
     className
-  }, props.type === "select" ? /* @__PURE__ */ React9.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }, inputProps.type === "select" ? /* @__PURE__ */ React9.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : props.type === "textarea" ? /* @__PURE__ */ React9.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React9.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React9.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : /* @__PURE__ */ React9.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
   }), validationProps)));
 }
@@ -639,8 +629,8 @@ function Form(_a) {
     action,
     submitFormData,
     submitJson,
-    validate,
-    validator,
+    validateOnBlur,
+    validateOnChange,
     className,
     autoComplete = false
   } = _b, props = __objRest(_b, [
@@ -649,8 +639,8 @@ function Form(_a) {
     "action",
     "submitFormData",
     "submitJson",
-    "validate",
-    "validator",
+    "validateOnBlur",
+    "validateOnChange",
     "className",
     "autoComplete"
   ]);
@@ -664,21 +654,18 @@ function Form(_a) {
     autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,
     action,
-    onChange: validator && (validate == null ? void 0 : validate.startsWith("onChange")) ? validationEffectHandler(
-      validator,
+    onChange: validateOnChange ? validationEffectHandler(
+      validateOnChange,
       props.onChange
     ) : void 0,
-    onBlur: validator && (validate == null ? void 0 : validate.startsWith("onBlur")) ? validationEffectHandler(
-      validator,
+    onBlur: validateOnBlur ? validationEffectHandler(
+      validateOnBlur,
       props.onBlur
     ) : void 0,
     onSubmit: (event) => {
       const form = event.target;
       event.preventDefault();
-      if (validateForm(
-        form,
-        (validate == null ? void 0 : validate.endsWith("Submit")) && validator || void 0
-      )) {
+      if (validateForm(form, validateOnChange || validateOnBlur || void 0)) {
         const submit = submitFormData ? submitFormData(getFormValuesAsFormData(form)) : submitJson(getFormValuesAsJson(form));
         (submit && submit instanceof Promise ? submit : Promise.resolve(submit)).then((formErrors) => {
           if (!formErrors)
@@ -686,6 +673,41 @@ function Form(_a) {
           for (const name of Object.keys(formErrors))
             setFormFieldError(form, name, formErrors[name]);
         });
+      }
+    }
+  }));
+}
+
+// src/components/Submit.tsx
+import * as React11 from "react";
+
+// src/core/getFormIsValid.ts
+function getFormIsValid(form) {
+  var _a;
+  for (const el of Array.from(form.elements)) {
+    if (!el.name)
+      continue;
+    const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+    if (hint.textContent)
+      return false;
+  }
+  return true;
+}
+
+// src/components/Submit.tsx
+function Submit(_a) {
+  var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
+  return /* @__PURE__ */ React11.createElement("button", __spreadProps(__spreadValues({}, props), {
+    type: "submit",
+    ref: (el) => {
+      if (el && el.form) {
+        el.disabled = !getFormIsValid(el.form);
+        el.form.addEventListener(
+          validate === "onChange" ? "input" : "change",
+          (event) => {
+            el.disabled = !getFormIsValid(el.form);
+          }
+        );
       }
     }
   }));
@@ -700,6 +722,7 @@ export {
   Label,
   RadioGroup,
   Select,
+  Submit,
   Textarea,
   getErrorMessage,
   getFormFieldValue,

@@ -75,14 +75,14 @@ function RadioGroup(_a) {
     label,
     name
   }, props), options.map((opt) => /* @__PURE__ */ React.createElement(import_Label.InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.name
+    label: typeof opt === "string" ? opt : opt.label
   }, /* @__PURE__ */ React.createElement(import_Input.Input, {
-    key: typeof opt === "string" ? opt : opt.id,
+    key: typeof opt === "string" ? opt : opt.value,
     type: "radio",
     name,
-    value: typeof opt === "string" ? opt : String(opt.id),
+    value: typeof opt === "string" ? opt : String(opt.value),
     "data-group": name,
-    defaultChecked: !!defaultChecked && defaultChecked === (typeof opt === "string" ? opt : opt.id)
+    defaultChecked: !!defaultChecked && defaultChecked === (typeof opt === "string" ? opt : opt.value)
   }))));
 }
 // Annotate the CommonJS export names for ESM import in node:

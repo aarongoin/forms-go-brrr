@@ -66,10 +66,10 @@ var import_Label = require("./Label");
 var import_core = require("../core");
 const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validate ? (0, import_core.wrapWithFieldValidation)(
-    props.validate,
-    props.validators || (props.validator ? [props.validator] : []),
-    props[props.validate]
+  const validationProps = props.validateOnChange || props.validateOnBlur ? (0, import_core.wrapWithFieldValidation)(
+    props.validateOnChange ? "onChange" : "onBlur",
+    props.validateOnChange || props.validateOnBlur,
+    props[props.validateOnChange ? "onChange" : "onBlur"]
   ) : null;
   if (props.type === "checkboxes") {
     return /* @__PURE__ */ React.createElement(import_Checkboxes.Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
@@ -78,17 +78,17 @@ function Field(props) {
     return /* @__PURE__ */ React.createElement(import_RadioGroup.RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
   }
   const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(props.type) ? import_Label.InlineLabel : import_Label.Label;
+  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? import_Label.InlineLabel : import_Label.Label;
   return /* @__PURE__ */ React.createElement(LabelCmp, {
     label,
     name: inputProps.name,
     hint,
     className
-  }, props.type === "select" ? /* @__PURE__ */ React.createElement(import_Select.Select, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }, inputProps.type === "select" ? /* @__PURE__ */ React.createElement(import_Select.Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : props.type === "textarea" ? /* @__PURE__ */ React.createElement(import_Textarea.Textarea, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React.createElement(import_Textarea.Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React.createElement(import_Input.Input, __spreadValues(__spreadProps(__spreadValues({}, props), {
+  }), validationProps)) : /* @__PURE__ */ React.createElement(import_Input.Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
     className: inputClassName
   }), validationProps)));
 }

@@ -210,7 +210,7 @@ export const navLinkListStyle = style({
   listStyleType: "none",
 });
 
-export const topNavLinkStyle = style({
+export const topNavHeaderStyle = style({
   fontFamily,
   color: "#eee",
   fontWeight: 700,
@@ -218,10 +218,6 @@ export const topNavLinkStyle = style({
   lineHeight: "36px",
   paddingBottom: "16px",
   textDecoration: "none",
-  outline: "none",
-  ":hover": { textDecoration: "underline", color: "#fff" },
-  ":focus": { textDecoration: "underline", color: "#fff" },
-  ":active": { textDecoration: "underline", color: "#fff" },
 });
 
 export const inlineLinkStyle = style({

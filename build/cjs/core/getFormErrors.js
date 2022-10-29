@@ -16,23 +16,23 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var setFormFieldError_exports = {};
-__export(setFormFieldError_exports, {
-  setFormFieldError: () => setFormFieldError
+var getFormErrors_exports = {};
+__export(getFormErrors_exports, {
+  getFormErrors: () => getFormErrors
 });
-module.exports = __toCommonJS(setFormFieldError_exports);
-function setFormFieldError(form, name, error) {
+module.exports = __toCommonJS(getFormErrors_exports);
+function getFormErrors(form) {
   var _a;
-  const elOrEls = form.elements.namedItem(name);
-  if (!elOrEls)
-    throw new Error(`Cannot find field with name ${name}`);
-  const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
-  el.setCustomValidity(error);
-  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-  if (hint)
-    hint.textContent = error || hint.dataset.hint || "";
+  const errors = {};
+  for (const el of Array.from(form.elements)) {
+    if (!el.name)
+      continue;
+    const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+    errors[el.name] = hint.textContent;
+  }
+  return errors;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  setFormFieldError
+  getFormErrors
 });

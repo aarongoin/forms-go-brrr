@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Option } from "../core/types";
+import { Option, Optional } from "../core/types";
 import { BaseInputProps } from "./Input";
 export declare type SelectType = {
     type: "select";
@@ -10,5 +10,6 @@ export declare type SelectType = {
     renderOption?: (opt: Option | string) => React.ReactNode;
     optionClassName?: string | undefined;
 };
-export declare type SelectProps = BaseInputProps & SelectType & React.SelectHTMLAttributes<HTMLSelectElement>;
+export declare type SelectFieldProps = BaseInputProps & SelectType & React.SelectHTMLAttributes<HTMLSelectElement>;
+export declare type SelectProps = BaseInputProps & Optional<SelectType, "type"> & React.SelectHTMLAttributes<HTMLSelectElement>;
 export declare function Select({ options, type, defaultSelected, name, renderOption, className, optionClassName, ...props }: SelectProps): React.ReactElement;

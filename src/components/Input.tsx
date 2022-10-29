@@ -149,7 +149,7 @@ export type BaseInputProps = {
 
 export type InputProps = BaseInputProps &
   InputTypes &
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby">;
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby" | "type">;
 
 export function Input(props: InputProps): React.ReactElement {
   return (

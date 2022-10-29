@@ -48,15 +48,15 @@ function Checkboxes(_a) {
     label,
     name
   }, props), options.map((opt) => /* @__PURE__ */ React.createElement(InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.name
+    label: typeof opt === "string" ? opt : opt.label
   }, /* @__PURE__ */ React.createElement(Input, {
-    key: typeof opt === "string" ? opt : opt.id,
+    key: typeof opt === "string" ? opt : opt.value,
     type: "checkbox",
     name,
-    value: typeof opt === "string" ? opt : String(opt.id),
+    value: typeof opt === "string" ? opt : String(opt.value),
     "data-group": name,
     defaultChecked: defaultChecked ? defaultChecked.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.id
+      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.value
     ) : false
   }))));
 }

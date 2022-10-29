@@ -92,7 +92,8 @@ function Label(_a) {
       hintClassName ? " " : "",
       hintClassName || ""
     ),
-    "aria-live": "polite"
+    "aria-live": "polite",
+    "data-hint": hint
   }, hint));
 }
 function InlineLabel({

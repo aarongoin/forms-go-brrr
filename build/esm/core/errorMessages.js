@@ -17,13 +17,13 @@ var __spreadValues = (a, b) => {
 import { isSelectElement, isTextareaElement } from "./types";
 let errorMessages = {
   badInput: "Malformed input.",
-  required: "This field is required.",
-  minLength: "Text is too short.",
-  maxLength: "Text is too long.",
-  pattern: "Value is invalid.",
-  min: "Value is too low.",
-  max: "Value is high.",
-  step: "Value is off-step.",
+  required: "Required.",
+  minLength: "Too short.",
+  maxLength: "Too long.",
+  pattern: "Invalid value.",
+  min: "Too low.",
+  max: "Too high.",
+  step: "Off-step.",
   email: "Invalid email address.",
   url: "Invalid url."
 };

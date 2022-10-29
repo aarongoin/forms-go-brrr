@@ -24,3 +24,4 @@ __reExport(components_exports, require("./Label"), module.exports);
 __reExport(components_exports, require("./RadioGroup"), module.exports);
 __reExport(components_exports, require("./Select"), module.exports);
 __reExport(components_exports, require("./Textarea"), module.exports);
+__reExport(components_exports, require("./Submit"), module.exports);

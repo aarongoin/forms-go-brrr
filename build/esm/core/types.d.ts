@@ -10,8 +10,8 @@ export declare function isTextareaElement(el: HTMLElement): el is HTMLTextAreaEl
 export declare type FieldValue = string | boolean | (string | null)[] | FileList | null | undefined;
 export declare type FormValues = Record<string, FieldValue>;
 export declare type Option = {
-    id: number | string;
-    name: string;
+    value: number | string;
+    label: string;
 };
 export declare type ChangeEventT = React.ChangeEvent<FieldInputElement>;
 export declare type BlurEventT = React.FocusEvent<FieldInputElement>;
@@ -19,3 +19,4 @@ export declare type GetValue<FV extends FormValues = FormValues> = <K extends ke
 export declare type SetValue<FV extends FormValues = FormValues> = <K extends keyof FV & string = keyof FV & string>(name: K, value: FV[K]) => void;
 export declare type FormErrors<FV extends FormValues = FormValues> = Partial<Record<keyof FV, string>>;
 export declare type FormHandler<FV extends FormValues = FormValues> = (getValue: GetValue<FV>, setValue: SetValue<FV>) => FormErrors<FV> | undefined | null;
+export declare type Optional<P extends Record<string, unknown> = Record<string, unknown>, K extends string = string> = Omit<P, K> & Partial<Pick<P, K>>;

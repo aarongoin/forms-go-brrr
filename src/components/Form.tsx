@@ -4,11 +4,7 @@ import {
   getFormValuesAsJson,
 } from "../core/getFormValues";
 import { setFormFieldError } from "../core/setFormFieldError";
-import {
-  FormErrors,
-  FormHandler,
-  FormValues,
-} from "../core/types";
+import { FormErrors, FormHandler, FormValues } from "../core/types";
 import { validateForm } from "../core/validateForm";
 import { validationEffectHandler } from "../core/validationEffectHandler";
 
@@ -28,27 +24,19 @@ export type FormProps<FV extends FormValues = FormValues> =
         | "multipart/form-data"
         | "text/plain";
       autoComplete?: boolean;
-      validate?:
-        | "onChange"
-        | "onBlur"
-        | "onSubmit"
-        | "onChangeOrSubmit"
-        | "onBlurOrSubmit";
-      validator?: FormHandler<FV>;
-    } & (
-        | {
-            submitFormData: (
-              data: FormData
-            ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>;
-            submitJson?: void;
-          }
-        | {
-            submitFormData?: void;
-            submitJson: (
-              data: Record<string, unknown>
-            ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>;
-          }
-      )
+      validateOnBlur?: FormHandler<FV>;
+      validateOnChange?: FormHandler<FV>;
+      submitFormData?:
+        | void
+        | ((
+            data: FormData
+          ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
+      submitJson?:
+        | void
+        | ((
+            data: Record<string, unknown>
+          ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
+    }
   >;
 
 export function Form<FV extends FormValues = FormValues>({
@@ -57,8 +45,8 @@ export function Form<FV extends FormValues = FormValues>({
   action,
   submitFormData,
   submitJson,
-  validate,
-  validator,
+  validateOnBlur,
+  validateOnChange,
   className,
   autoComplete = false,
   ...props
@@ -79,17 +67,17 @@ export function Form<FV extends FormValues = FormValues>({
       method={dialog ? "dialog" : method}
       action={action}
       onChange={
-        validator && validate?.startsWith("onChange")
+        validateOnChange
           ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
-              validator,
+              validateOnChange,
               props.onChange
             )
           : undefined
       }
       onBlur={
-        validator && validate?.startsWith("onBlur")
+        validateOnBlur
           ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
-              validator,
+              validateOnBlur,
               props.onBlur
             )
           : undefined
@@ -98,10 +86,7 @@ export function Form<FV extends FormValues = FormValues>({
         const form = event.target as HTMLFormElement;
         event.preventDefault();
         if (
-          validateForm(
-            form,
-            (validate?.endsWith("Submit") && validator) || undefined
-          )
+          validateForm(form, validateOnChange || validateOnBlur || undefined)
         ) {
           const submit = submitFormData
             ? // FormData is the preferred, browser native way, but may not be ideal in all instances

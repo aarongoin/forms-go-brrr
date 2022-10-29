@@ -23,22 +23,13 @@ __export(wrapWithFieldValidation_exports, {
 module.exports = __toCommonJS(wrapWithFieldValidation_exports);
 var import_errorMessages = require("./errorMessages");
 var import_getFormFieldValue = require("./getFormFieldValue");
-function wrapWithFieldValidation(onEvent, validators, outerHandler) {
+var import_setFormFieldError = require("./setFormFieldError");
+function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   const validateInput = (input) => {
-    var _a;
     let error = !input.validity.valid ? (0, import_errorMessages.getErrorMessage)(input) : "";
-    if (!error) {
-      const value = (0, import_getFormFieldValue.getFormFieldValue)(input.form, input.name);
-      for (const validator of validators) {
-        error = validator(value);
-        if (error)
-          break;
-      }
-    }
-    input.setCustomValidity(error);
-    const hint = (_a = input.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
-    if (hint)
-      hint.textContent = error;
+    const value = (0, import_getFormFieldValue.getFormFieldValue)(input.form, input.name);
+    error = validator(value) || error;
+    (0, import_setFormFieldError.setFormFieldError)(input.form, input.name, error);
     return !!error;
   };
   return {

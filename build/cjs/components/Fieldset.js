@@ -82,7 +82,8 @@ function Fieldset(_a) {
       hintClassName ? " " : "",
       hintClassName || ""
     ),
-    "aria-live": "polite"
+    "aria-live": "polite",
+    "data-hint": hint
   }, hint));
 }
 // Annotate the CommonJS export names for ESM import in node:

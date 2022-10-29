@@ -25,24 +25,22 @@ var import_getFormFieldValue = require("./getFormFieldValue");
 var import_setFormFieldError = require("./setFormFieldError");
 var import_setFormFieldValue = require("./setFormFieldValue");
 function validateForm(form, validator) {
-  let is_valid = true;
-  for (const input of Array.from(form.elements))
-    if (!input.dispatchEvent(new Event("invalid", { cancelable: true })))
-      is_valid = false;
-  if (!validator)
-    return is_valid;
-  const formErrors = validator(
+  let form_valid = true;
+  const formErrors = validator == null ? void 0 : validator(
     (name) => (0, import_getFormFieldValue.getFormFieldValue)(form, name),
     (name, value) => (0, import_setFormFieldValue.setFormFieldValue)(form, name, value)
   );
-  if (formErrors) {
-    for (const name of Object.keys(formErrors)) {
-      if (formErrors[name])
-        is_valid = false;
-      (0, import_setFormFieldError.setFormFieldError)(form, name, formErrors[name]);
-    }
+  for (const el of Array.from(form.elements)) {
+    if (!el.name)
+      continue;
+    const err = (formErrors == null ? void 0 : formErrors[el.name]) || "";
+    let is_valid = el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;
+    if (is_valid || err)
+      (0, import_setFormFieldError.setFormFieldError)(form, el.name, err);
+    if (!is_valid)
+      form_valid = false;
   }
-  return is_valid;
+  return form_valid;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

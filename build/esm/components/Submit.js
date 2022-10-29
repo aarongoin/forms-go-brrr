@@ -30,54 +30,24 @@ var __objRest = (source, exclude) => {
   return target;
 };
 import * as React from "react";
-function Label(_a) {
-  var _b = _a, {
-    label,
-    name,
-    children,
-    hint,
-    textClassName,
-    hintClassName,
-    className
-  } = _b, props = __objRest(_b, [
-    "label",
-    "name",
-    "children",
-    "hint",
-    "textClassName",
-    "hintClassName",
-    "className"
-  ]);
-  const hintId = `${name}-hint`;
-  return /* @__PURE__ */ React.createElement("label", __spreadProps(__spreadValues({
-    htmlFor: name
-  }, props), {
-    className: "fgb-Label".concat(className ? " " : "", className || "")
-  }), typeof label === "string" ? /* @__PURE__ */ React.createElement("span", {
-    className: "fgb-Label-text".concat(
-      textClassName ? " " : "",
-      textClassName || ""
-    )
-  }, label) : label, children, /* @__PURE__ */ React.createElement("span", {
-    id: hintId,
-    className: "fgb-Label-hint".concat(
-      hintClassName ? " " : "",
-      hintClassName || ""
-    ),
-    "aria-live": "polite",
-    "data-hint": hint
-  }, hint));
-}
-function InlineLabel({
-  label,
-  children,
-  className
-}) {
-  return /* @__PURE__ */ React.createElement("label", {
-    className: "fgb-InlineLabel".concat(className ? " " : "", className || "")
-  }, children, label);
+import { getFormIsValid } from "../core/getFormIsValid";
+function Submit(_a) {
+  var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
+  return /* @__PURE__ */ React.createElement("button", __spreadProps(__spreadValues({}, props), {
+    type: "submit",
+    ref: (el) => {
+      if (el && el.form) {
+        el.disabled = !getFormIsValid(el.form);
+        el.form.addEventListener(
+          validate === "onChange" ? "input" : "change",
+          (event) => {
+            el.disabled = !getFormIsValid(el.form);
+          }
+        );
+      }
+    }
+  }));
 }
 export {
-  InlineLabel,
-  Label
+  Submit
 };

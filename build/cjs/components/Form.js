@@ -68,8 +68,8 @@ function Form(_a) {
     action,
     submitFormData,
     submitJson,
-    validate,
-    validator,
+    validateOnBlur,
+    validateOnChange,
     className,
     autoComplete = false
   } = _b, props = __objRest(_b, [
@@ -78,8 +78,8 @@ function Form(_a) {
     "action",
     "submitFormData",
     "submitJson",
-    "validate",
-    "validator",
+    "validateOnBlur",
+    "validateOnChange",
     "className",
     "autoComplete"
   ]);
@@ -93,21 +93,18 @@ function Form(_a) {
     autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,
     action,
-    onChange: validator && (validate == null ? void 0 : validate.startsWith("onChange")) ? (0, import_validationEffectHandler.validationEffectHandler)(
-      validator,
+    onChange: validateOnChange ? (0, import_validationEffectHandler.validationEffectHandler)(
+      validateOnChange,
       props.onChange
     ) : void 0,
-    onBlur: validator && (validate == null ? void 0 : validate.startsWith("onBlur")) ? (0, import_validationEffectHandler.validationEffectHandler)(
-      validator,
+    onBlur: validateOnBlur ? (0, import_validationEffectHandler.validationEffectHandler)(
+      validateOnBlur,
       props.onBlur
     ) : void 0,
     onSubmit: (event) => {
       const form = event.target;
       event.preventDefault();
-      if ((0, import_validateForm.validateForm)(
-        form,
-        (validate == null ? void 0 : validate.endsWith("Submit")) && validator || void 0
-      )) {
+      if ((0, import_validateForm.validateForm)(form, validateOnChange || validateOnBlur || void 0)) {
         const submit = submitFormData ? submitFormData((0, import_getFormValues.getFormValuesAsFormData)(form)) : submitJson((0, import_getFormValues.getFormValuesAsJson)(form));
         (submit && submit instanceof Promise ? submit : Promise.resolve(submit)).then((formErrors) => {
           if (!formErrors)

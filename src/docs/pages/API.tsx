@@ -12,10 +12,29 @@ import {
 export const apiLinks = [
   "API",
   [
-    "Components",
+    "<Form /> component",
+    "<Submit /> component",
+    "<Field /> component",
     [
-      "Form",
-      "Field",
+      "checkbox",
+      "checkboxes",
+      "date",
+      "datetime-local",
+      "email",
+      "file",
+      "month",
+      "number",
+      "password",
+      "radio",
+      "radiogroup",
+      "range",
+      "search",
+      "select",
+      "tel",
+      "text",
+      "textarea",
+      "url",
+      "week",
       // "Input",
       // "Label",
       // "Textarea",
@@ -27,12 +46,12 @@ export const apiLinks = [
     "Core",
     [
       "Default error messages",
-      "setDefaultErrorMessages",
-      "getErrorMessage",
-      "getFormFieldValue",
-      "getFormValuesAsFormData",
-      "getFormValuesAsJson",
-      "setFormFieldError",
+      "setDefaultErrorMessages()",
+      "getErrorMessage()",
+      "getFormFieldValue()",
+      "getFormValuesAsFormData()",
+      "getFormValuesAsJson()",
+      "setFormFieldError()",
     ],
   ],
 ];
@@ -41,48 +60,362 @@ export function API({ className }: { className?: string | undefined }) {
   return (
     <Column space={2} className={className}>
       <Header level={2} name="API" />
-
-      <Header level={3} name="Components" />
-
-      <Header level={4} name="Form" />
-      <Paragraph>Description</Paragraph>
-      <Paragraph>Typed Interface</Paragraph>
-      <Paragraph>Prop details</Paragraph>
-
-      <Header level={4} name="Field" />
+      <Header level={3} name="<Form /> component" />
       <Paragraph>
-        A group of checkbox inputs, collected in a labeled Fieldset component.
-        This is the component you get from a{" "}
-        <Code>{'<Field type="checkboxes" />'}</Code>, but it comes without field
-        validation.
+        The Form component is a thin wrapper around the native form element that
+        enhances the form submit and validation.
       </Paragraph>
       <Paragraph>
         <b>Props:</b>
       </Paragraph>
       <Paragraph>
-        <Header level={5} name="Field Options">
-          Options
+        <Header level={5} name="Form validateOnBlur">
+          validateOnBlur
         </Header>
         <Paragraph>
-          <b>Type:</b> <Code>Option[] | string[]</Code>
-          <br />A list of string options which will be used as both the field
-          value and the field label, or an Option object which contains a{" "}
-          <Code>value</Code> key/value pair and a <Code>name</Code> key/value
-          pair used exactly as they are named.
+          <b>Optional Function</b>
+          <br />
+          <b>Type:</b>{" "}
+          <Code>
+            {
+              "(getValue: GetValue, setValue: SetValue) => FormErrors | undefined | null"
+            }
+          </Code>
+          <br />
+          An optional custom validator that will be run when a field within the
+          form is blurred. It gets passed synchronous getter and setter methods
+          for form values.
         </Paragraph>
       </Paragraph>
       <br />
       <Paragraph>
-        <Header level={5} name="Field defaultChecked">
-          defaultChecked
+        <Header level={5} name="Form validateOnChange">
+          validateOnChange
         </Header>
         <Paragraph>
-          <b>Type:</b> <Code>null | undefined | string[]</Code>
+          <b>Optional Function</b>
           <br />
-          An optional prop specifying which, if any, of the option values will
-          be initially selected.
+          <b>Type:</b>{" "}
+          <Code>
+            {
+              "(getValue: GetValue, setValue: SetValue) => FormErrors | undefined | null"
+            }
+          </Code>
+          <br />
+          An optional custom validator that will be run when a field within the
+          form is changed. It gets passed synchronous getter and setter methods
+          for form values.
         </Paragraph>
       </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form submitFormData">
+          submitFormData
+        </Header>
+        <Paragraph>
+          <b>Optional Function</b>
+          <br />
+          <b>Type:</b>{" "}
+          <Code>
+            {
+              "(data: FormData) => void | FormErrors | Promise<void | FormErrors>"
+            }
+          </Code>
+          <br />
+          JavaScript submit method that will be used instead of submitting
+          directly to the form action. Form values will be validated, and if
+          valid then submitted to this callback with the form values as a
+          FormData object. You may return a FormErrors shaped object to set or
+          clear errors on the form fields.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form submitJson">
+          submitJson
+        </Header>
+        <Paragraph>
+          <b>Optional Function</b>
+          <br />
+          <b>Type:</b>{" "}
+          <Code>
+            {
+              "(data: Record<string, unknown>) => void | FormErrors | Promise<void | FormErrors>"
+            }
+          </Code>
+          <br />
+          JavaScript submit method that will be used instead of submitting
+          directly to the form action. Form values will be validated, and if
+          valid then submitted to this callback with the form values as a
+          JavAscript object. You may return a FormErrors shaped object to set or
+          clear errors on the form fields. If you have defined a{" "}
+          <Code>submitFormData</Code> then this prop will be ignored.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form dialog">
+          dialog
+        </Header>
+        <Paragraph>
+          <b>Optional Boolean</b>
+          <br />
+          <b>Type:</b> <Code>boolean</Code>
+          <br />
+          Boolean which indicates the form is embedded within a dialog context
+          and will therefor not fallback to an HTTP submit if there is no
+          JavaScript submit handler. If this is true, then submitting the form
+          will trigger the usual submit event, but will also close the dialog.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form method">
+          method
+        </Header>
+        <Paragraph>
+          <b>Optional String</b>
+          <br />
+          <b>Type:</b> <Code>"post" | "get"</Code>
+          <br />
+          If the form is submitted and there is no JavaScript handler set then
+          the form will submit natively using this HTTP method as well as the
+          form <Code>action</Code>.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form action">
+          action
+        </Header>
+        <Paragraph>
+          <b>Optional String</b>
+          <br />
+          <b>Type:</b> <Code>string</Code>
+          <br />
+          If the form is submitted and there is no JavaScript handler set then
+          the form will submit natively to the url specified here using the HTTP
+          method specified in the <Code>method</Code>.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form target">
+          target
+        </Header>
+        <Paragraph>
+          <b>Optional String</b>
+          <br />
+          <b>Type:</b> <Code>"_self" | "_blank" | "_parent" | "_top"</Code>
+          <br />
+          If the form is submitted and there is no JavaScript handler set then
+          the form will submit natively to the url specified here using the HTTP
+          method specified in the <Code>method</Code>.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form encType">
+          encType
+        </Header>
+        <Paragraph>
+          <b>Optional String</b>
+          <br />
+          <b>Type:</b>{" "}
+          <Code>
+            "application/x-www-form-urlencoded" | "multipart/form-data" |
+            "text/plain"
+          </Code>
+          <br />
+          If the form is submitted via the "post" method then this is the MIME
+          type used. Use <Code>"multipart/form-data"</Code> if your form
+          contains an input with a file.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Form autoComplete">
+          autoComplete
+        </Header>
+        <Paragraph>
+          <b>Optional Boolean</b>
+          <br />
+          <b>Type:</b> <Code>boolean</Code>
+          <br />
+          Sets the default autoComplete value for all inputs in this form.
+          Sometimes browsers will ignore this on forms it thinks it knows better
+          about, ex. login forms.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Form
+  method="post"
+  action="/my-endpoint/"
+  target="_blank"
+  submitFormData={data =>
+    myApiService.post("/my-endpoint/", data)
+      .then(err => {
+        if (err) return err;
+        setUIState("success");
+      })}
+/>`}</CodeBlock>
+      </Paragraph>
+      <Header level={3} name="<Submit /> component" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="Submit validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={3} name="<Field /> component" />
+      <Paragraph>
+        The Field is a consolidated, typed wrapper around native HTML labels and
+        inputs which provides a solid, accessible foundation to build your
+        forms. Since the vast majority of HTML form inputs are under a single
+        tag with a <Code>type</Code> attribute, we go just a step farther to
+        bring the <Code>textarea</Code>, <Code>select</Code> under the same
+        pattern. Additionally we have defined two new field types: the{" "}
+        <Code>checkboxes</Code> and <Code>radiogroup</Code> types which are
+        convenient ways to handle a checklist of options, or a set of radio
+        options.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b> (shared by all field types)
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="Field name">
+          name
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>string</Code>
+          <br />
+          The name by which this field's value will be referenced.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field validateOnChange">
+          validateOnChange
+        </Header>
+        <Paragraph>
+          <b>Optional Function</b><br />
+          <b>Type:</b> <Code>{"(value: FieldValue) => string"}</Code>
+          <br />
+          Validation function to be run on every field change. It takes the
+          current field value and should return a string error message or an
+          empty string if no error.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field validateOnBlur">
+          validateOnBlur
+        </Header>
+        <Paragraph>
+          <b>Optional Function</b><br />
+          <b>Type:</b> <Code>{"(value: FieldValue) => string"}</Code>
+          <br />
+          Validation function to be run on field blur. If{" "}
+          <Code>validateOnChange</Code> is also defined, then this prop is
+          ignored. It takes the current field value and should return a string
+          error message or an empty string if no error.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field disabled">
+          disabled
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>boolean | undefined</Code>
+          <br />
+          Optional boolean prop to specify that this field should be disabled
+          and prevent user input or modification.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field autoFocus">
+          autoFocus
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>boolean | undefined</Code>
+          <br />
+          Optional boolean prop to specify that this field should be autofocused
+          on render. Only one field should have this property set to true at a
+          time.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field required">
+          required
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>boolean | undefined</Code>
+          <br />
+          Optional boolean prop to make field required in order to submit the
+          form.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field className">
+          className
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>string | undefined</Code>
+          <br />
+          An optional prop passes to label element as the <Code>
+            className
+          </Code>{" "}
+          prop.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field inputClassName">
+          inputClassName
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>string | undefined</Code>
+          <br />
+          An optional prop passes to input compontent as the{" "}
+          <Code>className</Code> prop.
+        </Paragraph>
+      </Paragraph>
+      <br />
+      <Paragraph>
+        <Header level={5} name="Field hintClassName">
+          hintClassName
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>string | undefined</Code>
+          <br />
+          An optional prop passes to span wrapping the hint text as the{" "}
+          <Code>className</Code> prop.
+        </Paragraph>
+      </Paragraph>
+      <br />
       <Paragraph>
         <b>Example:</b>
         <CodeBlock>{`<Field
@@ -92,7 +425,481 @@ export function API({ className }: { className?: string | undefined }) {
   defaultChecked={["Lettuce", "Tomato"]}
 />`}</CodeBlock>
       </Paragraph>
-
+      <Header level={4} name="checkbox" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="checkbox validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="checkboxes" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="checkboxes validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="date" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="date validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="datetime-local" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="datetime-local validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="email" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="email validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="file" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="file validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="month" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="month validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="number" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="number validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="password" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="password validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="radio" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="radio validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="radiogroup" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="radiogroup validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="range" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="range validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="search" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="search validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="select" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="select validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="tel" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="tel validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="text" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="text validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="textarea" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="textarea validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="url" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="url validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
+      <Header level={4} name="week" />
+      <Paragraph>
+        The Submit component is a thin wrapper around the native HTML button
+        element. It defines the button type as a submit button for you, and
+        hooks into the form it's enclosed in so that it will automatically
+        disable or enable based on the form and field validation.
+      </Paragraph>
+      <Paragraph>
+        <b>Props:</b>
+      </Paragraph>
+      <Paragraph>
+        <Header level={5} name="week validate">
+          validate
+        </Header>
+        <Paragraph>
+          <b>Type:</b> <Code>"onChange" | "onBlur"</Code>
+          <br />
+          Set when the submit button will check the form validity to determine
+          if it should be disabled or not.
+        </Paragraph>
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`<Submit validate="onChange" disabled={myCustomReasonToDisable}>Submit form</Submit>`}</CodeBlock>
+      </Paragraph>
       {/* <Header level={4} name="Input" />
       <Paragraph>Description</Paragraph>
       <Paragraph>Typed Interface</Paragraph>
@@ -125,13 +932,11 @@ export function API({ className }: { className?: string | undefined }) {
 
       <Header level={4} name="Checkboxes" />
       */}
-
       <Header level={3} name="Core" />
       <Paragraph>
         Most of the core utils documented below are used internally in the Form
         and Field components, and are provided here for advanced users.
       </Paragraph>
-
       <Header level={4} name="Default error messages" />
       <Paragraph>
         Validation is built on-top of native HTML form client-side validation,
@@ -174,8 +979,7 @@ export function API({ className }: { className?: string | undefined }) {
         Any of these errors can be overriden using the{" "}
         <Code>setDefaultErrorMessages</Code> function documented below.
       </Paragraph>
-
-      <Header level={4} name="setDefaultErrorMessages" />
+      <Header level={4} name="setDefaultErrorMessages()" />
       <Paragraph>
         Call this to customize any of the default error messages used for the
         the built-in field vaidation.
@@ -209,8 +1013,7 @@ export function API({ className }: { className?: string | undefined }) {
 });`}
         </CodeBlock>
       </Paragraph>
-
-      <Header level={4} name="getErrorMessage" />
+      <Header level={4} name="getErrorMessage()" />
       <Paragraph>
         Called when validating an input if{" "}
         <Code>inputElement.validity.valid === false</Code> in order to map the
@@ -241,8 +1044,7 @@ export function API({ className }: { className?: string | undefined }) {
         <b>Example:</b>
         <CodeBlock>{`getErrorMessage(textInput);`}</CodeBlock>
       </Paragraph>
-
-      <Header level={4} name="getFormFieldValue" />
+      <Header level={4} name="getFormFieldValue()" />
       <Paragraph>
         This function is the uncurried version provided by the form validators
         that allows for pulling the current value of any named input within a
@@ -276,8 +1078,7 @@ export function API({ className }: { className?: string | undefined }) {
         <b>Example:</b>
         <CodeBlock>{`getFormFieldValue(formElement, "username");`}</CodeBlock>
       </Paragraph>
-
-      <Header level={4} name="getFormValuesAsFormData" />
+      <Header level={4} name="getFormValuesAsFormData()" />
       <Paragraph>
         Get all the values from a form as a FormData instance, just as if the
         form had been submitted natively.
@@ -307,8 +1108,7 @@ export function API({ className }: { className?: string | undefined }) {
         <b>Example:</b>
         <CodeBlock>{`getFormValuesAsFormData(formElement);`}</CodeBlock>
       </Paragraph>
-
-      <Header level={4} name="getFormValuesAsJson" />
+      <Header level={4} name="getFormValuesAsJson()" />
       <Paragraph>
         Get all the values from a form as a javascript object.
       </Paragraph>
@@ -336,8 +1136,7 @@ export function API({ className }: { className?: string | undefined }) {
         <b>Example:</b>
         <CodeBlock>{`getFormValuesAsJson(formElement);`}</CodeBlock>
       </Paragraph>
-
-      <Header level={4} name="setFormFieldError" />
+      <Header level={4} name="setFormFieldError()" />
       <Paragraph>
         Function used by the library to set the error text for any named field
         within a form.

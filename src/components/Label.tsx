@@ -48,6 +48,7 @@ export function Label({
           hintClassName || ""
         )}
         aria-live="polite"
+        data-hint={hint}
       >
         {hint}
       </span>

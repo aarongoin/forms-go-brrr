@@ -98,6 +98,6 @@ export declare type BaseInputProps = {
     tabIndex?: number;
     autocorrect?: boolean;
 };
-export declare type InputProps = BaseInputProps & InputTypes & Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby">;
+export declare type InputProps = BaseInputProps & InputTypes & Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby" | "type">;
 export declare function Input(props: InputProps): React.ReactElement;
 export {};

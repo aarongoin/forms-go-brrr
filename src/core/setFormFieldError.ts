@@ -1,6 +1,4 @@
-import {
-  FieldInputElement,
-} from "./types";
+import { FieldInputElement } from "./types";
 
 export function setFormFieldError(
   form: HTMLFormElement,
@@ -18,6 +16,6 @@ export function setFormFieldError(
   el.setCustomValidity(error);
   const hint = el
     .closest(".fgb-Label, .fgb-Fieldset")
-    ?.querySelector(`#${el.name}-hint`);
-  if (hint) hint.textContent = error;
+    ?.querySelector(`#${el.name}-hint`) as HTMLSpanElement | null;
+  if (hint) hint.textContent = error || hint.dataset.hint || "";
 }

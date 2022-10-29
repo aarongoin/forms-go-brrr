@@ -1,21 +1,12 @@
 import { getErrorMessage } from "./errorMessages";
 import { getFormFieldValue } from "./getFormFieldValue";
-function wrapWithFieldValidation(onEvent, validators, outerHandler) {
+import { setFormFieldError } from "./setFormFieldError";
+function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   const validateInput = (input) => {
-    var _a;
     let error = !input.validity.valid ? getErrorMessage(input) : "";
-    if (!error) {
-      const value = getFormFieldValue(input.form, input.name);
-      for (const validator of validators) {
-        error = validator(value);
-        if (error)
-          break;
-      }
-    }
-    input.setCustomValidity(error);
-    const hint = (_a = input.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${input.name}-hint`);
-    if (hint)
-      hint.textContent = error;
+    const value = getFormFieldValue(input.form, input.name);
+    error = validator(value) || error;
+    setFormFieldError(input.form, input.name, error);
     return !!error;
   };
   return {

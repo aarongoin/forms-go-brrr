@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Optional } from "../core/types";
 import { BaseInputProps } from "./Input";
 export declare type TextareaType = {
     type: "textarea";
@@ -7,5 +8,6 @@ export declare type TextareaType = {
     spellcheck?: boolean;
     autosize?: boolean;
 };
-export declare type TextareaProps = BaseInputProps & TextareaType & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+export declare type TextareaFieldProps = BaseInputProps & TextareaType & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+export declare type TextareaProps = BaseInputProps & Optional<TextareaType, "type"> & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 export declare function Textarea({ type, minRows, autosize, className, ...props }: TextareaProps): JSX.Element;

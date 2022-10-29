@@ -12,7 +12,7 @@ import {
   CodeDemo,
 } from "./components";
 import { API, apiLinks } from "./pages/API";
-import { BasicConcepts, basicConceptLinks } from "./pages/BasicConcepts";
+import { Concepts, conceptsLinks } from "./pages/Concepts";
 import { Examples, exampleLinks } from "./pages/Examples";
 import { GettingStarted, gettingStartedLinks } from "./pages/GettingStarted";
 
@@ -27,7 +27,7 @@ function ExampleApp() {
       <DocLinks
         links={[
           ...gettingStartedLinks,
-          ...basicConceptLinks,
+          ...conceptsLinks,
           ...apiLinks,
           ...exampleLinks
         ]}
@@ -35,7 +35,7 @@ function ExampleApp() {
       <Column space={4}>
         <Header level={1} name="forms-go-brrr" />
         <GettingStarted />
-        <BasicConcepts />
+        <Concepts />
         <API />
         <Examples />
       </Column>
