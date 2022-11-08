@@ -1,31 +1,23 @@
 import React from "react";
 import { render } from "react-dom";
-import { Form, Field } from "../index";
 import {
-  CodeBlock,
   Column,
   DocLinks,
   Header,
-  Paragraph,
-  StickyColumnPair,
   PageWrapper,
-  CodeDemo,
 } from "./components";
 import { API, apiLinks } from "./pages/API";
 import { Concepts, conceptsLinks } from "./pages/Concepts";
 import { Examples, exampleLinks } from "./pages/Examples";
 import { GettingStarted, gettingStartedLinks } from "./pages/GettingStarted";
-
-type ExampleFormValues = {
-  text_field: string;
-  text_area: string;
-};
+import { Introduction, introductionLinks } from "./pages/Introduction";
 
 function ExampleApp() {
   return (
     <PageWrapper>
       <DocLinks
         links={[
+          ...introductionLinks,
           ...gettingStartedLinks,
           ...conceptsLinks,
           ...apiLinks,
@@ -34,6 +26,7 @@ function ExampleApp() {
       />
       <Column space={4}>
         <Header level={1} name="forms-go-brrr" />
+        <Introduction />
         <GettingStarted />
         <Concepts />
         <API />

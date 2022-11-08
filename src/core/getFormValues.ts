@@ -29,7 +29,7 @@ export const getFormValuesAsJson = <FV extends FormValues = FormValues>(form: HT
           if (input.checked) setKV(result, input.name, input.value);
           continue;
         case "checkbox":
-          if (input.dataset.group !== input.name)
+          if (input.dataset.fgbGroup !== input.name)
             setKV(result, input.name, !!input.checked);
           else if (!input.checked && !result[input.name])
             setKV(result, input.name, []);

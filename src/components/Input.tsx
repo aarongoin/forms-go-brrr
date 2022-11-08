@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Option } from "../core/types";
 
 type TextTypeProps = {
   minLength?: number;
@@ -11,15 +12,25 @@ export type TextInputProps = {
   type: "text";
   autocomplete?: string;
   defaultValue?: string;
+  options?: string[] | Option[];
 } & TextTypeProps;
 
 export type TelInputProps = {
   type: "tel";
+  options?: string[] | Option[];
 } & TextTypeProps;
+
+export type ColorInputProps = {
+  type: "color";
+  autocomplete?: string;
+  defaultValue?: string;
+  options?: string[] | Option[];
+};
 
 export type UrlInputProps = {
   type: "url";
   defaultValue?: string;
+  options?: string[] | Option[];
 } & TextTypeProps;
 
 export type PasswordInputProps = {
@@ -31,6 +42,7 @@ export type PasswordInputProps = {
 export type SearchInputProps = {
   type: "search";
   defaultValue?: string;
+  options?: string[] | Option[];
   // Can use `::-webkit-search-cancel-button` to style the clear search button provided by webkit browsers
 } & TextTypeProps;
 
@@ -39,6 +51,7 @@ export type EmailInputProps = {
   multiple?: boolean;
   autocomplete?: "on" | "off" | "email";
   defaultValue?: string;
+  options?: string[] | Option[];
 } & TextTypeProps;
 
 type NumberTypeProps = {
@@ -49,13 +62,20 @@ type NumberTypeProps = {
 
 export type NumberInputProps = {
   type: "number";
-  pattern?: string;
   defaultValue?: number;
+  options?: number[];
 } & NumberTypeProps;
+
+export type NumericInputProps = {
+  type: "numeric";
+  defaultValue?: number;
+  options?: number[];
+};
 
 export type RangeInputProps = {
   type: "range";
   defaultValue?: number;
+  options?: number[]; // for tick marks
 } & NumberTypeProps;
 
 type DateTypeProps = {
@@ -67,6 +87,7 @@ type DateTypeProps = {
 export type DateInputProps = {
   type: "date";
   defaultValue?: string;
+  options?: string[] | Option[];
   // value YYYY-MM-DD
   // step is in days
 } & DateTypeProps;
@@ -74,6 +95,7 @@ export type DateInputProps = {
 export type TimeInputProps = {
   type: "time";
   defaultValue?: string;
+  options?: string[] | Option[];
   // value hh:mm
   // step is in seconds
 } & DateTypeProps;
@@ -81,6 +103,7 @@ export type TimeInputProps = {
 export type DatetimeInputProps = {
   type: "datetime-local";
   defaultValue?: string;
+  options?: string[] | Option[];
   // value YYYY-MM-DDThh:mm
   // step is in seconds
 } & DateTypeProps;
@@ -88,6 +111,7 @@ export type DatetimeInputProps = {
 export type MonthInputProps = {
   type: "month";
   defaultValue?: string;
+  options?: string[] | Option[];
   // value YYYY-MM
   // step is in months
 } & DateTypeProps;
@@ -95,6 +119,7 @@ export type MonthInputProps = {
 export type WeekInputProps = {
   type: "week";
   defaultValue?: string;
+  options?: string[] | Option[];
   // value YYYY-Www
   // step is in weeks
 } & DateTypeProps;
@@ -117,6 +142,11 @@ export type RadioInputProps = {
   defaultChecked?: boolean;
 };
 
+export type HiddenInputProps = {
+  type: "hidden";
+  defaultValue: string;
+};
+
 export type InputTypes =
   | TextInputProps
   | TelInputProps
@@ -125,6 +155,7 @@ export type InputTypes =
   | EmailInputProps
   | PasswordInputProps
   | NumberInputProps
+  | NumericInputProps
   | RangeInputProps
   | FileInputProps
   | CheckboxInputProps
@@ -133,7 +164,9 @@ export type InputTypes =
   | TimeInputProps
   | DatetimeInputProps
   | MonthInputProps
-  | WeekInputProps;
+  | WeekInputProps
+  | ColorInputProps
+  | HiddenInputProps;
 
 export type BaseInputProps = {
   name: string;
@@ -149,18 +182,55 @@ export type BaseInputProps = {
 
 export type InputProps = BaseInputProps &
   InputTypes &
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby" | "type">;
+  Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "aria-describedby" | "type"
+  >;
 
-export function Input(props: InputProps): React.ReactElement {
-  return (
+export function Input({
+  type,
+  // @ts-expect-error - it's okay. Not every input type accepts this, but we can still hande them as one
+  options,
+  ...props
+}: InputProps): React.ReactElement {
+  const input = (
     <input
       tabIndex={0}
+      {...(type === "numeric"
+        ? {
+            type: "text",
+            inputMode: "numeric",
+            pattern: "[0-9]*",
+          }
+        : { type })}
       {...props}
       aria-describedby={`${props.name}-hint`}
-      className={"fgb-Input".concat(
-        props.className ? " " : "",
-        props.className || ""
-      )}
+      data-fgb="input"
+      list={
+        Array.isArray(options) && options.length
+          ? `${props.name}-options`
+          : undefined
+      }
     />
+  );
+  return Array.isArray(options) && options.length ? (
+    <React.Fragment>
+      {input}
+      <datalist id={`${props.name}-options`}>
+        {options.map((o) =>
+          typeof o === "object" ? (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ) : (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          )
+        )}
+      </datalist>
+    </React.Fragment>
+  ) : (
+    input
   );
 }

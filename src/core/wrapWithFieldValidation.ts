@@ -14,13 +14,14 @@ export function wrapWithFieldValidation<
   V extends FieldValue = FieldValue
 >(
   onEvent: ValidationEvents,
-  validator: ValidateFn<V>,
+  validator?: ValidateFn<V>,
   outerHandler?: (event: React.ChangeEvent<I> | React.FocusEvent<I>) => unknown
 ) {
   const validateInput = (input: I): boolean => {
     let error = !input.validity.valid ? getErrorMessage(input) : "";
     const value = getFormFieldValue<V>(input.form!, input.name);
-    error = validator(value) || error;
+    error = validator?.(value) || error;
+    console.log({ name: input.name, error, value, validated: validator?.(value), validity: input.validity })
     setFormFieldError(input.form!, input.name, error);
     return !!error;
   };

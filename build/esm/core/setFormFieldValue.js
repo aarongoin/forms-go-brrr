@@ -49,7 +49,7 @@ function setFormFieldValue(form, name, value) {
       el.value = value.join(",");
       return;
     }
-    if (el.type === "checkbox" && el.dataset.group !== el.name) {
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name) {
       el.checked = !!value;
       return;
     }

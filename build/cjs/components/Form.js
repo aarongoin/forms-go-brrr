@@ -70,7 +70,6 @@ function Form(_a) {
     submitJson,
     validateOnBlur,
     validateOnChange,
-    className,
     autoComplete = false
   } = _b, props = __objRest(_b, [
     "dialog",
@@ -80,7 +79,6 @@ function Form(_a) {
     "submitJson",
     "validateOnBlur",
     "validateOnChange",
-    "className",
     "autoComplete"
   ]);
   if (!submitFormData && !submitJson)
@@ -88,7 +86,7 @@ function Form(_a) {
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
   return /* @__PURE__ */ React.createElement("form", __spreadProps(__spreadValues({}, props), {
-    className: "fgb-Form".concat(className ? " " : "", className || ""),
+    "data-fgb": "form",
     noValidate: typeof window !== void 0,
     autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,

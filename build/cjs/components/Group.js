@@ -1,7 +1,9 @@
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
@@ -19,6 +21,7 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __objRest = (source, exclude) => {
   var target = {};
   for (var prop in source)
@@ -48,16 +51,15 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var Checkboxes_exports = {};
-__export(Checkboxes_exports, {
-  Checkboxes: () => Checkboxes
+var Group_exports = {};
+__export(Group_exports, {
+  Group: () => Group
 });
-module.exports = __toCommonJS(Checkboxes_exports);
+module.exports = __toCommonJS(Group_exports);
 var React = __toESM(require("react"));
 var import_Fieldset = require("./Fieldset");
 var import_Input = require("./Input");
-var import_Label = require("./Label");
-function Checkboxes(_a) {
+function Group(_a) {
   var _b = _a, {
     type,
     name,
@@ -71,23 +73,24 @@ function Checkboxes(_a) {
     "label",
     "defaultChecked"
   ]);
-  return /* @__PURE__ */ React.createElement(import_Fieldset.Fieldset, __spreadValues({
-    label,
-    name
-  }, props), options.map((opt) => /* @__PURE__ */ React.createElement(import_Label.InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.label
-  }, /* @__PURE__ */ React.createElement(import_Input.Input, {
-    key: typeof opt === "string" ? opt : opt.value,
-    type: "checkbox",
-    name,
-    value: typeof opt === "string" ? opt : String(opt.value),
-    "data-group": name,
-    defaultChecked: defaultChecked ? defaultChecked.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.value
-    ) : false
-  }))));
+  return options.map((opt) => {
+    const { value, label: label2 } = typeof opt === "object" ? opt : { label: opt, value: opt };
+    const id = `${name}-${value}`;
+    return /* @__PURE__ */ React.createElement(import_Fieldset.Fieldset, {
+      name: id,
+      label: label2,
+      key: value
+    }, /* @__PURE__ */ React.createElement(import_Input.Input, __spreadProps(__spreadValues({}, props), {
+      type: type.startsWith("c") ? "checkbox" : "radio",
+      name,
+      id,
+      value: String(value),
+      "data-fgb-group": name,
+      defaultChecked: Array.isArray(defaultChecked) ? defaultChecked.some((e) => e === value) : defaultChecked === value
+    })));
+  });
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  Checkboxes
+  Group
 });

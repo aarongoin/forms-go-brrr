@@ -30,40 +30,82 @@ var __objRest = (source, exclude) => {
   return target;
 };
 import * as React from "react";
-import { Checkboxes } from "./Checkboxes";
 import { Input } from "./Input";
-import { RadioGroup } from "./RadioGroup";
+import { Group } from "./Group";
 import { Select } from "./Select";
 import { Textarea } from "./Textarea";
-import { Label, InlineLabel } from "./Label";
+import { Fieldset } from "./Fieldset";
 import { wrapWithFieldValidation } from "../core";
-const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validateOnChange || props.validateOnBlur ? wrapWithFieldValidation(
+  const validationProps = wrapWithFieldValidation(
     props.validateOnChange ? "onChange" : "onBlur",
-    props.validateOnChange || props.validateOnBlur,
+    typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
     props[props.validateOnChange ? "onChange" : "onBlur"]
-  ) : null;
-  if (props.type === "checkboxes") {
-    return /* @__PURE__ */ React.createElement(Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  if (props.type === "radiogroup") {
-    return /* @__PURE__ */ React.createElement(RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? InlineLabel : Label;
-  return /* @__PURE__ */ React.createElement(LabelCmp, {
+  );
+  const _a = props, {
     label,
-    name: inputProps.name,
     hint,
-    className
-  }, inputProps.type === "select" ? /* @__PURE__ */ React.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)));
+    className,
+    style,
+    hintClassName,
+    hintStyle,
+    labelClassName,
+    labelStyle,
+    inputClassName,
+    inputStyle,
+    inputLabelClassName,
+    inputLabelStyle,
+    name,
+    type = "text"
+  } = _a, inputProps = __objRest(_a, [
+    "label",
+    "hint",
+    "className",
+    "style",
+    "hintClassName",
+    "hintStyle",
+    "labelClassName",
+    "labelStyle",
+    "inputClassName",
+    "inputStyle",
+    "inputLabelClassName",
+    "inputLabelStyle",
+    "name",
+    "type"
+  ]);
+  return /* @__PURE__ */ React.createElement(Fieldset, {
+    label,
+    name,
+    hint,
+    className,
+    style,
+    hintStyle,
+    hintClassName,
+    labelStyle,
+    labelClassName,
+    "data-fgb-type": type,
+    group: type === "radios" || type === "checkboxes"
+  }, type === "select" ? /* @__PURE__ */ React.createElement(Select, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "textarea" ? /* @__PURE__ */ React.createElement(Textarea, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "checkboxes" || type === "radios" ? /* @__PURE__ */ React.createElement(Group, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    type,
+    name,
+    className: inputLabelClassName,
+    style: inputLabelStyle,
+    inputClassName,
+    inputStyle
+  })) : /* @__PURE__ */ React.createElement(Input, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    type,
+    className: inputClassName,
+    style: inputStyle
+  })));
 }
 export {
   Field

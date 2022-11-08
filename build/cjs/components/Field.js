@@ -57,40 +57,82 @@ __export(Field_exports, {
 });
 module.exports = __toCommonJS(Field_exports);
 var React = __toESM(require("react"));
-var import_Checkboxes = require("./Checkboxes");
 var import_Input = require("./Input");
-var import_RadioGroup = require("./RadioGroup");
+var import_Group = require("./Group");
 var import_Select = require("./Select");
 var import_Textarea = require("./Textarea");
-var import_Label = require("./Label");
+var import_Fieldset = require("./Fieldset");
 var import_core = require("../core");
-const inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validateOnChange || props.validateOnBlur ? (0, import_core.wrapWithFieldValidation)(
+  const validationProps = (0, import_core.wrapWithFieldValidation)(
     props.validateOnChange ? "onChange" : "onBlur",
-    props.validateOnChange || props.validateOnBlur,
+    typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
     props[props.validateOnChange ? "onChange" : "onBlur"]
-  ) : null;
-  if (props.type === "checkboxes") {
-    return /* @__PURE__ */ React.createElement(import_Checkboxes.Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  if (props.type === "radiogroup") {
-    return /* @__PURE__ */ React.createElement(import_RadioGroup.RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? import_Label.InlineLabel : import_Label.Label;
-  return /* @__PURE__ */ React.createElement(LabelCmp, {
+  );
+  const _a = props, {
     label,
-    name: inputProps.name,
     hint,
-    className
-  }, inputProps.type === "select" ? /* @__PURE__ */ React.createElement(import_Select.Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React.createElement(import_Textarea.Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React.createElement(import_Input.Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)));
+    className,
+    style,
+    hintClassName,
+    hintStyle,
+    labelClassName,
+    labelStyle,
+    inputClassName,
+    inputStyle,
+    inputLabelClassName,
+    inputLabelStyle,
+    name,
+    type = "text"
+  } = _a, inputProps = __objRest(_a, [
+    "label",
+    "hint",
+    "className",
+    "style",
+    "hintClassName",
+    "hintStyle",
+    "labelClassName",
+    "labelStyle",
+    "inputClassName",
+    "inputStyle",
+    "inputLabelClassName",
+    "inputLabelStyle",
+    "name",
+    "type"
+  ]);
+  return /* @__PURE__ */ React.createElement(import_Fieldset.Fieldset, {
+    label,
+    name,
+    hint,
+    className,
+    style,
+    hintStyle,
+    hintClassName,
+    labelStyle,
+    labelClassName,
+    "data-fgb-type": type,
+    group: type === "radios" || type === "checkboxes"
+  }, type === "select" ? /* @__PURE__ */ React.createElement(import_Select.Select, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "textarea" ? /* @__PURE__ */ React.createElement(import_Textarea.Textarea, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "checkboxes" || type === "radios" ? /* @__PURE__ */ React.createElement(import_Group.Group, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    type,
+    name,
+    className: inputLabelClassName,
+    style: inputLabelStyle,
+    inputClassName,
+    inputStyle
+  })) : /* @__PURE__ */ React.createElement(import_Input.Input, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    type,
+    className: inputClassName,
+    style: inputStyle
+  })));
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

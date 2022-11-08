@@ -14,8 +14,9 @@ export function setFormFieldError(
       : (elOrEls as FieldInputElement);
 
   el.setCustomValidity(error);
+
   const hint = el
-    .closest(".fgb-Label, .fgb-Fieldset")
+    .closest("[data-fgb='fieldset']")
     ?.querySelector(`#${el.name}-hint`) as HTMLSpanElement | null;
-  if (hint) hint.textContent = error || hint.dataset.hint || "";
+  if (hint) hint.textContent = error || hint.dataset.fgbHint || "";
 }

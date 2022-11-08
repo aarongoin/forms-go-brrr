@@ -63,7 +63,7 @@ export function setFormFieldValue<V extends FieldValue>(
       el.value = value.join(",");
       return;
     }
-    if (el.type === "checkbox" && el.dataset.group !== el.name) {
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name) {
       el.checked = !!value;
       return;
     }

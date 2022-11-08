@@ -10,4 +10,4 @@ export declare type TextareaType = {
 };
 export declare type TextareaFieldProps = BaseInputProps & TextareaType & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 export declare type TextareaProps = BaseInputProps & Optional<TextareaType, "type"> & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-export declare function Textarea({ type, minRows, autosize, className, ...props }: TextareaProps): JSX.Element;
+export declare function Textarea({ type, minRows, autosize, ...props }: TextareaProps): JSX.Element;

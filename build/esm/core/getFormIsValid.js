@@ -3,8 +3,8 @@ function getFormIsValid(form) {
   for (const el of Array.from(form.elements)) {
     if (!el.name)
       continue;
-    const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-    if (hint.textContent)
+    const hint = (_a = el.closest("[data-fgb='label']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+    if (hint == null ? void 0 : hint.textContent)
       return false;
   }
   return true;

@@ -37,19 +37,20 @@ export function Concepts({ className }: { className?: string | undefined }) {
       <Paragraph>
         The backbone of every web application is the form. You want to accept
         normalized inputs from your users, and submit these values painless to
-        your backend, or manipulate easiliy JavaScript. Forms-go-brrr does its
+        your server, or manipulate easily in JavaScript. Forms-go-brrr does its
         best to follow native HTML form conventions so that you can build forms
         with progressive enhancement in mind.
       </Paragraph>
       <Paragraph>
-        The Form is comprised of the wrapping Form component which generally
-        wraps all the fields within the form, and which governs how the data
-        will be submitted. Inside your Form, you'll have one or more Field
-        components which will specify normalized and freeform fields for your
-        user, and upon which you can specify more specific validation rules to
-        help your users. Finally you'll typically have a Submit button in your
-        form which will trigger a final validation and submit the values just as
-        you've specified.
+        The form is really a composition of several components: the Form, the
+        Field(s), and the Submit button. The Form component generally wraps all
+        the fields within the form, and which governs how the data will be
+        submitted. Inside your Form, you'll have one or more normalized or
+        freeform Field components for your user to enter data, and upon which
+        you can have more specific validation rules to help your users fill
+        things out correctly. Finally you'll typically have a Submit button in
+        your form which will trigger a final validation, and if all is valid:
+        submit the values just as you've specified.
       </Paragraph>
       <Header level={3} name="Data Submission" />
       <Paragraph>
@@ -153,7 +154,7 @@ export function Concepts({ className }: { className?: string | undefined }) {
           <Column space={2}>
             <Paragraph>
               Native css styles that target forms-go-brrr elements using their{" "}
-              <Code>.fgb-*</Code> class names.
+              <Code>[data-fgb=*]</Code> attributes.
             </Paragraph>
           </Column>
         }

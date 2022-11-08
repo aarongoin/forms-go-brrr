@@ -28,7 +28,8 @@ function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   const validateInput = (input) => {
     let error = !input.validity.valid ? (0, import_errorMessages.getErrorMessage)(input) : "";
     const value = (0, import_getFormFieldValue.getFormFieldValue)(input.form, input.name);
-    error = validator(value) || error;
+    error = (validator == null ? void 0 : validator(value)) || error;
+    console.log({ name: input.name, error, value, validated: validator == null ? void 0 : validator(value), validity: input.validity });
     (0, import_setFormFieldError.setFormFieldError)(input.form, input.name, error);
     return !!error;
   };

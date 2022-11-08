@@ -5,9 +5,9 @@ function setFormFieldError(form, name, error) {
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
   if (hint)
-    hint.textContent = error || hint.dataset.hint || "";
+    hint.textContent = error || hint.dataset.fgbHint || "";
 }
 export {
   setFormFieldError

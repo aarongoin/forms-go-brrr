@@ -6,10 +6,7 @@ export declare type SelectType = {
     options: Option[] | string[];
     defaultSelected?: string | string[];
     multiple?: boolean;
-    size?: number;
-    renderOption?: (opt: Option | string) => React.ReactNode;
-    optionClassName?: string | undefined;
 };
 export declare type SelectFieldProps = BaseInputProps & SelectType & React.SelectHTMLAttributes<HTMLSelectElement>;
 export declare type SelectProps = BaseInputProps & Optional<SelectType, "type"> & React.SelectHTMLAttributes<HTMLSelectElement>;
-export declare function Select({ options, type, defaultSelected, name, renderOption, className, optionClassName, ...props }: SelectProps): React.ReactElement;
+export declare function Select({ options, type, defaultSelected, name, ...props }: SelectProps): React.ReactElement;

@@ -22,7 +22,6 @@ export function Textarea({
   type,
   minRows = 3,
   autosize,
-  className,
   ...props
 }: TextareaProps) {
   return (
@@ -39,7 +38,7 @@ export function Textarea({
             }
           : undefined
       }
-      className={"fgb-Textarea".concat(className ? " " : "", className || "")}
+      data-fgb="input"
       rows={minRows}
     ></textarea>
   );

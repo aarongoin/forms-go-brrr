@@ -38,7 +38,7 @@ export function getFormFieldValue<V extends FieldValue>(
     if (el.type === "file") return el.files as V;
     if (el.type === "email" && el.multiple)
       return el.value.split(/\s*,\s*/) as V;
-    if (el.type === "checkbox" && el.dataset.group !== el.name)
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name)
       return el.checked as V;
     if (el.type === "radio") return el.checked as V;
 

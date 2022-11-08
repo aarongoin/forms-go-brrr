@@ -17,17 +17,49 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
 import * as React from "react";
-function Input(props) {
-  return /* @__PURE__ */ React.createElement("input", __spreadProps(__spreadValues({
+function Input(_a) {
+  var _b = _a, {
+    type,
+    options
+  } = _b, props = __objRest(_b, [
+    "type",
+    "options"
+  ]);
+  const input = /* @__PURE__ */ React.createElement("input", __spreadProps(__spreadValues(__spreadValues({
     tabIndex: 0
-  }, props), {
+  }, type === "numeric" ? {
+    type: "text",
+    inputMode: "numeric",
+    pattern: "[0-9]*"
+  } : { type }), props), {
     "aria-describedby": `${props.name}-hint`,
-    className: "fgb-Input".concat(
-      props.className ? " " : "",
-      props.className || ""
-    )
+    "data-fgb": "input",
+    list: Array.isArray(options) && options.length ? `${props.name}-options` : void 0
   }));
+  return Array.isArray(options) && options.length ? /* @__PURE__ */ React.createElement(React.Fragment, null, input, /* @__PURE__ */ React.createElement("datalist", {
+    id: `${props.name}-options`
+  }, options.map(
+    (o) => typeof o === "object" ? /* @__PURE__ */ React.createElement("option", {
+      key: o.value,
+      value: o.value
+    }, o.label) : /* @__PURE__ */ React.createElement("option", {
+      key: o,
+      value: o
+    }, o)
+  ))) : input;
 }
 export {
   Input

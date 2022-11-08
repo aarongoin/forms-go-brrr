@@ -30,54 +30,39 @@ var __objRest = (source, exclude) => {
   return target;
 };
 import * as React from "react";
-function Label(_a) {
+import { Fieldset } from "./Fieldset";
+import { Input } from "./Input";
+function Group(_a) {
   var _b = _a, {
-    label,
+    type,
     name,
-    children,
-    hint,
-    textClassName,
-    hintClassName,
-    className
+    options,
+    label,
+    defaultChecked
   } = _b, props = __objRest(_b, [
-    "label",
+    "type",
     "name",
-    "children",
-    "hint",
-    "textClassName",
-    "hintClassName",
-    "className"
+    "options",
+    "label",
+    "defaultChecked"
   ]);
-  const hintId = `${name}-hint`;
-  return /* @__PURE__ */ React.createElement("label", __spreadProps(__spreadValues({
-    htmlFor: name
-  }, props), {
-    className: "fgb-Label".concat(className ? " " : "", className || "")
-  }), typeof label === "string" ? /* @__PURE__ */ React.createElement("span", {
-    className: "fgb-Label-text".concat(
-      textClassName ? " " : "",
-      textClassName || ""
-    )
-  }, label) : label, children, /* @__PURE__ */ React.createElement("span", {
-    id: hintId,
-    className: "fgb-Label-hint".concat(
-      hintClassName ? " " : "",
-      hintClassName || ""
-    ),
-    "aria-live": "polite",
-    "data-hint": hint
-  }, hint));
-}
-function InlineLabel({
-  label,
-  children,
-  className
-}) {
-  return /* @__PURE__ */ React.createElement("label", {
-    className: "fgb-InlineLabel".concat(className ? " " : "", className || "")
-  }, children, label);
+  return options.map((opt) => {
+    const { value, label: label2 } = typeof opt === "object" ? opt : { label: opt, value: opt };
+    const id = `${name}-${value}`;
+    return /* @__PURE__ */ React.createElement(Fieldset, {
+      name: id,
+      label: label2,
+      key: value
+    }, /* @__PURE__ */ React.createElement(Input, __spreadProps(__spreadValues({}, props), {
+      type: type.startsWith("c") ? "checkbox" : "radio",
+      name,
+      id,
+      value: String(value),
+      "data-fgb-group": name,
+      defaultChecked: Array.isArray(defaultChecked) ? defaultChecked.some((e) => e === value) : defaultChecked === value
+    })));
+  });
 }
 export {
-  InlineLabel,
-  Label
+  Group
 };

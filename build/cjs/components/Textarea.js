@@ -61,13 +61,11 @@ function Textarea(_a) {
   var _b = _a, {
     type,
     minRows = 3,
-    autosize,
-    className
+    autosize
   } = _b, props = __objRest(_b, [
     "type",
     "minRows",
-    "autosize",
-    "className"
+    "autosize"
   ]);
   return /* @__PURE__ */ React.createElement("textarea", __spreadProps(__spreadValues({}, props), {
     onInput: autosize ? (event) => {
@@ -77,7 +75,7 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "fgb-Textarea".concat(className ? " " : "", className || ""),
+    "data-fgb": "input",
     rows: minRows
   }));
 }

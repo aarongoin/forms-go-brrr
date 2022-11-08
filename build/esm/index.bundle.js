@@ -30,107 +30,94 @@ var __objRest = (source, exclude) => {
   return target;
 };
 
-// src/components/Checkboxes.tsx
-import * as React4 from "react";
+// src/components/Field.tsx
+import * as React7 from "react";
+
+// src/components/Input.tsx
+import * as React from "react";
+function Input(_a) {
+  var _b = _a, {
+    type,
+    options
+  } = _b, props = __objRest(_b, [
+    "type",
+    "options"
+  ]);
+  const input = /* @__PURE__ */ React.createElement("input", __spreadProps(__spreadValues(__spreadValues({
+    tabIndex: 0
+  }, type === "numeric" ? {
+    type: "text",
+    inputMode: "numeric",
+    pattern: "[0-9]*"
+  } : { type }), props), {
+    "aria-describedby": `${props.name}-hint`,
+    "data-fgb": "input",
+    list: Array.isArray(options) && options.length ? `${props.name}-options` : void 0
+  }));
+  return Array.isArray(options) && options.length ? /* @__PURE__ */ React.createElement(React.Fragment, null, input, /* @__PURE__ */ React.createElement("datalist", {
+    id: `${props.name}-options`
+  }, options.map(
+    (o) => typeof o === "object" ? /* @__PURE__ */ React.createElement("option", {
+      key: o.value,
+      value: o.value
+    }, o.label) : /* @__PURE__ */ React.createElement("option", {
+      key: o,
+      value: o
+    }, o)
+  ))) : input;
+}
+
+// src/components/Group.tsx
+import * as React3 from "react";
 
 // src/components/Fieldset.tsx
-import * as React from "react";
+import * as React2 from "react";
 function Fieldset(_a) {
   var _b = _a, {
     name,
     label,
     children,
-    className,
     hint,
-    hintClassName
-  } = _b, props = __objRest(_b, [
-    "name",
-    "label",
-    "children",
-    "className",
-    "hint",
-    "hintClassName"
-  ]);
-  const hintId = `${name}-hint`;
-  return /* @__PURE__ */ React.createElement("fieldset", __spreadProps(__spreadValues({}, props), {
-    className: "fgb-Fieldset".concat(className ? " " : "", className || "")
-  }), /* @__PURE__ */ React.createElement("legend", null, label), children, /* @__PURE__ */ React.createElement("span", {
-    id: hintId,
-    className: "fgb-Fieldset-hint".concat(
-      hintClassName ? " " : "",
-      hintClassName || ""
-    ),
-    "aria-live": "polite",
-    "data-hint": hint
-  }, hint));
-}
-
-// src/components/Input.tsx
-import * as React2 from "react";
-function Input(props) {
-  return /* @__PURE__ */ React2.createElement("input", __spreadProps(__spreadValues({
-    tabIndex: 0
-  }, props), {
-    "aria-describedby": `${props.name}-hint`,
-    className: "fgb-Input".concat(
-      props.className ? " " : "",
-      props.className || ""
-    )
-  }));
-}
-
-// src/components/Label.tsx
-import * as React3 from "react";
-function Label(_a) {
-  var _b = _a, {
-    label,
-    name,
-    children,
-    hint,
-    textClassName,
     hintClassName,
-    className
+    labelClassName,
+    group,
+    labelStyle,
+    hintStyle
   } = _b, props = __objRest(_b, [
-    "label",
     "name",
+    "label",
     "children",
     "hint",
-    "textClassName",
     "hintClassName",
-    "className"
+    "labelClassName",
+    "group",
+    "labelStyle",
+    "hintStyle"
   ]);
   const hintId = `${name}-hint`;
-  return /* @__PURE__ */ React3.createElement("label", __spreadProps(__spreadValues({
-    htmlFor: name
-  }, props), {
-    className: "fgb-Label".concat(className ? " " : "", className || "")
-  }), typeof label === "string" ? /* @__PURE__ */ React3.createElement("span", {
-    className: "fgb-Label-text".concat(
-      textClassName ? " " : "",
-      textClassName || ""
-    )
-  }, label) : label, children, /* @__PURE__ */ React3.createElement("span", {
+  return /* @__PURE__ */ React2.createElement("fieldset", __spreadValues({
+    "data-fgb": "fieldset"
+  }, props), /* @__PURE__ */ React2.createElement("span", {
     id: hintId,
-    className: "fgb-Label-hint".concat(
-      hintClassName ? " " : "",
-      hintClassName || ""
-    ),
+    "data-fgb": "hint",
+    className: hintClassName,
     "aria-live": "polite",
-    "data-hint": hint
-  }, hint));
-}
-function InlineLabel({
-  label,
-  children,
-  className
-}) {
-  return /* @__PURE__ */ React3.createElement("label", {
-    className: "fgb-InlineLabel".concat(className ? " " : "", className || "")
-  }, children, label);
+    "data-fgb-hint": hint,
+    style: __spreadValues({ order: 2 }, hintStyle)
+  }, hint), group ? /* @__PURE__ */ React2.createElement("legend", {
+    "data-fgb": "label",
+    className: labelClassName,
+    style: labelStyle
+  }, label) : /* @__PURE__ */ React2.createElement("label", {
+    htmlFor: name,
+    "data-fgb": "label",
+    className: labelClassName,
+    style: labelStyle
+  }, label), children);
 }
 
-// src/components/Checkboxes.tsx
-function Checkboxes(_a) {
+// src/components/Group.tsx
+function Group(_a) {
   var _b = _a, {
     type,
     name,
@@ -144,112 +131,67 @@ function Checkboxes(_a) {
     "label",
     "defaultChecked"
   ]);
-  return /* @__PURE__ */ React4.createElement(Fieldset, __spreadValues({
-    label,
-    name
-  }, props), options.map((opt) => /* @__PURE__ */ React4.createElement(InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.label
-  }, /* @__PURE__ */ React4.createElement(Input, {
-    key: typeof opt === "string" ? opt : opt.value,
-    type: "checkbox",
-    name,
-    value: typeof opt === "string" ? opt : String(opt.value),
-    "data-group": name,
-    defaultChecked: defaultChecked ? defaultChecked.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.value
-    ) : false
-  }))));
-}
-
-// src/components/Field.tsx
-import * as React9 from "react";
-
-// src/components/RadioGroup.tsx
-import * as React5 from "react";
-function RadioGroup(_a) {
-  var _b = _a, {
-    type,
-    name,
-    options,
-    label,
-    defaultChecked
-  } = _b, props = __objRest(_b, [
-    "type",
-    "name",
-    "options",
-    "label",
-    "defaultChecked"
-  ]);
-  return /* @__PURE__ */ React5.createElement(Fieldset, __spreadValues({
-    label,
-    name
-  }, props), options.map((opt) => /* @__PURE__ */ React5.createElement(InlineLabel, {
-    label: typeof opt === "string" ? opt : opt.label
-  }, /* @__PURE__ */ React5.createElement(Input, {
-    key: typeof opt === "string" ? opt : opt.value,
-    type: "radio",
-    name,
-    value: typeof opt === "string" ? opt : String(opt.value),
-    "data-group": name,
-    defaultChecked: !!defaultChecked && defaultChecked === (typeof opt === "string" ? opt : opt.value)
-  }))));
+  return options.map((opt) => {
+    const { value, label: label2 } = typeof opt === "object" ? opt : { label: opt, value: opt };
+    const id = `${name}-${value}`;
+    return /* @__PURE__ */ React3.createElement(Fieldset, {
+      name: id,
+      label: label2,
+      key: value
+    }, /* @__PURE__ */ React3.createElement(Input, __spreadProps(__spreadValues({}, props), {
+      type: type.startsWith("c") ? "checkbox" : "radio",
+      name,
+      id,
+      value: String(value),
+      "data-fgb-group": name,
+      defaultChecked: Array.isArray(defaultChecked) ? defaultChecked.some((e) => e === value) : defaultChecked === value
+    })));
+  });
 }
 
 // src/components/Select.tsx
-import * as React6 from "react";
+import * as React4 from "react";
 function Select(_a) {
   var _b = _a, {
     options,
     type,
     defaultSelected,
-    name,
-    renderOption,
-    className,
-    optionClassName
+    name
   } = _b, props = __objRest(_b, [
     "options",
     "type",
     "defaultSelected",
-    "name",
-    "renderOption",
-    "className",
-    "optionClassName"
+    "name"
   ]);
-  const finalOptionClassName = "fgb-Field-option".concat(
-    optionClassName ? " " : "",
-    optionClassName || ""
-  );
-  return /* @__PURE__ */ React6.createElement("select", __spreadProps(__spreadValues({
+  return /* @__PURE__ */ React4.createElement("select", __spreadProps(__spreadValues({
     name,
     tabIndex: 0,
     "aria-describedby": `${name}-hint`
   }, props), {
-    className: "fgb-Select".concat(className ? " " : "", className || "")
-  }), options.map((opt) => /* @__PURE__ */ React6.createElement("option", {
-    key: typeof opt === "string" ? opt : opt.id,
-    value: typeof opt === "string" ? opt : opt.id,
-    className: finalOptionClassName,
-    defaultChecked: !!defaultSelected && (props.multiple && Array.isArray(defaultSelected) ? defaultSelected.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.id
-    ) : defaultSelected === (typeof opt === "string" ? opt : opt.id))
-  }, renderOption ? renderOption(opt) : typeof opt === "string" ? opt : opt.name)));
+    "data-fgb": "input"
+  }), options.map((opt) => {
+    const { value, label } = typeof opt === "object" ? opt : { label: opt, value: opt };
+    return /* @__PURE__ */ React4.createElement("option", {
+      key: value,
+      value,
+      defaultChecked: !!defaultSelected && (props.multiple && Array.isArray(defaultSelected) ? defaultSelected.some((e) => e == value) : defaultSelected == value)
+    }, label);
+  }));
 }
 
 // src/components/Textarea.tsx
-import * as React7 from "react";
+import * as React5 from "react";
 function Textarea(_a) {
   var _b = _a, {
     type,
     minRows = 3,
-    autosize,
-    className
+    autosize
   } = _b, props = __objRest(_b, [
     "type",
     "minRows",
-    "autosize",
-    "className"
+    "autosize"
   ]);
-  return /* @__PURE__ */ React7.createElement("textarea", __spreadProps(__spreadValues({}, props), {
+  return /* @__PURE__ */ React5.createElement("textarea", __spreadProps(__spreadValues({}, props), {
     onInput: autosize ? (event) => {
       const el = event.target;
       setTimeout(() => {
@@ -257,7 +199,7 @@ function Textarea(_a) {
         el.style.height = `${el.scrollHeight}px`;
       }, 0);
     } : void 0,
-    className: "fgb-Textarea".concat(className ? " " : "", className || ""),
+    "data-fgb": "input",
     rows: minRows
   }));
 }
@@ -306,7 +248,7 @@ function getErrorMessage(input) {
   if (isTextareaElement(input))
     return "";
   if (input.validity.patternMismatch)
-    return errorMessages.pattern;
+    return input.title || errorMessages.pattern;
   if (input.validity.rangeUnderflow)
     return errorMessages.min;
   if (input.validity.rangeOverflow)
@@ -349,7 +291,7 @@ function getFormFieldValue(form, name) {
       return el.files;
     if (el.type === "email" && el.multiple)
       return el.value.split(/\s*,\s*/);
-    if (el.type === "checkbox" && el.dataset.group !== el.name)
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name)
       return el.checked;
     if (el.type === "radio")
       return el.checked;
@@ -410,7 +352,7 @@ function setFormFieldValue(form, name, value) {
       el.value = value.join(",");
       return;
     }
-    if (el.type === "checkbox" && el.dataset.group !== el.name) {
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name) {
       el.checked = !!value;
       return;
     }
@@ -457,7 +399,7 @@ var getFormValuesAsJson = (form) => {
             setKV(result, input.name, input.value);
           continue;
         case "checkbox":
-          if (input.dataset.group !== input.name)
+          if (input.dataset.fgbGroup !== input.name)
             setKV(result, input.name, !!input.checked);
           else if (!input.checked && !result[input.name])
             setKV(result, input.name, []);
@@ -494,7 +436,7 @@ var getFormValuesAsJson = (form) => {
 };
 
 // src/core/withValidation.tsx
-import * as React8 from "react";
+import * as React6 from "react";
 
 // src/core/setFormFieldError.ts
 function setFormFieldError(form, name, error) {
@@ -504,9 +446,9 @@ function setFormFieldError(form, name, error) {
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
   if (hint)
-    hint.textContent = error || hint.dataset.hint || "";
+    hint.textContent = error || hint.dataset.fgbHint || "";
 }
 
 // src/core/wrapWithFieldValidation.ts
@@ -514,7 +456,8 @@ function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   const validateInput = (input) => {
     let error = !input.validity.valid ? getErrorMessage(input) : "";
     const value = getFormFieldValue(input.form, input.name);
-    error = validator(value) || error;
+    error = (validator == null ? void 0 : validator(value)) || error;
+    console.log({ name: input.name, error, value, validated: validator == null ? void 0 : validator(value), validity: input.validity });
     setFormFieldError(input.form, input.name, error);
     return !!error;
   };
@@ -540,7 +483,7 @@ function withValidation(onEvent) {
       } = _b, props = __objRest(_b, [
         "validators"
       ]);
-      return /* @__PURE__ */ React8.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithFieldValidation(
+      return /* @__PURE__ */ React6.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithFieldValidation(
         onEvent,
         _validators ? validatorList.concat(_validators) : validatorList,
         props[onEvent]
@@ -591,37 +534,80 @@ function validationEffectHandler(validator, onEvent) {
 }
 
 // src/components/Field.tsx
-var inlineFieldTypes = ["radio", "checkbox"];
 function Field(props) {
-  const validationProps = props.validateOnChange || props.validateOnBlur ? wrapWithFieldValidation(
+  const validationProps = wrapWithFieldValidation(
     props.validateOnChange ? "onChange" : "onBlur",
-    props.validateOnChange || props.validateOnBlur,
+    typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
     props[props.validateOnChange ? "onChange" : "onBlur"]
-  ) : null;
-  if (props.type === "checkboxes") {
-    return /* @__PURE__ */ React9.createElement(Checkboxes, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  if (props.type === "radiogroup") {
-    return /* @__PURE__ */ React9.createElement(RadioGroup, __spreadValues(__spreadValues({}, props), validationProps));
-  }
-  const _a = props, { label, hint, className, inputClassName } = _a, inputProps = __objRest(_a, ["label", "hint", "className", "inputClassName"]);
-  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? InlineLabel : Label;
-  return /* @__PURE__ */ React9.createElement(LabelCmp, {
+  );
+  const _a = props, {
     label,
-    name: inputProps.name,
     hint,
-    className
-  }, inputProps.type === "select" ? /* @__PURE__ */ React9.createElement(Select, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : inputProps.type === "textarea" ? /* @__PURE__ */ React9.createElement(Textarea, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)) : /* @__PURE__ */ React9.createElement(Input, __spreadValues(__spreadProps(__spreadValues({}, inputProps), {
-    className: inputClassName
-  }), validationProps)));
+    className,
+    style,
+    hintClassName,
+    hintStyle,
+    labelClassName,
+    labelStyle,
+    inputClassName,
+    inputStyle,
+    inputLabelClassName,
+    inputLabelStyle,
+    name,
+    type = "text"
+  } = _a, inputProps = __objRest(_a, [
+    "label",
+    "hint",
+    "className",
+    "style",
+    "hintClassName",
+    "hintStyle",
+    "labelClassName",
+    "labelStyle",
+    "inputClassName",
+    "inputStyle",
+    "inputLabelClassName",
+    "inputLabelStyle",
+    "name",
+    "type"
+  ]);
+  return /* @__PURE__ */ React7.createElement(Fieldset, {
+    label,
+    name,
+    hint,
+    className,
+    style,
+    hintStyle,
+    hintClassName,
+    labelStyle,
+    labelClassName,
+    "data-fgb-type": type,
+    group: type === "radios" || type === "checkboxes"
+  }, type === "select" ? /* @__PURE__ */ React7.createElement(Select, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "textarea" ? /* @__PURE__ */ React7.createElement(Textarea, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "checkboxes" || type === "radios" ? /* @__PURE__ */ React7.createElement(Group, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    type,
+    name,
+    className: inputLabelClassName,
+    style: inputLabelStyle,
+    inputClassName,
+    inputStyle
+  })) : /* @__PURE__ */ React7.createElement(Input, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    type,
+    className: inputClassName,
+    style: inputStyle
+  })));
 }
 
 // src/components/Form.tsx
-import * as React10 from "react";
+import * as React8 from "react";
 function Form(_a) {
   var _b = _a, {
     dialog,
@@ -631,7 +617,6 @@ function Form(_a) {
     submitJson,
     validateOnBlur,
     validateOnChange,
-    className,
     autoComplete = false
   } = _b, props = __objRest(_b, [
     "dialog",
@@ -641,15 +626,14 @@ function Form(_a) {
     "submitJson",
     "validateOnBlur",
     "validateOnChange",
-    "className",
     "autoComplete"
   ]);
   if (!submitFormData && !submitJson)
     throw new Error(
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
-  return /* @__PURE__ */ React10.createElement("form", __spreadProps(__spreadValues({}, props), {
-    className: "fgb-Form".concat(className ? " " : "", className || ""),
+  return /* @__PURE__ */ React8.createElement("form", __spreadProps(__spreadValues({}, props), {
+    "data-fgb": "form",
     noValidate: typeof window !== void 0,
     autoComplete: autoComplete ? "on" : "off",
     method: dialog ? "dialog" : method,
@@ -679,7 +663,7 @@ function Form(_a) {
 }
 
 // src/components/Submit.tsx
-import * as React11 from "react";
+import * as React9 from "react";
 
 // src/core/getFormIsValid.ts
 function getFormIsValid(form) {
@@ -687,8 +671,8 @@ function getFormIsValid(form) {
   for (const el of Array.from(form.elements)) {
     if (!el.name)
       continue;
-    const hint = (_a = el.closest(".fgb-Label, .fgb-Fieldset")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-    if (hint.textContent)
+    const hint = (_a = el.closest("[data-fgb='label']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+    if (hint == null ? void 0 : hint.textContent)
       return false;
   }
   return true;
@@ -697,7 +681,7 @@ function getFormIsValid(form) {
 // src/components/Submit.tsx
 function Submit(_a) {
   var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
-  return /* @__PURE__ */ React11.createElement("button", __spreadProps(__spreadValues({}, props), {
+  return /* @__PURE__ */ React9.createElement("button", __spreadProps(__spreadValues({}, props), {
     type: "submit",
     ref: (el) => {
       if (el && el.form) {
@@ -713,17 +697,9 @@ function Submit(_a) {
   }));
 }
 export {
-  Checkboxes,
   Field,
-  Fieldset,
   Form,
-  InlineLabel,
-  Input,
-  Label,
-  RadioGroup,
-  Select,
   Submit,
-  Textarea,
   getErrorMessage,
   getFormFieldValue,
   getFormValuesAsFormData,

@@ -1,71 +1,101 @@
 import * as React from "react";
-import { Checkboxes, CheckboxesProps } from "./Checkboxes";
 import { Input, InputProps } from "./Input";
-import { RadioGroup, RadioGroupProps } from "./RadioGroup";
+import { Group, GroupProps } from "./Group";
 import { Select, SelectFieldProps } from "./Select";
 import { Textarea, TextareaFieldProps } from "./Textarea";
-import { Label, InlineLabel, LabelProps } from "./Label";
+import { Fieldset, FieldsetProps } from "./Fieldset";
 import { ValidateFn, wrapWithFieldValidation } from "../core";
 
-const inlineFieldTypes = ["radio", "checkbox"];
-
-type FieldsetFieldProps = CheckboxesProps | RadioGroupProps;
-
-type LabelledFieldProps = (SelectFieldProps | TextareaFieldProps | InputProps) &
-  LabelProps;
-
-export type FieldProps = (FieldsetFieldProps | LabelledFieldProps) & {
-  validateOnChange?: ValidateFn;
-  validateOnBlur?: ValidateFn;
-  inputClassName?: undefined | string;
-};
+export type FieldProps = FieldsetProps &
+  (SelectFieldProps | TextareaFieldProps | InputProps | GroupProps) & {
+    validateOnChange?: ValidateFn | boolean;
+    validateOnBlur?: ValidateFn | boolean;
+    inputClassName?: undefined | string;
+    inputStyle?: React.CSSProperties;
+    inputLabelClassName?: undefined | string;
+    inputLabelStyle?: React.CSSProperties;
+  };
 
 export function Field(props: FieldProps): React.ReactElement {
-  const validationProps =
-    props.validateOnChange || props.validateOnBlur
-      ? (wrapWithFieldValidation(
-          props.validateOnChange ? "onChange" : "onBlur",
-          props.validateOnChange || props.validateOnBlur!,
-          // @ts-expect-error - later
-          props[props.validateOnChange ? "onChange" : "onBlur"]
-        ) as Record<string, unknown>) // casting to generic record for simplicity. should probably fix someday
-      : null;
-  if (props.type === "checkboxes") {
-    return <Checkboxes {...props} {...validationProps} />;
-  }
-  if (props.type === "radiogroup") {
-    return <RadioGroup {...props} {...validationProps} />;
-  }
-  const { label, hint, className, inputClassName, ...inputProps } = props;
-
-  const LabelCmp = inlineFieldTypes.includes(inputProps.type) ? InlineLabel : Label;
+  const validationProps = wrapWithFieldValidation(
+    props.validateOnChange ? "onChange" : "onBlur",
+    typeof props.validateOnChange === "function"
+      ? props.validateOnChange
+      : typeof props.validateOnBlur === "function"
+      ? props.validateOnBlur
+      : undefined,
+    // @ts-expect-error - later
+    props[props.validateOnChange ? "onChange" : "onBlur"]
+  ) as Record<string, unknown>; // casting to generic record for simplicity. should probably fix someday
+  const {
+    label,
+    hint,
+    className,
+    style,
+    hintClassName,
+    hintStyle,
+    labelClassName,
+    labelStyle,
+    inputClassName,
+    inputStyle,
+    inputLabelClassName,
+    inputLabelStyle,
+    name,
+    type = "text",
+    ...inputProps
+  } = props;
 
   return (
-    <LabelCmp
+    <Fieldset
       label={label}
-      name={inputProps.name}
+      name={name}
       hint={hint}
       className={className}
+      style={style}
+      hintStyle={hintStyle}
+      hintClassName={hintClassName}
+      labelStyle={labelStyle}
+      labelClassName={labelClassName}
+      data-fgb-type={type}
+      group={type === "radios" || type === "checkboxes"}
     >
-      {inputProps.type === "select" ? (
+      {type === "select" ? (
         <Select
           {...inputProps}
-          className={inputClassName}
           {...validationProps}
+          name={name}
+          className={inputClassName}
+          style={inputStyle}
         />
-      ) : inputProps.type === "textarea" ? (
+      ) : type === "textarea" ? (
         <Textarea
           {...inputProps}
-          className={inputClassName}
           {...validationProps}
+          name={name}
+          className={inputClassName}
+          style={inputStyle}
+        />
+      ) : type === "checkboxes" || type === "radios" ? (
+        <Group
+          {...inputProps}
+          {...validationProps}
+          type={type}
+          name={name}
+          className={inputLabelClassName}
+          style={inputLabelStyle}
+          inputClassName={inputClassName}
+          inputStyle={inputStyle}
         />
       ) : (
         <Input
           {...inputProps}
-          className={inputClassName}
           {...validationProps}
+          name={name}
+          type={type}
+          className={inputClassName}
+          style={inputStyle}
         />
       )}
-    </LabelCmp>
+    </Fieldset>
   );
 }

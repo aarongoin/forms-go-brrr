@@ -10,7 +10,7 @@ let errorMessages = {
   max: "Too high.",
   step: "Off-step.",
   email: "Invalid email address.",
-  url: "Invalid url."
+  url: "Invalid url.",
 };
 
 export function setDefaultErrorMessages<K extends keyof typeof errorMessages>(
@@ -32,7 +32,10 @@ export function getErrorMessage(input: FieldInputElement): string {
   // inputs only from here on
   if (isTextareaElement(input)) return "";
 
-  if (input.validity.patternMismatch) return errorMessages.pattern;
+  // TODO: Validate that file inputs adhere to their accepts params
+
+  if (input.validity.patternMismatch)
+    return input.title || errorMessages.pattern;
   if (input.validity.rangeUnderflow) return errorMessages.min;
   if (input.validity.rangeOverflow) return errorMessages.max;
   if (input.validity.stepMismatch) return errorMessages.step;

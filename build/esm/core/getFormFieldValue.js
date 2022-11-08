@@ -29,7 +29,7 @@ function getFormFieldValue(form, name) {
       return el.files;
     if (el.type === "email" && el.multiple)
       return el.value.split(/\s*,\s*/);
-    if (el.type === "checkbox" && el.dataset.group !== el.name)
+    if (el.type === "checkbox" && el.dataset.fgbGroup !== el.name)
       return el.checked;
     if (el.type === "radio")
       return el.checked;

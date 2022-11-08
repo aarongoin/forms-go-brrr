@@ -66,7 +66,7 @@ function getErrorMessage(input) {
   if ((0, import_types.isTextareaElement)(input))
     return "";
   if (input.validity.patternMismatch)
-    return errorMessages.pattern;
+    return input.title || errorMessages.pattern;
   if (input.validity.rangeUnderflow)
     return errorMessages.min;
   if (input.validity.rangeOverflow)

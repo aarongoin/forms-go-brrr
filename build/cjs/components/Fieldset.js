@@ -1,9 +1,7 @@
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
@@ -21,7 +19,6 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __objRest = (source, exclude) => {
   var target = {};
   for (var prop in source)
@@ -62,29 +59,43 @@ function Fieldset(_a) {
     name,
     label,
     children,
-    className,
     hint,
-    hintClassName
+    hintClassName,
+    labelClassName,
+    group,
+    labelStyle,
+    hintStyle
   } = _b, props = __objRest(_b, [
     "name",
     "label",
     "children",
-    "className",
     "hint",
-    "hintClassName"
+    "hintClassName",
+    "labelClassName",
+    "group",
+    "labelStyle",
+    "hintStyle"
   ]);
   const hintId = `${name}-hint`;
-  return /* @__PURE__ */ React.createElement("fieldset", __spreadProps(__spreadValues({}, props), {
-    className: "fgb-Fieldset".concat(className ? " " : "", className || "")
-  }), /* @__PURE__ */ React.createElement("legend", null, label), children, /* @__PURE__ */ React.createElement("span", {
+  return /* @__PURE__ */ React.createElement("fieldset", __spreadValues({
+    "data-fgb": "fieldset"
+  }, props), /* @__PURE__ */ React.createElement("span", {
     id: hintId,
-    className: "fgb-Fieldset-hint".concat(
-      hintClassName ? " " : "",
-      hintClassName || ""
-    ),
+    "data-fgb": "hint",
+    className: hintClassName,
     "aria-live": "polite",
-    "data-hint": hint
-  }, hint));
+    "data-fgb-hint": hint,
+    style: __spreadValues({ order: 2 }, hintStyle)
+  }, hint), group ? /* @__PURE__ */ React.createElement("legend", {
+    "data-fgb": "label",
+    className: labelClassName,
+    style: labelStyle
+  }, label) : /* @__PURE__ */ React.createElement("label", {
+    htmlFor: name,
+    "data-fgb": "label",
+    className: labelClassName,
+    style: labelStyle
+  }, label), children);
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

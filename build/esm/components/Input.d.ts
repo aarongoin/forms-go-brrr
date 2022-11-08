@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Option } from "../core/types";
 declare type TextTypeProps = {
     minLength?: number;
     maxLength?: number;
@@ -9,13 +10,22 @@ export declare type TextInputProps = {
     type: "text";
     autocomplete?: string;
     defaultValue?: string;
+    options?: string[] | Option[];
 } & TextTypeProps;
 export declare type TelInputProps = {
     type: "tel";
+    options?: string[] | Option[];
 } & TextTypeProps;
+export declare type ColorInputProps = {
+    type: "color";
+    autocomplete?: string;
+    defaultValue?: string;
+    options?: string[] | Option[];
+};
 export declare type UrlInputProps = {
     type: "url";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & TextTypeProps;
 export declare type PasswordInputProps = {
     type: "password";
@@ -25,12 +35,14 @@ export declare type PasswordInputProps = {
 export declare type SearchInputProps = {
     type: "search";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & TextTypeProps;
 export declare type EmailInputProps = {
     type: "email";
     multiple?: boolean;
     autocomplete?: "on" | "off" | "email";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & TextTypeProps;
 declare type NumberTypeProps = {
     min?: number;
@@ -39,12 +51,18 @@ declare type NumberTypeProps = {
 };
 export declare type NumberInputProps = {
     type: "number";
-    pattern?: string;
     defaultValue?: number;
+    options?: number[];
 } & NumberTypeProps;
+export declare type NumericInputProps = {
+    type: "numeric";
+    defaultValue?: number;
+    options?: number[];
+};
 export declare type RangeInputProps = {
     type: "range";
     defaultValue?: number;
+    options?: number[];
 } & NumberTypeProps;
 declare type DateTypeProps = {
     min?: string;
@@ -54,22 +72,27 @@ declare type DateTypeProps = {
 export declare type DateInputProps = {
     type: "date";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & DateTypeProps;
 export declare type TimeInputProps = {
     type: "time";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & DateTypeProps;
 export declare type DatetimeInputProps = {
     type: "datetime-local";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & DateTypeProps;
 export declare type MonthInputProps = {
     type: "month";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & DateTypeProps;
 export declare type WeekInputProps = {
     type: "week";
     defaultValue?: string;
+    options?: string[] | Option[];
 } & DateTypeProps;
 export declare type FileInputProps = {
     type: "file";
@@ -86,7 +109,11 @@ export declare type RadioInputProps = {
     value: string;
     defaultChecked?: boolean;
 };
-export declare type InputTypes = TextInputProps | TelInputProps | SearchInputProps | UrlInputProps | EmailInputProps | PasswordInputProps | NumberInputProps | RangeInputProps | FileInputProps | CheckboxInputProps | RadioInputProps | DateInputProps | TimeInputProps | DatetimeInputProps | MonthInputProps | WeekInputProps;
+export declare type HiddenInputProps = {
+    type: "hidden";
+    defaultValue: string;
+};
+export declare type InputTypes = TextInputProps | TelInputProps | SearchInputProps | UrlInputProps | EmailInputProps | PasswordInputProps | NumberInputProps | NumericInputProps | RangeInputProps | FileInputProps | CheckboxInputProps | RadioInputProps | DateInputProps | TimeInputProps | DatetimeInputProps | MonthInputProps | WeekInputProps | ColorInputProps | HiddenInputProps;
 export declare type BaseInputProps = {
     name: string;
     required?: boolean;
@@ -99,5 +126,5 @@ export declare type BaseInputProps = {
     autocorrect?: boolean;
 };
 export declare type InputProps = BaseInputProps & InputTypes & Omit<React.InputHTMLAttributes<HTMLInputElement>, "aria-describedby" | "type">;
-export declare function Input(props: InputProps): React.ReactElement;
+export declare function Input({ type, options, ...props }: InputProps): React.ReactElement;
 export {};

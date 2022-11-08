@@ -62,37 +62,27 @@ function Select(_a) {
     options,
     type,
     defaultSelected,
-    name,
-    renderOption,
-    className,
-    optionClassName
+    name
   } = _b, props = __objRest(_b, [
     "options",
     "type",
     "defaultSelected",
-    "name",
-    "renderOption",
-    "className",
-    "optionClassName"
+    "name"
   ]);
-  const finalOptionClassName = "fgb-Field-option".concat(
-    optionClassName ? " " : "",
-    optionClassName || ""
-  );
   return /* @__PURE__ */ React.createElement("select", __spreadProps(__spreadValues({
     name,
     tabIndex: 0,
     "aria-describedby": `${name}-hint`
   }, props), {
-    className: "fgb-Select".concat(className ? " " : "", className || "")
-  }), options.map((opt) => /* @__PURE__ */ React.createElement("option", {
-    key: typeof opt === "string" ? opt : opt.id,
-    value: typeof opt === "string" ? opt : opt.id,
-    className: finalOptionClassName,
-    defaultChecked: !!defaultSelected && (props.multiple && Array.isArray(defaultSelected) ? defaultSelected.some(
-      typeof opt === "string" ? (e) => e === opt : (e) => e === opt.id
-    ) : defaultSelected === (typeof opt === "string" ? opt : opt.id))
-  }, renderOption ? renderOption(opt) : typeof opt === "string" ? opt : opt.name)));
+    "data-fgb": "input"
+  }), options.map((opt) => {
+    const { value, label } = typeof opt === "object" ? opt : { label: opt, value: opt };
+    return /* @__PURE__ */ React.createElement("option", {
+      key: value,
+      value,
+      defaultChecked: !!defaultSelected && (props.multiple && Array.isArray(defaultSelected) ? defaultSelected.some((e) => e == value) : defaultSelected == value)
+    }, label);
+  }));
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
