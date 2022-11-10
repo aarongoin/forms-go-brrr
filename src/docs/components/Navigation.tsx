@@ -36,15 +36,13 @@ export function DocLinks({
   return (
     <nav className={navStyle}>
       <span className={topNavHeaderStyle}>forms-go-brrr</span>
-      {/* <span className={iconLinksStyle}>
-        <a href="">
-          <img src="" alt="github icon"></img>
-        </a>
-        <a href="">
-          <img src="" alt="twitter icon"></img>
-        </a>
-      </span> */}
       <NestedLinks links={links} level={0} />
+      <a
+        href="https://github.com/aarongoin/forms-go-brrr/"
+        className={`${navLinkStyle} ${nestedLinkStyle[0]}`}
+      >
+        GitHub repository
+      </a>
     </nav>
   );
 }

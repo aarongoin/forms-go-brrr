@@ -26,17 +26,13 @@ export function GettingStarted({
         Follow these instructions to get forms-go-brrr setup in your project.
       </Paragraph>
       <Header level={3} name="Install the library" />
-      <StickyColumnPair
-        left={
-          <Column space={2}>
-            <Paragraph>
-              Forms-go-brrr is hosted on npm, so you can use npm or any
-              npm-compatible package manager to install it.
-            </Paragraph>
-          </Column>
-        }
-        right={<CodeBlock>npm install --save forms-go-brrr</CodeBlock>}
-      />
+      <Paragraph>
+        Forms-go-brrr is hosted on npm, so you can use npm or any npm-compatible
+        package manager to install it.
+      </Paragraph>
+      <Paragraph>
+        <CodeBlock>npm install --save forms-go-brrr</CodeBlock>
+      </Paragraph>
       <Header level={3} name="Pick your styles" />
       <Paragraph>
         Forms-go-brrr imparts no styling of its own, so all form and field

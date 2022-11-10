@@ -36,5 +36,6 @@
   "peerDependencies": {
     "react": "^16.14.0"
   },
-  "browserslist": ["> 0.5%", "last 2 versions", "Firefox ESR", "not dead"]
+  "browserslist": ["> 0.5%", "last 2 versions", "Firefox ESR", "not dead"],
+  "files": ["build", "docs"]
 }
