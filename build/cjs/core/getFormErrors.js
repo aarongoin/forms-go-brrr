@@ -21,14 +21,14 @@ __export(getFormErrors_exports, {
   getFormErrors: () => getFormErrors
 });
 module.exports = __toCommonJS(getFormErrors_exports);
+var import_getFieldHintElement = require("./getFieldHintElement");
 function getFormErrors(form) {
   var _a;
   const errors = {};
   for (const el of Array.from(form.elements)) {
     if (!el.name)
       continue;
-    const hint = (_a = el.closest("[data-fgb='label']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-    errors[el.name] = hint == null ? void 0 : hint.textContent;
+    errors[el.name] = ((_a = (0, import_getFieldHintElement.getFieldHintElement)(el)) == null ? void 0 : _a.textContent) || "";
   }
   return errors;
 }

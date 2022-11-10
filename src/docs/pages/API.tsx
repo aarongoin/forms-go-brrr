@@ -45,6 +45,7 @@ export const apiLinks = [
       "setDefaultErrorMessages",
       "getErrorMessage",
       "getFormFieldValue",
+      "setFormFieldValue",
       "getFormValuesAsFormData",
       "getFormValuesAsJson",
       "setFormFieldError",
@@ -1610,6 +1611,42 @@ export function API({ className }: { className?: string | undefined }) {
         <b>Example:</b>
         <CodeBlock>{`getFormFieldValue(formElement, "username");`}</CodeBlock>
       </Paragraph>
+
+      <Header level={4} name="setFormFieldValue" />
+      <Paragraph>
+        This function is the uncurried version provided by the form validators
+        that allows for setting the current value of any named input within a
+        given form.
+      </Paragraph>
+      <Paragraph>
+        <b>Signature:</b>{" "}
+        <Code>
+          {
+            "setFormFieldValue(form: HTMLFormElement, name: string, value: FieldValue): void"
+          }
+        </Code>
+      </Paragraph>
+      <Paragraph>
+        <b>Arguments:</b> An html form element, the name of the field and the
+        value to set. Field with name must exist within the form or else an
+        error will be thrown.
+      </Paragraph>
+      <Paragraph>
+        <b>Return value:</b> None.
+      </Paragraph>
+      <Paragraph>
+        <b>Throws:</b> An error if no field found by the given name, or if
+        element found is some unexpected type outside of the types supported by
+        forms-go-brrr.
+      </Paragraph>
+      <Paragraph>
+        <b>Side effects:</b> None.
+      </Paragraph>
+      <Paragraph>
+        <b>Example:</b>
+        <CodeBlock>{`getFormFieldValue(formElement, "username");`}</CodeBlock>
+      </Paragraph>
+
       <Header level={4} name="getFormValuesAsFormData" />
       <Paragraph>
         Get all the values from a form as a FormData instance, just as if the

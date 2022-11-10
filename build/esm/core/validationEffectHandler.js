@@ -17,7 +17,11 @@ function validationEffectHandler(validator, onEvent) {
     );
     if (formErrors)
       for (const name of Object.keys(formErrors))
-        setFormFieldError(form, name, formErrors[name]);
+        setFormFieldError(
+          form,
+          name,
+          formErrors[name]
+        );
     return onEvent == null ? void 0 : onEvent(event);
   };
 }

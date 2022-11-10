@@ -68,6 +68,7 @@ export function Form<FV extends FormValues = FormValues>({
       onChange={
         validateOnChange
           ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
+              // @ts-expect-error - later
               validateOnChange,
               props.onChange
             )
@@ -76,6 +77,7 @@ export function Form<FV extends FormValues = FormValues>({
       onBlur={
         validateOnBlur
           ? validationEffectHandler<React.ChangeEvent<HTMLFormElement>>(
+              // @ts-expect-error - later
               validateOnBlur,
               props.onBlur
             )
@@ -97,7 +99,12 @@ export function Form<FV extends FormValues = FormValues>({
           ).then((formErrors) => {
             if (!formErrors) return;
             for (const name of Object.keys(formErrors))
-              setFormFieldError(form, name, formErrors[name]);
+              setFormFieldError(
+                form,
+                name,
+                // @ts-expect-error - this is okay
+                formErrors[name]
+              );
           });
         }
       }}

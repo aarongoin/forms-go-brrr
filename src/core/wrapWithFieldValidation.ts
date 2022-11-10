@@ -21,7 +21,6 @@ export function wrapWithFieldValidation<
     let error = !input.validity.valid ? getErrorMessage(input) : "";
     const value = getFormFieldValue<V>(input.form!, input.name);
     error = validator?.(value) || error;
-    console.log({ name: input.name, error, value, validated: validator?.(value), validity: input.validity })
     setFormFieldError(input.form!, input.name, error);
     return !!error;
   };

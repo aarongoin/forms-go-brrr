@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,29 +15,18 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var useFormRef_exports = {};
-__export(useFormRef_exports, {
-  useFormRef: () => useFormRef
+var getFieldHintElement_exports = {};
+__export(getFieldHintElement_exports, {
+  getFieldHintElement: () => getFieldHintElement
 });
-module.exports = __toCommonJS(useFormRef_exports);
-var import_react = __toESM(require("react"));
-function useFormRef(name) {
-  const ref = import_react.default.useRef(window.document.forms.namedItem(name));
-  import_react.default.useEffect(() => {
-    if (!ref.current)
-      setTimeout(
-        () => ref.current = window.document.forms.namedItem(name),
-        0
-      );
-  }, []);
-  return ref;
+module.exports = __toCommonJS(getFieldHintElement_exports);
+function getFieldHintElement(el) {
+  var _a;
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  return hint || null;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  useFormRef
+  getFieldHintElement
 });

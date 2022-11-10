@@ -35,7 +35,7 @@ import { Group } from "./Group";
 import { Select } from "./Select";
 import { Textarea } from "./Textarea";
 import { Fieldset } from "./Fieldset";
-import { wrapWithFieldValidation } from "../core";
+import { wrapWithFieldValidation } from "../core/wrapWithFieldValidation";
 function Field(props) {
   const validationProps = wrapWithFieldValidation(
     props.validateOnChange ? "onChange" : "onBlur",

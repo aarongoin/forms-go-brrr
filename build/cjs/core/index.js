@@ -19,7 +19,6 @@ __reExport(core_exports, require("./errorMessages"), module.exports);
 __reExport(core_exports, require("./getFormFieldValue"), module.exports);
 __reExport(core_exports, require("./setFormFieldValue"), module.exports);
 __reExport(core_exports, require("./getFormValues"), module.exports);
-__reExport(core_exports, require("./withValidation"), module.exports);
 __reExport(core_exports, require("./validateForm"), module.exports);
 __reExport(core_exports, require("./validationEffectHandler"), module.exports);
 __reExport(core_exports, require("./wrapWithFieldValidation"), module.exports);

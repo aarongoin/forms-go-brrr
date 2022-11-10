@@ -4,7 +4,8 @@ import { Group, GroupProps } from "./Group";
 import { Select, SelectFieldProps } from "./Select";
 import { Textarea, TextareaFieldProps } from "./Textarea";
 import { Fieldset, FieldsetProps } from "./Fieldset";
-import { ValidateFn, wrapWithFieldValidation } from "../core";
+import { wrapWithFieldValidation } from "../core/wrapWithFieldValidation";
+import { ValidateFn } from "../core";
 
 export type FieldProps = FieldsetProps &
   (SelectFieldProps | TextareaFieldProps | InputProps | GroupProps) & {
@@ -60,6 +61,7 @@ export function Field(props: FieldProps): React.ReactElement {
       group={type === "radios" || type === "checkboxes"}
     >
       {type === "select" ? (
+        // @ts-expect-error - later
         <Select
           {...inputProps}
           {...validationProps}
@@ -68,6 +70,7 @@ export function Field(props: FieldProps): React.ReactElement {
           style={inputStyle}
         />
       ) : type === "textarea" ? (
+        // @ts-expect-error - later
         <Textarea
           {...inputProps}
           {...validationProps}
@@ -76,6 +79,7 @@ export function Field(props: FieldProps): React.ReactElement {
           style={inputStyle}
         />
       ) : type === "checkboxes" || type === "radios" ? (
+        // @ts-expect-error - later
         <Group
           {...inputProps}
           {...validationProps}
@@ -87,6 +91,7 @@ export function Field(props: FieldProps): React.ReactElement {
           inputStyle={inputStyle}
         />
       ) : (
+        // @ts-expect-error - later
         <Input
           {...inputProps}
           {...validationProps}

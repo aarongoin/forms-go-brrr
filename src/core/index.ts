@@ -2,7 +2,6 @@ export * from "./errorMessages";
 export * from "./getFormFieldValue";
 export * from "./setFormFieldValue";
 export * from "./getFormValues";
-export * from "./withValidation";
 export * from "./validateForm";
 export * from "./validationEffectHandler";
 export * from "./wrapWithFieldValidation";

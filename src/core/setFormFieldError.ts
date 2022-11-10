@@ -1,3 +1,4 @@
+import { getFieldHintElement } from "./getFieldHintElement";
 import { FieldInputElement } from "./types";
 
 export function setFormFieldError(
@@ -15,8 +16,6 @@ export function setFormFieldError(
 
   el.setCustomValidity(error);
 
-  const hint = el
-    .closest("[data-fgb='fieldset']")
-    ?.querySelector(`#${el.name}-hint`) as HTMLSpanElement | null;
+  const hint = getFieldHintElement(el);
   if (hint) hint.textContent = error || hint.dataset.fgbHint || "";
 }

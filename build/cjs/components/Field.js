@@ -62,9 +62,9 @@ var import_Group = require("./Group");
 var import_Select = require("./Select");
 var import_Textarea = require("./Textarea");
 var import_Fieldset = require("./Fieldset");
-var import_core = require("../core");
+var import_wrapWithFieldValidation = require("../core/wrapWithFieldValidation");
 function Field(props) {
-  const validationProps = (0, import_core.wrapWithFieldValidation)(
+  const validationProps = (0, import_wrapWithFieldValidation.wrapWithFieldValidation)(
     props.validateOnChange ? "onChange" : "onBlur",
     typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
     props[props.validateOnChange ? "onChange" : "onBlur"]

@@ -38,7 +38,11 @@ function validationEffectHandler(validator, onEvent) {
     );
     if (formErrors)
       for (const name of Object.keys(formErrors))
-        (0, import_setFormFieldError.setFormFieldError)(form, name, formErrors[name]);
+        (0, import_setFormFieldError.setFormFieldError)(
+          form,
+          name,
+          formErrors[name]
+        );
     return onEvent == null ? void 0 : onEvent(event);
   };
 }

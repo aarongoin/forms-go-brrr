@@ -108,7 +108,11 @@ function Form(_a) {
           if (!formErrors)
             return;
           for (const name of Object.keys(formErrors))
-            (0, import_setFormFieldError.setFormFieldError)(form, name, formErrors[name]);
+            (0, import_setFormFieldError.setFormFieldError)(
+              form,
+              name,
+              formErrors[name]
+            );
         });
       }
     }

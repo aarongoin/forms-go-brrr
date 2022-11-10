@@ -33,7 +33,12 @@ export function validationEffectHandler<
     );
     if (formErrors)
       for (const name of Object.keys(formErrors))
-        setFormFieldError(form, name, formErrors[name]);
+        setFormFieldError(
+          form,
+          name,
+          // @ts-expect-error - this is fine
+          formErrors[name]
+        );
     return onEvent?.(event);
   };
 }

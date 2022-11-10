@@ -20,7 +20,7 @@ export function Submit({ validate, ...props }: SubmitProps): React.ReactElement 
             // it's unintuitive but that's how it seems to work???
             validate === "onChange" ? "input" : "change",
             (event) => {
-              el.disabled = !getFormIsValid(el.form);
+              el.disabled = !getFormIsValid(el.form!);
             }
           );
         }

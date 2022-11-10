@@ -31,7 +31,7 @@ var __objRest = (source, exclude) => {
 };
 
 // src/components/Field.tsx
-import * as React7 from "react";
+import * as React6 from "react";
 
 // src/components/Input.tsx
 import * as React from "react";
@@ -305,6 +305,185 @@ function getFormFieldValue(form, name) {
   );
 }
 
+// src/core/getFieldHintElement.ts
+function getFieldHintElement(el) {
+  var _a;
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  return hint || null;
+}
+
+// src/core/setFormFieldError.ts
+function setFormFieldError(form, name, error) {
+  const elOrEls = form.elements.namedItem(name);
+  if (!elOrEls)
+    throw new Error(`Cannot find field with name ${name}`);
+  const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
+  el.setCustomValidity(error);
+  const hint = getFieldHintElement(el);
+  if (hint)
+    hint.textContent = error || hint.dataset.fgbHint || "";
+}
+
+// src/core/wrapWithFieldValidation.ts
+function wrapWithFieldValidation(onEvent, validator, outerHandler) {
+  const validateInput = (input) => {
+    let error = !input.validity.valid ? getErrorMessage(input) : "";
+    const value = getFormFieldValue(input.form, input.name);
+    error = (validator == null ? void 0 : validator(value)) || error;
+    setFormFieldError(input.form, input.name, error);
+    return !!error;
+  };
+  return {
+    [onEvent]: (event) => {
+      validateInput(event.target);
+      return outerHandler == null ? void 0 : outerHandler(event);
+    },
+    onInvalid: (event) => {
+      if (validateInput(event.target))
+        event.preventDefault();
+    }
+  };
+}
+
+// src/components/Field.tsx
+function Field(props) {
+  const validationProps = wrapWithFieldValidation(
+    props.validateOnChange ? "onChange" : "onBlur",
+    typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
+    props[props.validateOnChange ? "onChange" : "onBlur"]
+  );
+  const _a = props, {
+    label,
+    hint,
+    className,
+    style,
+    hintClassName,
+    hintStyle,
+    labelClassName,
+    labelStyle,
+    inputClassName,
+    inputStyle,
+    inputLabelClassName,
+    inputLabelStyle,
+    name,
+    type = "text"
+  } = _a, inputProps = __objRest(_a, [
+    "label",
+    "hint",
+    "className",
+    "style",
+    "hintClassName",
+    "hintStyle",
+    "labelClassName",
+    "labelStyle",
+    "inputClassName",
+    "inputStyle",
+    "inputLabelClassName",
+    "inputLabelStyle",
+    "name",
+    "type"
+  ]);
+  return /* @__PURE__ */ React6.createElement(Fieldset, {
+    label,
+    name,
+    hint,
+    className,
+    style,
+    hintStyle,
+    hintClassName,
+    labelStyle,
+    labelClassName,
+    "data-fgb-type": type,
+    group: type === "radios" || type === "checkboxes"
+  }, type === "select" ? /* @__PURE__ */ React6.createElement(Select, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "textarea" ? /* @__PURE__ */ React6.createElement(Textarea, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    className: inputClassName,
+    style: inputStyle
+  })) : type === "checkboxes" || type === "radios" ? /* @__PURE__ */ React6.createElement(Group, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    type,
+    name,
+    className: inputLabelClassName,
+    style: inputLabelStyle,
+    inputClassName,
+    inputStyle
+  })) : /* @__PURE__ */ React6.createElement(Input, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
+    name,
+    type,
+    className: inputClassName,
+    style: inputStyle
+  })));
+}
+
+// src/components/Form.tsx
+import * as React7 from "react";
+
+// src/core/getFormValues.ts
+var getFormValuesAsFormData = (form) => new FormData(form);
+function setKV(res, k, v) {
+  if (!res[k]) {
+    res[k] = v;
+  } else {
+    if (!Array.isArray(res[k]))
+      res[k] = [res[k]];
+    res[k].push(v);
+  }
+}
+var getFormValuesAsJson = (form) => {
+  const result = {};
+  for (const input of Array.from(form.elements)) {
+    if (isInputElement(input)) {
+      switch (input.type) {
+        case "number":
+        case "range":
+          setKV(result, input.name, +input.value);
+          continue;
+        case "radio":
+          if (!input.checked && !result[input.name])
+            setKV(result, input.name, null);
+          if (input.checked)
+            setKV(result, input.name, input.value);
+          continue;
+        case "checkbox":
+          if (input.dataset.fgbGroup !== input.name)
+            setKV(result, input.name, !!input.checked);
+          else if (!input.checked && !result[input.name])
+            setKV(result, input.name, []);
+          else if (input.checked)
+            setKV(result, input.name, input.value);
+          continue;
+        case "email":
+          if (input.multiple)
+            setKV(result, input.name, input.value.split(/\s*,\s*/));
+          else
+            setKV(result, input.name, input.value);
+          continue;
+        case "file":
+          setKV(result, input.name, input.files);
+        default:
+          setKV(result, input.name, input.value);
+          continue;
+      }
+    }
+    if (isSelectElement(input)) {
+      if (input.multiple)
+        setKV(
+          result,
+          input.name,
+          Array.from(input.selectedOptions).map((opt) => opt.value)
+        );
+      else
+        setKV(result, input.name, input.value);
+    }
+    if (isTextareaElement(input))
+      setKV(result, input.name, input.value);
+  }
+  return result;
+};
+
 // src/core/setFormFieldValue.ts
 function setFormFieldValue(form, name, value) {
   const elOrEls = form.elements.namedItem(name);
@@ -372,128 +551,6 @@ function setFormFieldValue(form, name, value) {
   );
 }
 
-// src/core/getFormValues.ts
-var getFormValuesAsFormData = (form) => new FormData(form);
-function setKV(res, k, v) {
-  if (!res[k]) {
-    res[k] = v;
-  } else {
-    if (!Array.isArray(res[k]))
-      res[k] = [res[k]];
-    res[k].push(v);
-  }
-}
-var getFormValuesAsJson = (form) => {
-  const result = {};
-  for (const input of Array.from(form.elements)) {
-    if (isInputElement(input)) {
-      switch (input.type) {
-        case "number":
-        case "range":
-          setKV(result, input.name, +input.value);
-          continue;
-        case "radio":
-          if (!input.checked && !result[input.name])
-            setKV(result, input.name, null);
-          if (input.checked)
-            setKV(result, input.name, input.value);
-          continue;
-        case "checkbox":
-          if (input.dataset.fgbGroup !== input.name)
-            setKV(result, input.name, !!input.checked);
-          else if (!input.checked && !result[input.name])
-            setKV(result, input.name, []);
-          else if (input.checked)
-            setKV(result, input.name, input.value);
-          continue;
-        case "email":
-          if (input.multiple)
-            setKV(result, input.name, input.value.split(/\s*,\s*/));
-          else
-            setKV(result, input.name, input.value);
-          continue;
-        case "file":
-          setKV(result, input.name, input.files);
-        default:
-          setKV(result, input.name, input.value);
-          continue;
-      }
-    }
-    if (isSelectElement(input)) {
-      if (input.multiple)
-        setKV(
-          result,
-          input.name,
-          Array.from(input.selectedOptions).map((opt) => opt.value)
-        );
-      else
-        setKV(result, input.name, input.value);
-    }
-    if (isTextareaElement(input))
-      setKV(result, input.name, input.value);
-  }
-  return result;
-};
-
-// src/core/withValidation.tsx
-import * as React6 from "react";
-
-// src/core/setFormFieldError.ts
-function setFormFieldError(form, name, error) {
-  var _a;
-  const elOrEls = form.elements.namedItem(name);
-  if (!elOrEls)
-    throw new Error(`Cannot find field with name ${name}`);
-  const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
-  el.setCustomValidity(error);
-  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-  if (hint)
-    hint.textContent = error || hint.dataset.fgbHint || "";
-}
-
-// src/core/wrapWithFieldValidation.ts
-function wrapWithFieldValidation(onEvent, validator, outerHandler) {
-  const validateInput = (input) => {
-    let error = !input.validity.valid ? getErrorMessage(input) : "";
-    const value = getFormFieldValue(input.form, input.name);
-    error = (validator == null ? void 0 : validator(value)) || error;
-    console.log({ name: input.name, error, value, validated: validator == null ? void 0 : validator(value), validity: input.validity });
-    setFormFieldError(input.form, input.name, error);
-    return !!error;
-  };
-  return {
-    [onEvent]: (event) => {
-      validateInput(event.target);
-      return outerHandler == null ? void 0 : outerHandler(event);
-    },
-    onInvalid: (event) => {
-      if (validateInput(event.target))
-        event.preventDefault();
-    }
-  };
-}
-
-// src/core/withValidation.tsx
-function withValidation(onEvent) {
-  return (Cmp, validators) => {
-    const validatorList = Array.isArray(validators) ? validators : [validators];
-    return function Validated(_a) {
-      var _b = _a, {
-        validators: _validators
-      } = _b, props = __objRest(_b, [
-        "validators"
-      ]);
-      return /* @__PURE__ */ React6.createElement(Cmp, __spreadValues(__spreadValues({}, props), wrapWithFieldValidation(
-        onEvent,
-        _validators ? validatorList.concat(_validators) : validatorList,
-        props[onEvent]
-      )));
-    };
-  };
-}
-var withValidationOnChange = withValidation("onChange");
-var withValidationOnBlur = withValidation("onBlur");
-
 // src/core/validateForm.ts
 function validateForm(form, validator) {
   let form_valid = true;
@@ -502,7 +559,7 @@ function validateForm(form, validator) {
     (name, value) => setFormFieldValue(form, name, value)
   );
   for (const el of Array.from(form.elements)) {
-    if (!el.name)
+    if (!("name" in el))
       continue;
     const err = (formErrors == null ? void 0 : formErrors[el.name]) || "";
     let is_valid = el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;
@@ -528,86 +585,16 @@ function validationEffectHandler(validator, onEvent) {
     );
     if (formErrors)
       for (const name of Object.keys(formErrors))
-        setFormFieldError(form, name, formErrors[name]);
+        setFormFieldError(
+          form,
+          name,
+          formErrors[name]
+        );
     return onEvent == null ? void 0 : onEvent(event);
   };
 }
 
-// src/components/Field.tsx
-function Field(props) {
-  const validationProps = wrapWithFieldValidation(
-    props.validateOnChange ? "onChange" : "onBlur",
-    typeof props.validateOnChange === "function" ? props.validateOnChange : typeof props.validateOnBlur === "function" ? props.validateOnBlur : void 0,
-    props[props.validateOnChange ? "onChange" : "onBlur"]
-  );
-  const _a = props, {
-    label,
-    hint,
-    className,
-    style,
-    hintClassName,
-    hintStyle,
-    labelClassName,
-    labelStyle,
-    inputClassName,
-    inputStyle,
-    inputLabelClassName,
-    inputLabelStyle,
-    name,
-    type = "text"
-  } = _a, inputProps = __objRest(_a, [
-    "label",
-    "hint",
-    "className",
-    "style",
-    "hintClassName",
-    "hintStyle",
-    "labelClassName",
-    "labelStyle",
-    "inputClassName",
-    "inputStyle",
-    "inputLabelClassName",
-    "inputLabelStyle",
-    "name",
-    "type"
-  ]);
-  return /* @__PURE__ */ React7.createElement(Fieldset, {
-    label,
-    name,
-    hint,
-    className,
-    style,
-    hintStyle,
-    hintClassName,
-    labelStyle,
-    labelClassName,
-    "data-fgb-type": type,
-    group: type === "radios" || type === "checkboxes"
-  }, type === "select" ? /* @__PURE__ */ React7.createElement(Select, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
-    name,
-    className: inputClassName,
-    style: inputStyle
-  })) : type === "textarea" ? /* @__PURE__ */ React7.createElement(Textarea, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
-    name,
-    className: inputClassName,
-    style: inputStyle
-  })) : type === "checkboxes" || type === "radios" ? /* @__PURE__ */ React7.createElement(Group, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
-    type,
-    name,
-    className: inputLabelClassName,
-    style: inputLabelStyle,
-    inputClassName,
-    inputStyle
-  })) : /* @__PURE__ */ React7.createElement(Input, __spreadProps(__spreadValues(__spreadValues({}, inputProps), validationProps), {
-    name,
-    type,
-    className: inputClassName,
-    style: inputStyle
-  })));
-}
-
 // src/components/Form.tsx
-import * as React8 from "react";
 function Form(_a) {
   var _b = _a, {
     dialog,
@@ -632,7 +619,7 @@ function Form(_a) {
     throw new Error(
       "Must supply a submit method prop of either `submitFormData` or `submitJson`."
     );
-  return /* @__PURE__ */ React8.createElement("form", __spreadProps(__spreadValues({}, props), {
+  return /* @__PURE__ */ React7.createElement("form", __spreadProps(__spreadValues({}, props), {
     "data-fgb": "form",
     noValidate: typeof window !== void 0,
     autoComplete: autoComplete ? "on" : "off",
@@ -655,7 +642,11 @@ function Form(_a) {
           if (!formErrors)
             return;
           for (const name of Object.keys(formErrors))
-            setFormFieldError(form, name, formErrors[name]);
+            setFormFieldError(
+              form,
+              name,
+              formErrors[name]
+            );
         });
       }
     }
@@ -663,16 +654,15 @@ function Form(_a) {
 }
 
 // src/components/Submit.tsx
-import * as React9 from "react";
+import * as React8 from "react";
 
 // src/core/getFormIsValid.ts
 function getFormIsValid(form) {
   var _a;
   for (const el of Array.from(form.elements)) {
-    if (!el.name)
+    if (!("name" in el))
       continue;
-    const hint = (_a = el.closest("[data-fgb='label']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
-    if (hint == null ? void 0 : hint.textContent)
+    if (!el.validity.valid || ((_a = getFieldHintElement(el)) == null ? void 0 : _a.textContent))
       return false;
   }
   return true;
@@ -681,7 +671,7 @@ function getFormIsValid(form) {
 // src/components/Submit.tsx
 function Submit(_a) {
   var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
-  return /* @__PURE__ */ React9.createElement("button", __spreadProps(__spreadValues({}, props), {
+  return /* @__PURE__ */ React8.createElement("button", __spreadProps(__spreadValues({}, props), {
     type: "submit",
     ref: (el) => {
       if (el && el.form) {
@@ -712,8 +702,5 @@ export {
   setFormFieldValue,
   validateForm,
   validationEffectHandler,
-  withValidation,
-  withValidationOnBlur,
-  withValidationOnChange,
   wrapWithFieldValidation
 };

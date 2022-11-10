@@ -32,7 +32,7 @@ export function getErrorMessage(input: FieldInputElement): string {
   // inputs only from here on
   if (isTextareaElement(input)) return "";
 
-  // TODO: Validate that file inputs adhere to their accepts params
+  // TODO: Validate that file inputs adhere to their accepts params?
 
   if (input.validity.patternMismatch)
     return input.title || errorMessages.pattern;

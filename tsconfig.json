@@ -1,5 +1,5 @@
 {
-  "exclude": ["./src/docs"],
+  "exclude": ["./src/docs", "./build/"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

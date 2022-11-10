@@ -48,6 +48,7 @@ export function getFormFieldValue<V extends FieldValue>(
     return el.value as V;
   }
   throw new Error(
+    // @ts-expect-error - it's okay
     `Unexpected element found in field name ${name}. Found ${el.tagName}`
   );
 }

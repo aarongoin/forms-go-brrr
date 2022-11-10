@@ -30,6 +30,8 @@ export function Group({
     const id = `${name}-${value}`;
     return (
       <Fieldset name={id} label={label} key={value}>
+        {/*
+        // @ts-expect-error - later */}
         <Input
           {...props}
           type={type.startsWith("c") ? "checkbox" : "radio"}

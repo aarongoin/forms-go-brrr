@@ -31,7 +31,7 @@ function validateForm(form, validator) {
     (name, value) => (0, import_setFormFieldValue.setFormFieldValue)(form, name, value)
   );
   for (const el of Array.from(form.elements)) {
-    if (!el.name)
+    if (!("name" in el))
       continue;
     const err = (formErrors == null ? void 0 : formErrors[el.name]) || "";
     let is_valid = el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;
