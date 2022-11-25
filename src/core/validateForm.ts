@@ -13,7 +13,8 @@ export function validateForm<FV extends FormValues = FormValues>(
     (name, value) => setFormFieldValue(form, name, value)
   );
   for (const el of Array.from(form.elements) as HTMLElement[]) {
-    if (!("name" in el)) continue;
+    // @ts-expect-error - it's okay
+    if (!("name" in el) || !el.name) continue;
     const err = formErrors?.[(el as HTMLInputElement).name] || "";
     let is_valid =
       el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;

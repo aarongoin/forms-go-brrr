@@ -14,7 +14,7 @@ export type SelectFieldProps = BaseInputProps &
 
 export type SelectProps = BaseInputProps &
   Optional<SelectType, "type"> &
-  React.SelectHTMLAttributes<HTMLSelectElement>;
+  Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "aria-describedby">;
 
 export function Select({
   options,

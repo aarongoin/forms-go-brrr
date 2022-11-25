@@ -159,11 +159,11 @@ export function Concepts({ className }: { className?: string | undefined }) {
           </Column>
         }
         right={
-          <CodeBlock highlight={[0, 4]}>{`.fgb-Label-text, .fgb-Label-hint {
+          <CodeBlock highlight={[0, 4]}>{`[data-fgb=label], [data-fgb=hint] {
   display: block;
 }
 
-.fgb-Input:invalid ~ .fgb-Label-hint {
+[data-fgb=input]:invalid ~ [data-fgb=hint] {
   color: red;
 }`}</CodeBlock>
         }

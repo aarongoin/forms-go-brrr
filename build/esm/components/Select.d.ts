@@ -8,5 +8,5 @@ export declare type SelectType = {
     multiple?: boolean;
 };
 export declare type SelectFieldProps = BaseInputProps & SelectType & React.SelectHTMLAttributes<HTMLSelectElement>;
-export declare type SelectProps = BaseInputProps & Optional<SelectType, "type"> & React.SelectHTMLAttributes<HTMLSelectElement>;
+export declare type SelectProps = BaseInputProps & Optional<SelectType, "type"> & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "aria-describedby">;
 export declare function Select({ options, type, defaultSelected, name, ...props }: SelectProps): React.ReactElement;
