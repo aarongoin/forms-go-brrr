@@ -34,7 +34,7 @@ export type FormProps<FV extends FormValues = FormValues> =
       submitJson?:
         | void
         | ((
-            data: Record<string, unknown>
+            data: FV
           ) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
     }
   >;

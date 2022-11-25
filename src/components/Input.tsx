@@ -10,7 +10,7 @@ type TextTypeProps = {
 
 export type TextInputProps = {
   type: "text";
-  autocomplete?: string;
+  autoComplete?: string;
   defaultValue?: string;
   options?: string[] | Option[];
 } & TextTypeProps;
@@ -22,7 +22,7 @@ export type TelInputProps = {
 
 export type ColorInputProps = {
   type: "color";
-  autocomplete?: string;
+  autoComplete?: string;
   defaultValue?: string;
   options?: string[] | Option[];
 };
@@ -35,7 +35,7 @@ export type UrlInputProps = {
 
 export type PasswordInputProps = {
   type: "password";
-  autocomplete?: "on" | "off" | "current-password" | "new-password";
+  autoComplete?: "on" | "off" | "current-password" | "new-password";
   defaultValue?: string;
 } & TextTypeProps;
 
@@ -49,7 +49,7 @@ export type SearchInputProps = {
 export type EmailInputProps = {
   type: "email";
   multiple?: boolean;
-  autocomplete?: "on" | "off" | "email";
+  autoComplete?: "on" | "off" | "email";
   defaultValue?: string;
   options?: string[] | Option[];
 } & TextTypeProps;
@@ -172,7 +172,7 @@ export type BaseInputProps = {
   name: string;
   required?: boolean;
   placeholder?: string;
-  autofocus?: boolean;
+  autoFocus?: boolean;
   disabled?: boolean;
   readonly?: boolean;
   id?: string;

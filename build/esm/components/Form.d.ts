@@ -10,6 +10,6 @@ export declare type FormProps<FV extends FormValues = FormValues> = React.PropsW
     validateOnBlur?: FormHandler<FV>;
     validateOnChange?: FormHandler<FV>;
     submitFormData?: void | ((data: FormData) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
-    submitJson?: void | ((data: Record<string, unknown>) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
+    submitJson?: void | ((data: FV) => void | FormErrors<FV> | Promise<void | FormErrors<FV>>);
 }>;
 export declare function Form<FV extends FormValues = FormValues>({ dialog, method, action, submitFormData, submitJson, validateOnBlur, validateOnChange, autoComplete, ...props }: FormProps<FV>): React.ReactElement;
