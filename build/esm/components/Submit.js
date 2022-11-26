@@ -32,7 +32,11 @@ var __objRest = (source, exclude) => {
 import * as React from "react";
 import { getFormIsValid } from "../core/getFormIsValid";
 function Submit(_a) {
-  var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
+  var _b = _a, {
+    validate
+  } = _b, props = __objRest(_b, [
+    "validate"
+  ]);
   return /* @__PURE__ */ React.createElement("button", __spreadProps(__spreadValues({}, props), {
     type: "submit",
     ref: (el) => {
@@ -41,7 +45,9 @@ function Submit(_a) {
         el.form.addEventListener(
           validate === "onChange" ? "input" : "change",
           (event) => {
-            el.disabled = !getFormIsValid(el.form);
+            setTimeout(() => {
+              el.disabled = !getFormIsValid(el.form);
+            }, 0);
           }
         );
       }

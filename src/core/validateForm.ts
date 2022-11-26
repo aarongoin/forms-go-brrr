@@ -16,6 +16,7 @@ export function validateForm<FV extends FormValues = FormValues>(
     // @ts-expect-error - it's okay
     if (!("name" in el) || !el.name) continue;
     const err = formErrors?.[(el as HTMLInputElement).name] || "";
+    // dispatch event so all fields self-validate
     let is_valid =
       el.dispatchEvent(new Event("invalid", { cancelable: true })) && !err;
     if (is_valid || err)

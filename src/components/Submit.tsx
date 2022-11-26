@@ -8,7 +8,10 @@ export type SubmitProps = Omit<
   validate?: "onBlur" | "onChange";
 };
 
-export function Submit({ validate, ...props }: SubmitProps): React.ReactElement {
+export function Submit({
+  validate,
+  ...props
+}: SubmitProps): React.ReactElement {
   return (
     <button
       {...props}
@@ -20,7 +23,9 @@ export function Submit({ validate, ...props }: SubmitProps): React.ReactElement 
             // it's unintuitive but that's how it seems to work???
             validate === "onChange" ? "input" : "change",
             (event) => {
-              el.disabled = !getFormIsValid(el.form!);
+              setTimeout(() => {
+                el.disabled = !getFormIsValid(el.form!);
+              }, 0);
             }
           );
         }

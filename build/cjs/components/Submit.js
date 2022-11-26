@@ -59,7 +59,11 @@ module.exports = __toCommonJS(Submit_exports);
 var React = __toESM(require("react"));
 var import_getFormIsValid = require("../core/getFormIsValid");
 function Submit(_a) {
-  var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
+  var _b = _a, {
+    validate
+  } = _b, props = __objRest(_b, [
+    "validate"
+  ]);
   return /* @__PURE__ */ React.createElement("button", __spreadProps(__spreadValues({}, props), {
     type: "submit",
     ref: (el) => {
@@ -68,7 +72,9 @@ function Submit(_a) {
         el.form.addEventListener(
           validate === "onChange" ? "input" : "change",
           (event) => {
-            el.disabled = !(0, import_getFormIsValid.getFormIsValid)(el.form);
+            setTimeout(() => {
+              el.disabled = !(0, import_getFormIsValid.getFormIsValid)(el.form);
+            }, 0);
           }
         );
       }

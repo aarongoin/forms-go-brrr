@@ -660,7 +660,7 @@ import * as React8 from "react";
 function getFormIsValid(form) {
   var _a;
   for (const el of Array.from(form.elements)) {
-    if (!("name" in el))
+    if (!("name" in el) || !el.name)
       continue;
     if (!el.validity.valid || ((_a = getFieldHintElement(el)) == null ? void 0 : _a.textContent))
       return false;
@@ -670,7 +670,11 @@ function getFormIsValid(form) {
 
 // src/components/Submit.tsx
 function Submit(_a) {
-  var _b = _a, { validate } = _b, props = __objRest(_b, ["validate"]);
+  var _b = _a, {
+    validate
+  } = _b, props = __objRest(_b, [
+    "validate"
+  ]);
   return /* @__PURE__ */ React8.createElement("button", __spreadProps(__spreadValues({}, props), {
     type: "submit",
     ref: (el) => {
@@ -679,7 +683,9 @@ function Submit(_a) {
         el.form.addEventListener(
           validate === "onChange" ? "input" : "change",
           (event) => {
-            el.disabled = !getFormIsValid(el.form);
+            setTimeout(() => {
+              el.disabled = !getFormIsValid(el.form);
+            }, 0);
           }
         );
       }
