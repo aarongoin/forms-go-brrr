@@ -271,6 +271,30 @@ export function API({ className }: { className?: string | undefined }) {
             which are convenient ways to handle a checklist of options, or a set
             of radio options.
           </span>,
+          <span>
+            <Header level={5} name="DOM Structure" />
+            <Paragraph>
+              While you shouldn't need to worry to much about the internals of
+              the Field component, it can be helpful to know the dom structure
+              for the purposes of styling.
+            </Paragraph>
+            <Paragraph>The output of any non-group Field looks basically like this (visual order is different):</Paragraph>
+            <CodeBlock>{`<fieldset>
+  <span data-fgb="hint" /> or <span data-fgb="error" /> (if field has validation error)
+  <label data-fgb="label" />
+  <input data-fgb="input" /> or <textarea data-fgb="input" /> or <select data-fgb="input" />
+</fieldset>`}</CodeBlock>
+            <Paragraph>In cases where there's a group of inputs:</Paragraph>
+            <CodeBlock>{`<fieldset>
+  <span data-fgb="hint" /> or <span data-fgb="error" /> (if field has validation error)
+  <legend data-fgb="label" />
+  <fieldset>
+    <label data-fgb="label" />
+    <input data-fgb="input" />
+  </fieldset>
+  {...repeat inner fieldset for every input in the group}
+</fieldset>`}</CodeBlock>
+          </span>,
         ]}
         props={[
           {

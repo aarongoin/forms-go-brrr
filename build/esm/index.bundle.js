@@ -320,8 +320,10 @@ function setFormFieldError(form, name, error) {
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
   const hint = getFieldHintElement(el);
-  if (hint)
+  if (hint) {
+    hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";
+  }
 }
 
 // src/core/wrapWithFieldValidation.ts
@@ -335,7 +337,7 @@ function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   };
   return {
     [onEvent]: (event) => {
-      validateInput(event.target);
+      setTimeout(validateInput, onEvent === "onChange" ? 0 : 120, event.target);
       return outerHandler == null ? void 0 : outerHandler(event);
     },
     onInvalid: (event) => {
@@ -685,7 +687,7 @@ function Submit(_a) {
           (event) => {
             setTimeout(() => {
               el.disabled = !getFormIsValid(el.form);
-            }, 0);
+            }, validate === "onChange" ? 1 : 121);
           }
         );
       }

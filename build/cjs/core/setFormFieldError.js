@@ -29,8 +29,10 @@ function setFormFieldError(form, name, error) {
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
   const hint = (0, import_getFieldHintElement.getFieldHintElement)(el);
-  if (hint)
+  if (hint) {
+    hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";
+  }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

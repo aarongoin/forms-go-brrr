@@ -11,7 +11,7 @@ function wrapWithFieldValidation(onEvent, validator, outerHandler) {
   };
   return {
     [onEvent]: (event) => {
-      validateInput(event.target);
+      setTimeout(validateInput, onEvent === "onChange" ? 0 : 120, event.target);
       return outerHandler == null ? void 0 : outerHandler(event);
     },
     onInvalid: (event) => {

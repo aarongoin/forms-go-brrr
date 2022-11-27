@@ -26,7 +26,9 @@ export function wrapWithFieldValidation<
   };
   return {
     [onEvent]: (event: React.ChangeEvent<I> | React.FocusEvent<I>) => {
-      validateInput(event.target);
+      // delay validation after blur in case user is attempting to click something else in the UI
+      // otherwise the potential error being rendered will shift the UI and cause mis-clicks
+      setTimeout(validateInput, onEvent === "onChange" ? 0 : 120, event.target);
       return outerHandler?.(event);
     },
     onInvalid: (event: React.InvalidEvent<I>) => {

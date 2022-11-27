@@ -74,7 +74,7 @@ function Submit(_a) {
           (event) => {
             setTimeout(() => {
               el.disabled = !(0, import_getFormIsValid.getFormIsValid)(el.form);
-            }, 0);
+            }, validate === "onChange" ? 1 : 121);
           }
         );
       }

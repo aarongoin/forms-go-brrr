@@ -154,16 +154,16 @@ export function Concepts({ className }: { className?: string | undefined }) {
           <Column space={2}>
             <Paragraph>
               Native css styles that target forms-go-brrr elements using their{" "}
-              <Code>[data-fgb=*]</Code> attributes.
+              <Code>[data-fgb=*]</Code> attributes along with existing css selectors, pseudo-classes, etc.
             </Paragraph>
           </Column>
         }
         right={
-          <CodeBlock highlight={[0, 4]}>{`[data-fgb=label], [data-fgb=hint] {
+          <CodeBlock highlight={[0, 4]}>{`[data-fgb=label], [data-fgb=error] {
   display: block;
 }
 
-[data-fgb=input]:invalid ~ [data-fgb=hint] {
+[data-fgb=input]:invalid ~ [data-fgb=error] {
   color: red;
 }`}</CodeBlock>
         }

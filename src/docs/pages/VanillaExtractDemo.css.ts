@@ -21,7 +21,7 @@ export const fieldStyle = style({
         color: "#00a9d8",
         transition: "color 150ms ease-in",
       },
-      [`&:invalid:not(:focus-within):has(span[data-fgb=hint]:not(:empty))`]: {
+      [`&:invalid:not(:focus-within):has(span[data-fgb=error]:not(:empty))`]: {
         color: "red",
         transition: "color 150ms ease-in",
       }
@@ -41,7 +41,7 @@ export const inputStyle = style({
       outline: `solid 1px #00a9d8`,
       transition: "all 150ms ease-in",
     },
-    [`${fieldStyle}:invalid:not(:focus-within):has([data-fgb=hint]:not(:empty)) &`]: {
+    [`${fieldStyle}:invalid:not(:focus-within):has([data-fgb=error]:not(:empty)) &`]: {
       outline: `solid 2px red`,
       transition: "all 150ms",
     },

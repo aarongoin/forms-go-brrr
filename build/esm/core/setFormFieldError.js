@@ -6,8 +6,10 @@ function setFormFieldError(form, name, error) {
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
   const hint = getFieldHintElement(el);
-  if (hint)
+  if (hint) {
+    hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";
+  }
 }
 export {
   setFormFieldError

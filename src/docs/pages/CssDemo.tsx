@@ -29,7 +29,7 @@ export const cssStyles = `
   transition: color 150ms ease-in;
 }
 
-[data-fgb='fieldset']:invalid:not(:focus-within):has(span[data-fgb='hint']:not(:empty)) {
+[data-fgb='fieldset']:invalid:not(:focus-within):has(span[data-fgb='error']:not(:empty)) {
   color: red;
   transition: color 150ms ease-in;
 }
@@ -54,7 +54,7 @@ export const cssStyles = `
   transition: all 150ms ease-in;
 }
 
-[data-fgb='fieldset']:invalid:not(:focus-within):has([data-fgb=hint]:not(:empty)) [data-fgb='input'] {
+[data-fgb='fieldset']:invalid:not(:focus-within):has([data-fgb=error]:not(:empty)) [data-fgb='input'] {
   outline: solid 2px red;
   transition: all 150ms;
 }
