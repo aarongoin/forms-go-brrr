@@ -347,9 +347,11 @@ function getFormFieldValue(form, name) {
 }
 
 // src/core/getFieldHintElement.ts
-function getFieldHintElement(el) {
+function getFieldHintElement(el, errorOnly = true) {
   var _a;
-  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(
+    `#${el.name}-hint${errorOnly ? "[data-fgb='error']" : ""}`
+  );
   return hint || null;
 }
 
@@ -360,7 +362,7 @@ function setFormFieldError(form, name, error) {
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = getFieldHintElement(el);
+  const hint = getFieldHintElement(el, false);
   if (hint) {
     hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";

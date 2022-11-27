@@ -5,7 +5,7 @@ function setFormFieldError(form, name, error) {
     throw new Error(`Cannot find field with name ${name}`);
   const el = "length" in elOrEls && elOrEls.length ? elOrEls.item(0) : elOrEls;
   el.setCustomValidity(error);
-  const hint = getFieldHintElement(el);
+  const hint = getFieldHintElement(el, false);
   if (hint) {
     hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";

@@ -16,7 +16,7 @@ export function setFormFieldError(
 
   el.setCustomValidity(error);
 
-  const hint = getFieldHintElement(el);
+  const hint = getFieldHintElement(el, false);
   if (hint) {
     hint.dataset.fgb = error ? "error" : "hint";
     hint.textContent = error || hint.dataset.fgbHint || "";

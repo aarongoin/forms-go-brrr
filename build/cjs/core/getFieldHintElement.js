@@ -21,9 +21,11 @@ __export(getFieldHintElement_exports, {
   getFieldHintElement: () => getFieldHintElement
 });
 module.exports = __toCommonJS(getFieldHintElement_exports);
-function getFieldHintElement(el) {
+function getFieldHintElement(el, errorOnly = true) {
   var _a;
-  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(`#${el.name}-hint`);
+  const hint = (_a = el.closest("[data-fgb='fieldset']")) == null ? void 0 : _a.querySelector(
+    `#${el.name}-hint${errorOnly ? "[data-fgb='error']" : ""}`
+  );
   return hint || null;
 }
 // Annotate the CommonJS export names for ESM import in node:
