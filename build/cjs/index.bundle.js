@@ -56,6 +56,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   Field: () => Field,
+  Fieldset: () => Fieldset,
   Form: () => Form,
   Submit: () => Submit,
   getErrorMessage: () => getErrorMessage,
@@ -740,6 +741,7 @@ function Submit(_a) {
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Field,
+  Fieldset,
   Form,
   Submit,
   getErrorMessage,

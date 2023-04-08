@@ -18,3 +18,4 @@ module.exports = __toCommonJS(components_exports);
 __reExport(components_exports, require("./Field"), module.exports);
 __reExport(components_exports, require("./Form"), module.exports);
 __reExport(components_exports, require("./Submit"), module.exports);
+__reExport(components_exports, require("./Fieldset"), module.exports);
